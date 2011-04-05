@@ -17,7 +17,7 @@ class Main_Controller extends CI_Controller {
 	}
 
         /**
-         *
+         * loads the home page once the user is logged in
          * @param <type> $id
          */
         function getHome($id)
@@ -26,6 +26,9 @@ class Main_Controller extends CI_Controller {
             $this->load->view('/include/template_view', $data);
 	}
 
+        /**
+         * loads the registration view page
+         */
 	function getRegistration()
 	{
             $data['main_content'] = 'registration_view';
@@ -38,10 +41,13 @@ class Main_Controller extends CI_Controller {
          */
         function submitRegistration($data)
 	{
-            $data['main_content'] = 'checkmail_view';
+            $data['main_content'] = 'checkMail_view';
             $this->load->view('/include/template_view', $data);
 	}
 
+        /**
+         * loads the page to request a password
+         */
         function getRequestPassword()
 	{
             $data['main_content'] = 'requestPass_view';
@@ -53,8 +59,19 @@ class Main_Controller extends CI_Controller {
          * If not, the user is alerted so they can re-type the password.
          * @param <string> $email
          */
-	function submitRequestPassword($email)
+	function submitRequestPassword()
 	{
+            $email = $this->input->post('email');
+            error_log($email);
+            if ($this->emailExistsInDb($email)) {
+                $this->email->from('donotreply@pubcrawl.com');
+                $this->email->to($email);
+
+                $this->email->subject('log-in to Pub Crawl');
+                $this->email->message('Testing');
+
+                $this->email->send();
+            }
 	}
 
         /**

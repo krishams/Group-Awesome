@@ -2,7 +2,7 @@ This is the request password view!
 
 Please insert your email.
 <div class="requestpassDiv">
-    <form class="requestpassForm" action="" method="" >
+    <form class="requestpassForm" action="submitRequestPassword" method="POST" >
         <table class="requestpassTabel">
             <tr>
                 <td>Email:</td>
