@@ -8,23 +8,23 @@ This is the registration view
         <table class="registrationTabel">
             <tr>
                 <td>First name:</td>
-                <td><input type="text" name="firstname" /></td>
+                <td><?php echo form_input('firstname','');?></td>
             </tr>
             <tr>
                 <td>Last name:</td>
-                <td><input type="text" name="lastname" /></td>
+                <td><?php echo form_input('lastname','');?></td>
             </tr>
             <tr>
                 <td>Email:</td>
-                <td><input type="text" name="email" /></td>
+                <td><?php echo form_input('email','');?></td>
             </tr>
             <tr>
                 <td>Password:</td>
-                <td><input type="password" name="pass" /></td>
+                <td><?php echo form_input('passw','');?></td>
             </tr>
             <tr>
                 <td>Confirm password:</td>
-                <td><input type="password" name="passconfirm" /></td>
+                <td><?php echo form_input('confirmPassw');?></td>
             </tr>
         </table>
 
