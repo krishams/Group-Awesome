@@ -8,7 +8,7 @@ class Main_Controller extends CI_Controller {
 	}
 
         /**
-         * loads th initial log-in screen
+         * loads the initial log-in screen
          */
 	function index()
 	{
@@ -44,7 +44,7 @@ class Main_Controller extends CI_Controller {
 
         function getRequestPassword()
 	{
-            $data['main_content'] = 'request_password_view';
+            $data['main_content'] = 'requestPass_view';
             $this->load->view('/include/template_view', $data);
 	}
 
