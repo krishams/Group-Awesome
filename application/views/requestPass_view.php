@@ -1,16 +1,19 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
-    </head>
-    <body>
-        <?php
-        // put your code here
-        ?>
-    </body>
-</html>
+This is the request password view!
+
+Please insert your email.
+<div class="requestpassDiv">
+    <form class="requestpassForm" action="" method="" >
+        <table class="requestpassTabel">
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" name="email" /></td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit" />
+    </form>
+</div>
+
+<?php
+
+// put your code here
+?>
