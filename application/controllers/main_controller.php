@@ -7,19 +7,29 @@ class Main_Controller extends CI_Controller {
 		parent::__construct();
 	}
 
+        /**
+         * loads th initial log-in screen
+         */
 	function index()
 	{
-		$this->load->view('index_view');
+            $data['main_content'] = 'index_view';
+            $this->load->view('/include/template_view', $data);
 	}
 
+        /**
+         *
+         * @param <type> $id
+         */
         function getHome($id)
 	{
-		$this->load->view('home_view');
+            $data['main_content'] = 'home_view';
+            $this->load->view('/include/template_view', $data);
 	}
 
 	function getRegistration()
 	{
-		$this->load->view('registration_view');
+            $data['main_content'] = 'registration_view';
+            $this->load->view('/include/template_view', $data);
 	}
 
         /**
@@ -28,12 +38,14 @@ class Main_Controller extends CI_Controller {
          */
         function submitRegistration($data)
 	{
-		$this->load->view('checkmail_view');
+            $data['main_content'] = 'checkmail_view';
+            $this->load->view('/include/template_view', $data);
 	}
 
         function getRequestPassword()
 	{
-		$this->load->view('request_password_view');
+            $data['main_content'] = 'request_password_view';
+            $this->load->view('/include/template_view', $data);
 	}
 
         /**
