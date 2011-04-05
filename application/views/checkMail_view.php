@@ -1,16 +1,10 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
-    </head>
-    <body>
-        <?php
-        // put your code here
-        ?>
-    </body>
-</html>
+<div id="checkMail">
+
+    <p>Thanks for signing up. <br/>
+       An confirmation email has now been sent to your email inbox, <br/>
+       please go to your email and verify your account
+    </p>
+
+    <?php echo anchor('', 'Back to sign in') ?>
+
+</div>
