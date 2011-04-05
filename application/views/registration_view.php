@@ -1,27 +1,35 @@
+This is the registration view
 <!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
+    In the following line of code we are making a tabel that will contain
+    the fields that the user should fill out in order to registre to the page
 -->
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Registre</title>
-    </head>
-    <body>
-        This is the registration view
-
-        <div class="registrationDiv">
-            <table class="registrationTabel">
-                <tr>
-                    <td>First name:</td>
-                    <td></td>
-                </tr>
-            </table>
-
-        </div>
-        <?php
-        // put your code here
-        ?>
-    </body>
-</html>
+<div class="registrationDiv">
+    <form class="registrationForm" action="" method="">
+        <table class="registrationTabel">
+            <tr>
+                <td>First name:</td>
+                <td><input type="text" name="firstname" /></td>
+            </tr>
+            <tr>
+                <td>Last name:</td>
+                <td><input type="text" name="lastname" /></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" name="email" /></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" name="pass" /></td>
+            </tr>
+            <tr>
+                <td>Confirm password:</td>
+                <td><input type="password" name="passconfirm" /></td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit registration" />
+    </form>
+</div>
+<?php
+// put your code here
+?>
