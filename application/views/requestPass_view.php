@@ -1,5 +1,3 @@
-This is the request password view!
-
 Please insert your email.
 <div class="requestpassDiv">
     <form class="requestpassForm" action="" method="" >
