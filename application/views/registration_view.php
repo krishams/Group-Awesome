@@ -4,7 +4,7 @@ This is the registration view
     the fields that the user should fill out in order to registre to the page
 -->
 <div class="registrationDiv">
-    <form class="registrationForm" action="" method="">
+    <form class="registrationForm" action="user_controller/submitRegistration" method="POST">
         <table class="registrationTabel">
             <tr>
                 <td>First name:</td>
@@ -27,6 +27,9 @@ This is the registration view
                 <td><input type="password" name="passconfirm" /></td>
             </tr>
         </table>
+
+        Her skal der være en captcha funktion: linket her kan hjælpe med det http://codeigniter.com/user_guide/helpers/captcha_helper.html
+        <br />
         <input type="submit" value="Submit registration" />
     </form>
 </div>
