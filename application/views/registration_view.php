@@ -33,6 +33,3 @@ This is the registration view
         <input type="submit" value="Submit registration" />
     </form>
 </div>
-<?php
-// put your code here
-?>
