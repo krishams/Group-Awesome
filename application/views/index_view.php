@@ -6,7 +6,7 @@ and open the template in the editor.
     
     <p>Welcome to Pub Crawl </p>
     <!--?php form_open('getHome()'); ?>-->
-    <form class="loginForm" action="getHome" method="POST">
+    <form class="loginForm" action="index.php/main_controller/getHome" method="POST">
     <table>
         <tr>
             <td>Email</td>
@@ -38,8 +38,14 @@ and open the template in the editor.
             <td>&nbsp;</td>
             <td><?php echo anchor('main_controller/getRequestPassword', 'Forgot your password?'); ?></td>
         </tr>
-        
     </table>
+        <?php
+            if($this->session->flashdata('error')){
+                echo "<div class='errorMessage'>";
+                echo $error;
+                echo "</div>";
+            }
+        ?>
     </form>
 </div>
 

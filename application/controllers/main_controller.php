@@ -1,113 +1,126 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 
 class Main_Controller extends CI_Controller {
 
-	function __construct()
-	{
-            parent::__construct();
-            session_start();
-	}
+    function __construct() {
+        parent::__construct();
+        session_start();
+    }
 
-        /**
-         * loads the initial log-in screen
-         */
-	function index()
-	{
-            $data['main_content'] = 'index_view';
-            $this->load->view('/include/template_view', $data);
-	}
+    /**
+     * loads the initial log-in screen
+     */
+    function index() {
+        $data['error'] = $this->session->flashdata('error');
+        $data['main_content'] = 'index_view';
+        $this->load->view('/include/template_view', $data);
+    }
 
-        /**
-         *
-         * @param <type> $id
-         */
-        function getHome()//$id)
-	{
+    /**
+     *
+     * @param <type> $id
+     */
+    function getHome() {//$id)
+        if($this->verifyLogin()){
             $data['main_content'] = 'home_view';
-            $this->load->view('/include/template1_view', $data);
-	}
+            $this->load->view('include/template1_view', $data);
+        }
+        else
+            redirect();
+    }
 
-	function getRegistration()
-	{
-            $data['main_content'] = 'registration_view';
-            $this->load->view('/include/template_view', $data);
-	}
+    function getRegistration() {
+        $data['main_content'] = 'registration_view';
+        $this->load->view('/include/template_view', $data);
+    }
 
-        /**
-         * Saves the user registration information and sends a confirmation email with a link to log on.
-         * First we load the helper form_validation, which makes it possible to set som rules for our form.
-         * in the rules we 3 parameters, 1: the fieldname, 2: errormessage and 3: the validation rule.
-         * trim means removing malicious code.
-         */
-        function submitRegistration()
-	{
-            //check if the captha is correct
-            //control that all fields have data in them, if not display which is missing - done
-            //check if email already exist in db, if not then display error - ½ done
+    /**
+     * Saves the user registration information and sends a confirmation email with a link to log on.
+     * First we load the helper form_validation, which makes it possible to set som rules for our form.
+     * in the rules we 3 parameters, 1: the fieldname, 2: errormessage and 3: the validation rule.
+     * trim means removing malicious code.
+     */
+    function submitRegistration() {
+        //check if the captha is correct
+        //control that all fields have data in them, if not display which is missing - done
+        //check if email already exist in db, if not then display error - ½ done
 
-            $this->load->library('form_validation');
+        $this->load->library('form_validation');
 
-            $this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
-            $this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
-            $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-            $this->form_validation->set_rules('passw', 'Password', 'trim|required|min_length[4]|max_length[32]');
-            $this->form_validation->set_rules('confirmPassw', 'Confirm Password', 'trim|required|matches[passw]');
+        $this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
+        $this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+        $this->form_validation->set_rules('passw', 'Password', 'trim|required|min_length[4]|max_length[32]');
+        $this->form_validation->set_rules('confirmPassw', 'Confirm Password', 'trim|required|matches[passw]');
 
-            if($this->form_validation->run() == FALSE)
-            {
-               $this->getRegistration();
+        if ($this->form_validation->run() == FALSE) {
+            $this->getRegistration();
+        } else if ($this->main_model->emailValidation()) {
+            echo "fejl i mail validation main_controller";
+            //print error message
+        } else {
+            if ($this->main_model->saveUserdata()) {
+                $data['main_content'] = 'checkMail_view';
+                $this->load->view('include/template_view', $data);
+            } else {
+                $this->load->view('registration_view');
             }
-            else if(!$this->main_model->emailValidation())
-            {
-                //print error message
-                echo "fejl i mail validation main_controller";
-            }
-            else
-            {
-                if($this->main_model->saveUserdata())
-                {
-                    $data['main_content'] = 'checkMail_view';
-                    $this->load->view('include/template_view', $data);
+        }
+    }
+
+    function getRequestPassword() {
+        $data['main_content'] = 'requestPass_view';
+        $this->load->view('/include/template_view', $data);
+    }
+
+    /**
+     * Checks if the email exists and if so, sends a reset link.
+     * If not, the user is alerted so they can re-type the password.
+     * @param <string> $email
+     */
+    function submitRequestPassword($email) {
+
+    }
+
+    /**
+     * Checks the database to see if the email exists
+     * @param <string> $email the users email address
+     * @return <boolean> whether the email exists
+     */
+    function emailExistsInDb() {
+        return true;
+    }
+
+    /**
+     *
+     */
+    function activate() {
+
+    }
+
+    /**
+     * This methode helps to verify the user that is trying to log into our web-
+     * page. It also creates a session for this user.
+     */
+    function verifyLogin() {
+        if ($this->input->post('email')) {
+            $mail = $this->input->post('email');
+            $pw = $this->input->post('passw');
+            if($this->main_model->verifyUser($mail, $pw)){
+                if($_SESSION['userid'] > 0) {
+                    return true;
                 }
                 else
-                {
-                    $this->load->view('registration_view');
-                }
-            
+                    return false;
             }
+            else
+                return false;
         }
+    }
 
-        function getRequestPassword()
-	{
-            $data['main_content'] = 'requestPass_view';
-            $this->load->view('/include/template_view', $data);
-	}
-
-        /**
-         * Checks if the email exists and if so, sends a reset link.
-         * If not, the user is alerted so they can re-type the password.
-         * @param <string> $email
-         */
-	function submitRequestPassword($email)
-	{
-	}
-
-        /**
-         * Checks the database to see if the email exists
-         * @param <string> $email the users email address
-         * @return <boolean> whether the email exists
-         */
-        function emailExistsInDb()
-        {
-            return true;
-        }
-
-        /**
-         * 
-         */
-        function activate() {
-
-        }
 }
 
 /* End of file welcome.php */
