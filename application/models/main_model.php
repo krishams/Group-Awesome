@@ -44,6 +44,7 @@ class main_model extends CI_Model {
         if ($Q->num_rows() > 0) {
             foreach ($Q->result_array() as $row) {
                 if ($row['email'] == $validemail) {
+                    $this->session->set_flashdata('error', 'This email is already in use.');
                     $validate = true;
                     return $validate;
                 }
@@ -55,7 +56,8 @@ class main_model extends CI_Model {
     /**
      * This methode selects an user by finding him with the help of his email and
      * password. It then sets some settings in the session data, so the user
-     * can be identifyed
+     * can be identifyed.
+     * If the login informations are incorrect it returns an error message.
      * @param <type> $user
      * @param <type> $pw
      */
@@ -72,8 +74,26 @@ class main_model extends CI_Model {
             return true;
         }
         else{
-           $this->session->set_flashdata('error', 'Sorry, your email or password is incorrect!');
+           $this->session->set_flashdata('errorVerify', 'Sorry, your email or password is incorrect! Please try again.');
            return false;
+        }
+    }
+
+    /**
+     * This methode is ment to control the hole database and return an array of
+     * data, with the a persons name, if it contains the search criteria.
+     * @param <type> $searh
+     */
+    function searchUser($searh){
+        $data = array();
+        $this->db->select('f_name', 'l_name');
+        $Q = $this->db->get('users');
+        if($Q->num_rows()>0){
+            foreach($Q->result_array() as $row){
+                if($row['f_name'].contains($searh)||$row['l_name'].contains($searh)){
+                    $data[] = $row;
+                }
+            }
         }
     }
 }

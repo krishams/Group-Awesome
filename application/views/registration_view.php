@@ -32,6 +32,15 @@ This is the registration view
         <br />
         <input type="submit" value="Submit registration" />
 
+        <!-- Is used to display type in errors-->
         <?php echo validation_errors('<p class="error">'); ?>
+        
+        <?php
+            if($this->session->flashdata('error')){
+                echo "<div class='errorMessage'>";
+                echo $error;
+                echo "</div>";
+            }
+        ?>
     </form>
 </div>

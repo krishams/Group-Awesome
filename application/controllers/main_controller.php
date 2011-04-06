@@ -20,13 +20,15 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
-     *
+     * This methode calls another methode to verify the login informations,
+     * if true it direkts the user to the home_view, otherwise it reloads the
+     * page with an error message.
      * @param <type> $id
      */
     function getHome() {//$id)
         if($this->verifyLogin()){
             $data['main_content'] = 'home_view';
-            $this->load->view('include/template1_view', $data);
+            $this->load->view('/include/template1_view', $data);
         }
         else
             redirect();
@@ -59,7 +61,7 @@ class Main_Controller extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->getRegistration();
         } else if ($this->main_model->emailValidation()) {
-            echo "fejl i mail validation main_controller";
+            redirect($uri = 'registration_view');
             //print error message
         } else {
             if ($this->main_model->saveUserdata()) {
@@ -103,7 +105,7 @@ class Main_Controller extends CI_Controller {
 
     /**
      * This methode helps to verify the user that is trying to log into our web-
-     * page. It also creates a session for this user.
+     * page. It controls to see if the user has a session.
      */
     function verifyLogin() {
         if ($this->input->post('email')) {
