@@ -4,7 +4,7 @@ This is the registration view
     the fields that the user should fill out in order to registre to the page
 -->
 <div class="registrationDiv">
-    <form class="registrationForm" action="user_controller/submitRegistration" method="POST">
+    <form class="registrationForm" action="submitRegistration" method="POST">
         <table class="registrationTabel">
             <tr>
                 <td>First name:</td>

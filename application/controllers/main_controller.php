@@ -36,9 +36,9 @@ class Main_Controller extends CI_Controller {
          * Saves the user registration information and sends a confirmation email with a link to log on
          * @param <array> $data the user's registration information
          */
-        function submitRegistration($data)
+        function submitRegistration()//$data)
 	{
-            $data['main_content'] = 'checkmail_view';
+            $data['main_content'] = 'checkMail_view';
             $this->load->view('/include/template_view', $data);
 	}
 

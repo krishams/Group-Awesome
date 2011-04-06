@@ -9,12 +9,10 @@
  *
  * @author Kristian
  */
-class user_controller {
-    //put your code here
-}
+class User_controller extends CI_Controller {
 
 
-/**
+        /**
          * Saves the user registration information and sends a confirmation email with a link to log on
          * @param <array> $data the user's registration information
          */
@@ -23,4 +21,8 @@ class user_controller {
             $data['main_content'] = 'checkMail_view';
             $this->load->view('/include/template_view', $data);
 	}
+
+}
+
 ?>
+
