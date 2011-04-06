@@ -44,15 +44,19 @@ class Main_Controller extends CI_Controller {
 
             $this->load->library('form_validation');
             //field name, error message, validation rules
-            $this->form_validation->set_rules('firstname', 'trim|required');
-            $this->form_validation->set_rules('lastname', 'trim|required');
-            $this->form_validation->set_rules('email', 'trim|required|valid_email');
-            $this->form_validation->set_rules('passw', 'trim|required|min_length[4]|max_length[32]');
-            $this->form_validation->set_rules('confirmPassw', 'trim|required|matches[passw]');
+            $this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
+            $this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
+            $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+            $this->form_validation->set_rules('passw', 'Password', 'trim|required|min_length[4]|max_length[32]');
+            $this->form_validation->set_rules('confirmPassw', 'Confirm Password', 'trim|required|matches[passw]');
 
             if($this->form_validation->run() == FALSE)
             {
-                getRegistration();
+               $this->getRegistration();
+            }
+            else if($this->main_model->emailValidation())
+            {
+
             }
             else
             {
@@ -63,7 +67,7 @@ class Main_Controller extends CI_Controller {
                 }
                 else
                 {
-                    getRegistration();
+                    $this->load->view('registration_view');
                 }
             
             }
