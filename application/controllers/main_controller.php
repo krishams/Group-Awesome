@@ -20,7 +20,7 @@ class Main_Controller extends CI_Controller {
          *
          * @param <type> $id
          */
-        function getHome($id)
+        function getHome()//$id)
 	{
             $data['main_content'] = 'home_view';
             $this->load->view('/include/template_view', $data);
@@ -56,7 +56,7 @@ class Main_Controller extends CI_Controller {
             }
             else if($this->main_model->emailValidation())
             {
-
+                
             }
             else
             {
