@@ -36,7 +36,7 @@ class Main_Controller extends CI_Controller {
          * Saves the user registration information and sends a confirmation email with a link to log on
          * @param <array> $data the user's registration information
          */
-        function submitRegistration()//$data)
+        function submitRegistration()
 	{
             //check if the captha is correct
             //control that all fields have data in them, if not display which is missing
@@ -67,6 +67,7 @@ class Main_Controller extends CI_Controller {
                 }
             
             }
+        }
 
         function getRequestPassword()
 	{
