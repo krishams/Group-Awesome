@@ -40,6 +40,8 @@ class Main_Controller extends CI_Controller {
 	{
             $data['main_content'] = 'checkMail_view';
             $this->load->view('/include/template_view', $data);
+            
+
 	}
 
         function getRequestPassword()
