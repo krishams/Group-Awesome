@@ -29,6 +29,7 @@ This is the registration view
         </table>
 
         Her skal der være en captcha funktion: linket her kan hjælpe med det http://codeigniter.com/user_guide/helpers/captcha_helper.html
+        
         <br />
         <input type="submit" value="Submit registration" />
 
