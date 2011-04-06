@@ -38,6 +38,10 @@ class Main_Controller extends CI_Controller {
          */
         function submitRegistration()//$data)
 	{
+            //check if the captha is correct
+            //control that all fields have data in them, if not display which is missing
+            //check if email already exist, if not then display
+
             $data['main_content'] = 'checkMail_view';
             $this->load->view('/include/template_view', $data);
 	}

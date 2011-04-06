@@ -4,14 +4,9 @@ Please insert your email.
         <table class="requestpassTabel">
             <tr>
                 <td>Email:</td>
-                <td><input type="text" name="email" /></td>
+                <td><?php echo form_input('email','');?></td>
             </tr>
         </table>
         <input type="submit" value="Submit" />
     </form>
 </div>
-
-<?php
-
-// put your code here
-?>
