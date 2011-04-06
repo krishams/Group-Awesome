@@ -20,11 +20,11 @@ This is the registration view
             </tr>
             <tr>
                 <td>Password:</td>
-                <td><?php echo form_input('passw','');?></td>
+                <td><?php echo form_password('passw','');?></td>
             </tr>
             <tr>
                 <td>Confirm password:</td>
-                <td><?php echo form_input('confirmPassw');?></td>
+                <td><?php echo form_password('confirmPassw');?></td>
             </tr>
         </table>
 

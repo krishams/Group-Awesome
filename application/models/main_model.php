@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Description of main_model
  *
@@ -6,7 +7,7 @@
  */
 class main_model extends CI_Model {
 
-    function main_model(){
+    function main_model() {
         parent::__construct();
     }
 
@@ -21,5 +22,19 @@ class main_model extends CI_Model {
         $this->db->insert('users', $new_user_data);
     }
 
+    function emailValidation() {
+        $validemail = $this->input->post('email');
+        $validate = true;
+        $Q = $this->db->get('email');
+        if ($Q->num_rows() > 0) {
+            foreach ($Q->result_array() as $row) {
+                if ($row == $validemail) {
+                    $validate = false;
+                    return $validate;
+                };
+            };
+        };
+        return $validate;
+    }
 }
 ?>
