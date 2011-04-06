@@ -33,17 +33,19 @@ class Main_Controller extends CI_Controller {
 	}
 
         /**
-         * Saves the user registration information and sends a confirmation email with a link to log on
-         * @param <array> $data the user's registration information
+         * Saves the user registration information and sends a confirmation email with a link to log on.
+         * First we load the helper form_validation, which makes it possible to set som rules for our form.
+         * in the rules we 3 parameters, 1: the fieldname, 2: errormessage and 3: the validation rule.
+         * trim means removing malicious code.
          */
         function submitRegistration()
 	{
             //check if the captha is correct
-            //control that all fields have data in them, if not display which is missing
-            //check if email already exist, if not then display
+            //control that all fields have data in them, if not display which is missing - done
+            //check if email already exist in db, if not then display error - ½ done
 
             $this->load->library('form_validation');
-            //field name, error message, validation rules
+
             $this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
             $this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
             $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
@@ -54,9 +56,9 @@ class Main_Controller extends CI_Controller {
             {
                $this->getRegistration();
             }
-            else if($this->main_model->emailValidation())
+            else if(! $this->emailExistsInDb())
             {
-
+                //print an error message..
             }
             else
             {
@@ -93,9 +95,9 @@ class Main_Controller extends CI_Controller {
          * @param <string> $email the users email address
          * @return <boolean> whether the email exists
          */
-        function emailExistsInDb($email)
+        function emailExistsInDb()
         {
-            return true;
+            return $this->main_model->emailValidation();
         }
 
         /**
