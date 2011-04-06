@@ -20,7 +20,7 @@ class Main_Controller extends CI_Controller {
          *
          * @param <type> $id
          */
-        function getHome($id)
+        function getHome()//$id)
 	{
             $data['main_content'] = 'home_view';
             $this->load->view('/include/template_view', $data);
@@ -56,10 +56,11 @@ class Main_Controller extends CI_Controller {
             {
                $this->getRegistration();
             }
-            else if(! $this->emailExistsInDb())
-            {
-                //print an error message..
-            }
+//            else if($this->main_model->emailValidation())
+//            {
+//                   //print an error message..
+//                echo "email fejl";
+//            }
             else
             {
                 if($this->main_model->saveUserdata())
@@ -97,7 +98,7 @@ class Main_Controller extends CI_Controller {
          */
         function emailExistsInDb()
         {
-            return $this->main_model->emailValidation();
+            return true;
         }
 
         /**
