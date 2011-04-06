@@ -42,11 +42,31 @@ class Main_Controller extends CI_Controller {
             //control that all fields have data in them, if not display which is missing
             //check if email already exist, if not then display
 
-            $data['main_content'] = 'checkMail_view';
-            $this->load->view('/include/template_view', $data);
-            
+            $this->load->library('form_validation');
+            //field name, error message, validation rules
+            $this->form_validation->set_rules('firstname', 'trim|required');
+            $this->form_validation->set_rules('lastname', 'trim|required');
+            $this->form_validation->set_rules('email', 'trim|required|valid_email');
+            $this->form_validation->set_rules('passw', 'trim|required|min_length[4]|max_length[32]');
+            $this->form_validation->set_rules('confirmPassw', 'trim|required|matches[passw]');
 
-	}
+            if($this->form_validation->run() == FALSE)
+            {
+                getRegistration();
+            }
+            else
+            {
+                if($this->main_model->saveUserdata())
+                {
+                    $data['main_content'] = 'checkMail_view';
+                    $this->load->view('include/template', $data);
+                }
+                else
+                {
+                    getRegistration();
+                }
+            
+            }
 
         function getRequestPassword()
 	{
