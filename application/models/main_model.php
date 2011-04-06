@@ -26,6 +26,7 @@ class main_model extends CI_Model {
             'is_admin' => '0'
         );
         $this->db->insert('users', $new_user_data);
+        return true;
     }
 
     /**
@@ -48,6 +49,7 @@ class main_model extends CI_Model {
                 };
             };
         };
+        $validate =true;
         return $validate;
     }
 }

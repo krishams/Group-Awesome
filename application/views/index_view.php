@@ -5,13 +5,26 @@ and open the template in the editor.
 <div id="logon">
     
     <p>Welcome to Pub Crawl </p>
-    <?php    form_open('getHome') ?>
+    <!--?php form_open('getHome()'); ?>-->
+    <form class="loginForm" action="getHome" method="POST">
     <table>
         <tr>
-            <td>Email</td><td><?php echo form_input('email','');?></td>
+            <td>Email</td>
+            <td><?php $data = array(
+                'name'=>'email',
+                'value'=>'',
+                'size'=>'30');
+            echo form_input($data);?>
+            </td>
         </tr>
         <tr>
-            <td>Password</td><td><?php echo form_input('passw','');?></td>
+            <td>Password</td>
+            <td><?php $data = array(
+                'name'=>'passw',
+                'value'=>'',
+                'size'=>'30');
+            echo form_password($data);?>
+            </td>
         </tr>
         <tr>
             <td>&nbsp;</td>
@@ -27,5 +40,6 @@ and open the template in the editor.
         </tr>
         
     </table>
+    </form>
 </div>
 

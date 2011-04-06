@@ -4,7 +4,8 @@ class Main_Controller extends CI_Controller {
 
 	function __construct()
 	{
-		parent::__construct();
+            parent::__construct();
+            session_start();
 	}
 
         /**
@@ -23,7 +24,7 @@ class Main_Controller extends CI_Controller {
         function getHome()//$id)
 	{
             $data['main_content'] = 'home_view';
-            $this->load->view('/include/template_view', $data);
+            $this->load->view('/include/template1_view', $data);
 	}
 
 	function getRegistration()
@@ -54,16 +55,16 @@ class Main_Controller extends CI_Controller {
             {
                $this->getRegistration();
             }
-            else if($this->main_model->emailValidation())
+            else if(!$this->main_model->emailValidation())
             {
-                
+                echo "fejl i mail validation main_controller";
             }
             else
             {
                 if($this->main_model->saveUserdata())
                 {
                     $data['main_content'] = 'checkMail_view';
-                    $this->load->view('include/template', $data);
+                    $this->load->view('include/template_view', $data);
                 }
                 else
                 {
