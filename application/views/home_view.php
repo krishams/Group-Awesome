@@ -2,7 +2,8 @@
 <p>Welcome to home</p>
 
 <?php
-echo form_open('main_controller/searchUserButton');
+$attributes = array('method' => 'post');
+echo form_open('main_controller/searchUserButton/',$attributes);
 ?>
 <input type="text" name="search" onkeyup="showResult(this.value)"/>
 <input type="submit" value="Search user" />
@@ -39,7 +40,7 @@ echo form_close();
                 document.getElementById("searchResults").style.border="1px solid #A5ACB2";
             }
         }
-        xmlhttp.open("GET","/Groupe-Awesome/main_controller/searchUser/"+str,true);
+        xmlhttp.open("GET","/Groupe-Awesome/main_controller/searchUser?q="+str,true);
         xmlhttp.send();
     }
 </script>
