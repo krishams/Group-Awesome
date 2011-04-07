@@ -51,7 +51,7 @@ and open the template in the editor.
         <?php
             if ($this->session->flashdata('errorVerify')) {
                 echo "<div class='errorMessage'>";
-                echo $error;
+                echo $this->session->flashdata('errorVerify');
                 echo "</div>";
             }
         ?>
