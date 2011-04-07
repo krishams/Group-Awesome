@@ -144,11 +144,10 @@ class Main_Controller extends CI_Controller {
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('requestPass_view');
-        } else if (!$this->main_model->emailValidation()) {
-            redirect('main_controller/getRequestPassword');
-            //print error message
-        } else {
+        } else if ($id = $this->main_model->emailValidation()) {
             //validation has passed, so send email
+            $linkString = $this->main_model->createLink($id, 1);
+
             $email = $this->input->post('email');
             $this->load->library('email', $config);
 
@@ -157,7 +156,8 @@ class Main_Controller extends CI_Controller {
             $this->email->from('The Pub Crawl Team');
             $this->email->to($email);
             $this->email->subject('Reset password');
-            $this->email->message('Test mail');
+            $this->email->message("Click the following link to reset your password:\n\n" .
+                    base_url() . "index.php/main_controller/activate/" . $linkString);
 
             if ($this->email->send()) {
                 $data['main_content'] = 'checkMail2_view';
@@ -165,6 +165,9 @@ class Main_Controller extends CI_Controller {
             } else {
                 show_error($this->email->print_debugger);
             }
+        } else {
+                    redirect('main_controller/getRequestPassword');
+            //print error message
         }
     }
 
@@ -177,8 +180,28 @@ class Main_Controller extends CI_Controller {
             $this->main_model->activateUser($user_id);
             $this->load->view('activateSuccess_view');
         }
+        else if ($type == 1) { //link type == reset pasword
+            $data['linkval'] = $linkVal;
+            $this->load->view('resetPass_view', $data);
+        }
+    }
 
-//        error_log("user: $user_id type $type");
+    function resetPassSuccess() {
+//        error_log(print_r($_POST, true));
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('passw', 'Password', 'trim|required|min_length[6]|max_length[32]');
+        $this->form_validation->set_rules('confirmPassw', 'Confirm Password', 'trim|required|matches[passw]');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('resetPass_view');
+        } else {
+            error_log(print_r($_POST, true));
+            list($user_id, ) = $this->main_model->getUserForLink($this->input->post('linkVal'));
+            $newPass = $this->input->post('passw');
+            $this->main_model->resetPassword(array($user_id, $newPass));
+            $this->load->view('resetPassSuccess_view');
+        }
     }
 
     /**

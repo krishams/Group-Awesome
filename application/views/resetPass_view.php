@@ -1,6 +1,7 @@
 <div class="resetPassDiv">
-    <?php echo form_open(main_controller/resetPassSuccess_view); ?> 
+    <?php echo form_open('main_controller/resetPassSuccess'); ?>
         <table class="resetTable">
+            <input type="hidden" name="linkVal" value="<?php echo $linkval ?>" />
             <tr>
                 <td>Password:</td>
                 <td><?php echo form_password('passw','');?></td>
