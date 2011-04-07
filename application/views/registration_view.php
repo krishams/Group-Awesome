@@ -35,6 +35,8 @@
         
         <br />
 
+        <?php echo anchor('', 'Back to sign in') ?>
+
         <!-- Is used to display type in errors-->
         <?php echo validation_errors('<p class="error">'); ?>
         
