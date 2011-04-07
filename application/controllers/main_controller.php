@@ -69,9 +69,33 @@ class Main_Controller extends CI_Controller {
             redirect('main_controller/getRegistration');
             //print error message
         } else {
-            if ($this->main_model->saveUserdata()) {
+            if ($id = $this->main_model->saveUserdata()) {
                 $data['main_content'] = 'checkMail_view';
                 $this->load->view('include/template_view', $data);
+
+                $linkString = $this->main_model->createLink($id ,0);
+
+                $config = Array(
+
+                        'protocol' => 'smtp',
+                        'smtp_host' => 'ssl://smtp.googlemail.com',
+                        'smtp_port' => 465,
+                        'smtp_user' => 'awesome.pubcrawl2011@gmail.com',
+                        'smtp_pass' => 'group.awesome'
+                );
+
+                $email = $this->input->post('email');
+                $this->load->library('email', $config);
+
+                $this->email->set_newline("\r\n"); //just has to be there
+
+                $this->email->from('The Pub Crawl Team');
+                $this->email->to($email);
+                $this->email->subject('Activate account');
+                $this->email->message("Click the following link to activate your account:\n\n" .
+                base_url() . "index.php/main_controller/activate/" . $linkString);
+                $this->email->send();
+
             } else {
                 $this->load->view('registration_view');
             }
@@ -151,22 +175,17 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
-     * Checks the database to see if the email exists
-     * @param <string> $email the users email address
-     * @return <boolean> whether the email exists
-     */
-    function emailExistsInDb($email) {
-        return true;
-    }
-//        else
-//            redirect();
-
-
-    /**
      *
      */
-    function activate() {
+    function activate($linkVal) {
+        list($user_id, $type) = $this->main_model->getUserForLink($linkVal);
+        if ($type == 0) { //link type == activate
+            $this->main_model->activateUser($user_id);
+            $this->load->view('activateSuccess_view');
 
+        }
+
+//        error_log("user: $user_id type $type");
     }
 
     /**
