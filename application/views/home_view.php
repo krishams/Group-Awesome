@@ -1,5 +1,5 @@
-
-<p>Welcome to home</p>
+<div id="home">
+<h1>Welcome to home</h1>
 
 <?php
 $attributes = array('method' => 'post');
@@ -44,3 +44,4 @@ echo form_close();
         xmlhttp.send();
     }
 </script>
+</div>
