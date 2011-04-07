@@ -190,8 +190,8 @@ class Main_Controller extends CI_Controller {
     }
 
     function searchUser(){
-        if($this->input->post('search')){
-            $search = $this->input->post('search');//$_GET["search"];
+        if($this->input->get('search')){
+            $search = $this->uri->segment(3);
             $data['searchdata'] = $this->main_model->searchUser($search);
             $this->load->view('searchUser_view', $data);
         }
@@ -224,6 +224,8 @@ class Main_Controller extends CI_Controller {
  		$this->load->view('/include/template1_view', $data);
     }
 }
+
+
 
 /* End of file welcome.php */
 /* Location: ./application/controllers/welcome.php */
