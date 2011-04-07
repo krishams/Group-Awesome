@@ -43,13 +43,27 @@ h1{
 	background-position: center top;
 }
 
-#logon, .registrationDiv, .requestpassDiv{
+#logon, .registrationDiv, .requestpassDiv, #aSuccess, #checkMail, .headerUl{
 	padding: 350px 0px 0px 0px;
 	margin: 0 auto;
+}
+#checkMail p, #checkMail, .registrationDiv{
+	text-align: center;
+}
+
+.headerUl li{
+	text-decoration: none;
+	list-style-type: none;
+	display: inline;
+	padding-right: 30px;
 }
 
 #logon table, .registrationDiv table, .requestpassDiv table{
 	margin: 0 auto;
+}
+
+#home, .headerUl{
+	padding-left: 250px;
 }
 
 #logon table input, .registrationDiv table input, .requestpassDiv table input{
