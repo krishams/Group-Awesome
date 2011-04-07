@@ -86,7 +86,7 @@ class main_model extends CI_Model {
      * data, with the a persons name, if it contains the search criteria.
      * @param <type> $searh
      */
-    function searchUser($searh){
+    function searchUser($search){
         $data = array();
         $this->db->like('f_name', $search);
         $this->db->or_like('l_name', $search);
