@@ -43,7 +43,7 @@
         <?php
             if($this->session->flashdata('error')){
                 echo "<div class='errorMessage'>";
-                echo $error;
+                echo $this->session->flashdata('error');
                 echo "</div>";
             }
         ?>

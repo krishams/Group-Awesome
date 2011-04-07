@@ -114,17 +114,11 @@ class main_model extends CI_Model {
         $Q = $this->db->get('users');
         if($Q->num_rows() > 0){
             $row = $Q->row_array();
-            if ($row['active'] != 1) {
-               $this->session->set_flashdata('errorVerify', 'Sorry, your account has not been activated yet! Please click the link you were sent by email.');
-               return false;
-            }
-            $_SESSION['userid'] = $row['id'];
-            $_SESSION['username'] = $row['email'];
-            return true;
+            return $row;
         }
         else{
            $this->session->set_flashdata('errorVerify', 'Sorry, your email or password is incorrect! Please try again.');
-           return false;
+           return null;
         }
     }
 
@@ -160,5 +154,6 @@ class main_model extends CI_Model {
     	return $data;
     	
     }
+
 }
 ?>
