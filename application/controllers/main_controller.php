@@ -79,15 +79,14 @@ class Main_Controller extends CI_Controller {
                 $data['main_content'] = 'checkMail_view';
                 $this->load->view('include/template_view', $data);
 
-                $linkString = $this->main_model->createLink($id ,0);
+                $linkString = $this->main_model->createLink($id, 0);
 
                 $config = Array(
-
-                        'protocol' => 'smtp',
-                        'smtp_host' => 'ssl://smtp.googlemail.com',
-                        'smtp_port' => 465,
-                        'smtp_user' => 'awesome.pubcrawl2011@gmail.com',
-                        'smtp_pass' => 'group.awesome'
+                    'protocol' => 'smtp',
+                    'smtp_host' => 'ssl://smtp.googlemail.com',
+                    'smtp_port' => 465,
+                    'smtp_user' => 'awesome.pubcrawl2011@gmail.com',
+                    'smtp_pass' => 'group.awesome'
                 );
 
                 $email = $this->input->post('email');
@@ -99,9 +98,8 @@ class Main_Controller extends CI_Controller {
                 $this->email->to($email);
                 $this->email->subject('Activate account');
                 $this->email->message("Click the following link to activate your account:\n\n" .
-                base_url() . "index.php/main_controller/activate/" . $linkString);
+                        base_url() . "index.php/main_controller/activate/" . $linkString);
                 $this->email->send();
-
             } else {
                 $this->load->view('registration_view');
             }
@@ -178,7 +176,6 @@ class Main_Controller extends CI_Controller {
         if ($type == 0) { //link type == activate
             $this->main_model->activateUser($user_id);
             $this->load->view('activateSuccess_view');
-
         }
 
 //        error_log("user: $user_id type $type");
@@ -203,12 +200,13 @@ class Main_Controller extends CI_Controller {
         }
     }
 
-
     /**
-     * 
+     * This methode will get a string with a search criteria and forward it to
+     * a methode in the main_model, then it will load a new page where the search
+     * results will be displayed
      */
-    function searchUser(){
-        if($this->input->get('search')){
+    function searchUser() {
+        if ($this->input->get('search')) {
             $search = $this->uri->segment(3);
             $data['searchdata'] = $this->main_model->searchUser($search);
             $this->load->view('searchUser_view', $data);
@@ -216,9 +214,8 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
-     * This methode will get a string with a search criteria and forward it to
-     * a methode in the main_model, then it will load a new page where the search
-     * results will be displayed
+     * It will work together with the ajax code on the home_view page
+     * !!!!!!!!!!!    This function is currently not working !!!!!!!!!!!!!!!!
      */
     function searchUserButton() {
         if ($this->input->post('search')) {
@@ -229,28 +226,31 @@ class Main_Controller extends CI_Controller {
         }
     }
 
+    /**
+     * Will pass the users id to the db, and gets all the users data back, and
+     * forwards it to the users profilpage
+     */
     function showProfile() {
 
-    	$userid = 0;
-    	
-    	if($this->uri->segment(3))
-    	{
-    	$userid = $this->uri->segment(3);
-    	}
-    	$data['profile'] = $this->main_model->getUserById($userid);
-    	
-    	$data['main_content'] = 'profile_view';
- 		$this->load->view('/include/template1_view', $data);
+        $userid = 0;
+
+        if ($this->uri->segment(3)) {
+            $userid = $this->uri->segment(3);
+        }
+        $data['profile'] = $this->main_model->getUserById($userid);
+
+        $data['main_content'] = 'profile_view';
+        $this->load->view('/include/template1_view', $data);
     }
 
     /**
      * This function is needed when the user wants to log out of the webpage
      */
-    function logOut(){
+    function logOut() {
         session_destroy();
         redirect('');
-        //$this->index();
     }
+
 }
 
 /* End of file welcome.php */
