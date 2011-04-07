@@ -39,10 +39,7 @@ echo form_close();
                 document.getElementById("searchResults").style.border="1px solid #A5ACB2";
             }
         }
-        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        http.setRequestHeader("Content-length", params.length);
-        http.setRequestHeader("Connection", "close");
-        xmlhttp.open("POST","main_controller/searchUser",true);
-        xmlhttp.send(str);
+        xmlhttp.open("GET","/Groupe-Awesome/main_controller/searchUser/"+str,true);
+        xmlhttp.send();
     }
 </script>
