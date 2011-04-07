@@ -30,6 +30,9 @@ class Main_Controller extends CI_Controller {
             $data['main_content'] = 'home_view';
             $this->load->view('/include/template1_view', $data);
         }
+        else {
+        	redirect();
+        }
     }
 
     /**
@@ -63,7 +66,7 @@ class Main_Controller extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->getRegistration();
         } else if ($this->main_model->emailValidation()) {
-            redirect($uri = 'registration_view');
+            redirect('main_controller/getRegistration');
             //print error message
         } else {
             if ($this->main_model->saveUserdata()) {
