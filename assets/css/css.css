@@ -43,7 +43,7 @@ h1{
 	background-position: center top;
 }
 
-#logon, .registrationDiv, .requestpassDiv, #aSuccess, #checkMail, .headerUl{
+#logon, .registrationDiv, .requestpassDiv, #aSuccess, #checkMail, .headerUl, #aSuccess{
 	padding: 350px 0px 0px 0px;
 	margin: 0 auto;
 }
