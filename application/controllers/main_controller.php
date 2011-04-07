@@ -73,6 +73,9 @@ class Main_Controller extends CI_Controller {
         }
     }
 
+    /*
+     * loads the request password and template
+     */
     function getRequestPassword() {
         $data['main_content'] = 'requestPass_view';
         $this->load->view('/include/template_view', $data);
@@ -82,8 +85,64 @@ class Main_Controller extends CI_Controller {
      * Checks if the email exists and if so, sends a reset link.
      * If not, the user is alerted so they can re-type the password.
      * @param <string> $email
+     * 
+     * User clicks on link, "Forgot your password"
+     * User types in his/her email address
+     * You put a random key and temporary password in the user table
+     * You send an email with a link to activate the password you set. The link has the random key
+     * User clicks on link. The link should match the random string
+     * You activate the password and clear the temporary password and the random string
+     * User logs in and changes his password to something he wants
      */
-    function submitRequestPassword($email) {
+    function submitRequestPassword() {
+        //1. first email validation - done
+
+        //make random key as a temp password in usertabel:
+        //2. call to model to generate a random string
+
+        //send email with an activation link and a temp password - ½done
+        //3. call email function
+        
+            $config = Array(
+
+                    'protocol' => 'smtp',
+                    'smtp_host' => 'ssl://smtp.googlemail.com',
+                    'smtp_port' => 465,
+                    'smtp_user' => 'awesome.pubcrawl2011@gmail.com',
+                    'smtp_pass' => 'group.awesome'
+            );
+
+        
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+
+        if($this->form_validation->run() == FALSE)
+        {
+            $this->load->view('requestPass_view');
+        }
+        else
+        {
+                //validation has passed, so send email
+                $email = $this->input->post('email');
+                $this->load->library('email', $config);
+
+                $this->email->set_newline("\r\n"); //just has to be there
+
+                $this->email->from('The Pub Crawl Team');
+                $this->email->to($email);
+                $this->email->subject('Reset password');
+                $this->email->message('Test mail');
+
+                    if($this->email->send())
+                    {
+                        $data['main_content'] = 'checkMail2_view';
+                        $this->load->view('include/template_view', $data);
+                    }
+                    else
+                    {
+                        show_error($this->email->print_debugger);
+                    }
+        }
 
     }
 
