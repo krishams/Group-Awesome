@@ -84,7 +84,7 @@ class main_model extends CI_Model {
     /**
      * This methode is ment to control the hole database and return an array of
      * data, with the a persons name, if it contains the search criteria.
-     * @param <type> $searh
+     * @param <type> $search
      */
     function searchUser($search){
         $data = array();
@@ -97,6 +97,21 @@ class main_model extends CI_Model {
             }
         }
         return $data;
+    }
+    
+    function getUserByid($id) {
+    	$data = array();
+    	$this->db->where('id', $id);
+    	$Q = $this->db->get('users');
+    	if($Q->num_rows()>0){
+    		foreach($Q->result_array() as $row){
+                    $data = $row;
+            }
+
+    	}
+    	
+    	return $data;
+    	
     }
 }
 ?>

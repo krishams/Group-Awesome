@@ -210,6 +210,19 @@ class Main_Controller extends CI_Controller {
             $this->load->view('/include/template1_view', $data);
         }
     }
+    
+    function showProfile() {
+    	$userid = 0;
+    	
+    	if($this->uri->segment(3))
+    	{
+    	$userid = $this->uri->segment(3);
+    	}
+    	$data['profile'] = $this->main_model->getUserById($userid);
+    	
+    	$data['main_content'] = 'profile_view';
+ 		$this->load->view('/include/template1_view', $data);
+    }
 }
 
 /* End of file welcome.php */
