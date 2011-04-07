@@ -79,7 +79,7 @@ class Main_Controller extends CI_Controller {
                 $data['main_content'] = 'checkMail_view';
                 $this->load->view('include/template_view', $data);
 
-                $linkString = $this->main_model->createLink($id, 0);
+                $linkString = $this->main_model->createLink($id, 1);
 
                 $config = Array(
                     'protocol' => 'smtp',
@@ -146,7 +146,7 @@ class Main_Controller extends CI_Controller {
             $this->load->view('requestPass_view');
         } else if ($id = $this->main_model->emailValidation()) {
             //validation has passed, so send email
-            $linkString = $this->main_model->createLink($id, 1);
+            $linkString = $this->main_model->createLink($id, 2);
 
             $email = $this->input->post('email');
             $this->load->library('email', $config);
@@ -176,11 +176,11 @@ class Main_Controller extends CI_Controller {
      */
     function activate($linkVal) {
         list($user_id, $type) = $this->main_model->getUserForLink($linkVal);
-        if ($type == 0) { //link type == activate
+        if ($type == 1) { //link type == activate
             $this->main_model->activateUser($user_id);
             $this->load->view('activateSuccess_view');
         }
-        else if ($type == 1) { //link type == reset pasword
+        else if ($type == 2) { //link type == reset pasword
             $data['linkval'] = $linkVal;
             $this->load->view('resetPass_view', $data);
         }

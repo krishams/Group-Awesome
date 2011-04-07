@@ -3,11 +3,11 @@
         <table class="resetTable">
             <input type="hidden" name="linkVal" value="<?php echo $linkval ?>" />
             <tr>
-                <td>Password:</td>
+                <td>New password:</td>
                 <td><?php echo form_password('passw','');?></td>
             </tr>
             <tr>
-                <td>Confirm password:</td>
+                <td>Confirm new password:</td>
                 <td><?php echo form_password('confirmPassw');?></td>
             </tr>
             <tr>
