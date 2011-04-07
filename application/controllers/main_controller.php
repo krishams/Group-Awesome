@@ -189,6 +189,34 @@ class Main_Controller extends CI_Controller {
         }
     }
 
+     /**
+      * 
+      */
+     function captcha()
+     {
+        $this->load->helper('captcha');
+
+        $vals = array(
+            'img_path'   => '/var/www/mysite.com/images/captcha/',
+//            'img_url'    => 'http://mysite.com/images/captcha/',
+            'font' => '../../system/fonts/texb.ttf',
+            'img_width'  => '150',
+            'img_height' => 30,
+            'expiration' => 7200,
+            "time" => time()
+            );
+
+        $data['cap'] = create_captcha($vals);
+
+        $cap = array(
+            'captcha_time'  => $data['cap']['time'],
+            'ip_address'    => $this->input->ip_address(),
+            'word'   => $data['cap']['word']
+            );
+
+        $this->main_model->add_captcha($cap);
+    }
+
 }
 
 /* End of file welcome.php */

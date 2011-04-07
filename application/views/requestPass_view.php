@@ -1,7 +1,13 @@
 <div class="requestpassDiv">
     <form class="requestpassForm" action="submitRequestPassword" method="POST" >
         <table class="requestpassTabel">
-
+            <tr>
+                <td><?php echo $cap['image']; ?></td>
+            </tr>
+            <tr>
+                <td>Captca:</td>
+                <td><?php echo form_input('captcha', ''); ?></td>
+            </tr>
             <tr>
             	<td>Email:</td>
                 <td><?php echo form_input('email','');?></td>
