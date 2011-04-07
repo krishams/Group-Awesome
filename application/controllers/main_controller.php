@@ -60,7 +60,7 @@ class Main_Controller extends CI_Controller {
         $this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
         $this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-        $this->form_validation->set_rules('passw', 'Password', 'trim|required|min_length[4]|max_length[32]');
+        $this->form_validation->set_rules('passw', 'Password', 'trim|required|min_length[6]|max_length[32]');
         $this->form_validation->set_rules('confirmPassw', 'Confirm Password', 'trim|required|matches[passw]');
 
         if ($this->form_validation->run() == FALSE) {
@@ -101,15 +101,9 @@ class Main_Controller extends CI_Controller {
      * User logs in and changes his password to something he wants
      */
     function submitRequestPassword() {
-
-        //1. first email validation - done
-
         //make random key as a temp password in usertabel:
         //2. call to model to generate a random string
-
         //send email with an activation link and a temp password - ½done
-        //3. call email function
-
             $config = Array(
 
                     'protocol' => 'smtp',
@@ -119,13 +113,16 @@ class Main_Controller extends CI_Controller {
                     'smtp_pass' => 'group.awesome'
             );
 
-        
         $this->load->library('form_validation');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
 
         if($this->form_validation->run() == FALSE)
         {
             $this->load->view('requestPass_view');
+        }
+        else if (!$this->main_model->emailValidation()) {
+            redirect('main_controller/getRequestPassword');
+            //print error message
         }
         else
         {

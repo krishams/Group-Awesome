@@ -11,4 +11,5 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/css.css" media="screen" />
     </head>
     <body>
+
     <div id="wrapper">

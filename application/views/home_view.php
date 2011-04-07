@@ -1,10 +1,10 @@
-This is the home_view file.
 
-It is the general idéar that on this page you will have an overview of which events will happen later on.
+<p>Welcome to home</p>
 
 <?php
 
 echo form_open('main_controller/searchUser');
+
 
 echo form_input('search','');
 ?>
