@@ -9,11 +9,15 @@
             <tr>
             <td>&nbsp;</td>
             <td><input type="submit" value="Submit" /><td>
-        	</tr>
+            </tr>
+            <tr>
+             <td>&nbsp;</td>
+             <td><?php echo anchor('', 'Back to sign in'); ?></td>
+            </tr>
         </table>
     </form>
 
-    <?php echo anchor('', 'Back to sign in'); ?>
+    
 
      <?php echo validation_errors('<p class="error">'); ?>
 </div>
