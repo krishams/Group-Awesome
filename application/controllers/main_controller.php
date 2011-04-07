@@ -191,6 +191,19 @@ class Main_Controller extends CI_Controller {
 
     function searchUser(){
         if($this->input->post('search')){
+            $search = $this->input->post('search');//$_GET["search"];
+            $data['searchdata'] = $this->main_model->searchUser($search);
+            $this->load->view('searchUser_view', $data);
+        }
+    }
+
+    /**
+     * This methode will get a string with a search criteria and forward it to
+     * a methode in the main_model, then it will load a new page where the search
+     * results will be displayed
+     */
+    function searchUserButton(){
+        if($this->input->post('search')){
             $search = $this->input->post('search');
             $data['searchdata'] = $this->main_model->searchUser($search);
             $data['main_content'] = 'searchUser_view';
