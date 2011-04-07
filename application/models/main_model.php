@@ -114,6 +114,10 @@ class main_model extends CI_Model {
         $Q = $this->db->get('users');
         if($Q->num_rows() > 0){
             $row = $Q->row_array();
+            if($row['active'] != 1){
+                $this->session->set_flashdata('errorVerify', 'You need to activate your account');
+                return null;
+            }
             return $row;
         }
         else{

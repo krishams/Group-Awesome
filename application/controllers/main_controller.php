@@ -171,15 +171,6 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
-     * Checks the database to see if the email exists
-     * @param <string> $email the users email address
-     * @return <boolean> whether the email exists
-     */
-    function emailExistsInDb($email) {
-        return true;
-    }
-
-    /**
      *
      */
     function activate($linkVal) {
