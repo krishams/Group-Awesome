@@ -16,6 +16,7 @@ class main_model extends CI_Model {
      * informations that we need about the user, it gets the information directly
      * from the view that are displayed for the user. Lastly it inserts the data
      * into our tabel called users.
+     * @return the id of the newly created user
      */
     function saveUserdata() {
     	$passwHash = hash('sha512', $this->input->post('passw'), FALSE);
@@ -24,10 +25,52 @@ class main_model extends CI_Model {
             'pass' => $passwHash,
             'f_name' => $this->input->post('firstname'),
             'l_name' => $this->input->post('lastname'),
-            'is_admin' => '0'
+            'is_admin' => '0',
+            'active' => '0'
         );
         $this->db->insert('users', $new_user_data);
-        return true;
+        return $this->db->insert_id();
+    }
+
+    /**
+     *
+     * @param int $type 0 for activate link
+     *                  1 for reset link
+     * @return string   the link we created
+     */
+    function createLink($userid, $type) {
+    	$this->load->helper('string');
+        $link_string = random_string('alnum', 32);
+
+        $new_link_data = array(
+            'user_id' => $userid,
+            'type' => $type,
+            'link_string' => $link_string
+        );
+        $this->db->insert('email_links', $new_link_data);
+        return $link_string;
+    }
+
+    function getUserForLink($linkString){
+        $this->db->select('user_id, type');
+        $this->db->where('link_string', $linkString);
+        $Q = $this->db->get('email_links');
+        if($Q->num_rows() > 0){
+            $row = $Q->row_array();
+            $data = array($row['user_id'], $row['type']);
+            return $data;
+        }
+        return false;
+    }
+
+    function activateUser($id){
+        $data = array('active' => 1);
+        $this->db->where('id', $id);
+        $this->db->update('users', $data);
+
+        //now delete the user from the email_links table
+        $this->db->where('user_id', $id);
+        $this->db->delete('email_links');
     }
 
     /**
@@ -64,7 +107,7 @@ class main_model extends CI_Model {
      */
     function verifyUser($email, $pw){
     	$passwHash = hash('sha512', $pw, FALSE);
-        $this->db->select('id, email');
+        $this->db->select('id, email, active');
         $this->db->where('email', $email);
         $this->db->where('pass', $passwHash);
         $this->db->limit(1);
@@ -111,5 +154,6 @@ class main_model extends CI_Model {
     	return $data;
     	
     }
+
 }
 ?>
