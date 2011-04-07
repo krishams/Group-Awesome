@@ -39,7 +39,7 @@ class Main_Controller extends CI_Controller {
      */
     function goHome() {
         $data['main_content'] = 'home_view';
-        $this->load->view('include/template1_view', $data);
+        $this->load->view('/include/template1_view', $data);
     }
 
     /**
@@ -218,6 +218,14 @@ class Main_Controller extends CI_Controller {
         $this->load->view('/include/template1_view', $data);
     }
 
+    /**
+     * This function is needed when the user wants to log out of the webpage
+     */
+    function logOut(){
+        session_destroy();
+        redirect('');
+        //$this->index();
+    }
 }
 
 /* End of file welcome.php */
