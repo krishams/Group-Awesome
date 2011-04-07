@@ -189,35 +189,47 @@ class Main_Controller extends CI_Controller {
         }
     }
 
-     /**
-      * 
-      */
-     function captcha()
-     {
-        $this->load->helper('captcha');
+    /**
+     * 
+     */
+    function searchUser(){
+        if($this->input->get('search')){
+            $search = $this->uri->segment(3);
+            $data['searchdata'] = $this->main_model->searchUser($search);
+            $this->load->view('searchUser_view', $data);
+        }
+    }
 
-        $vals = array(
-            'img_path'   => '/var/www/mysite.com/images/captcha/',
-//            'img_url'    => 'http://mysite.com/images/captcha/',
-            'font' => '../../system/fonts/texb.ttf',
-            'img_width'  => '150',
-            'img_height' => 30,
-            'expiration' => 7200,
-            "time" => time()
-            );
-
-        $data['cap'] = create_captcha($vals);
-
-        $cap = array(
-            'captcha_time'  => $data['cap']['time'],
-            'ip_address'    => $this->input->ip_address(),
-            'word'   => $data['cap']['word']
-            );
-
-        $this->main_model->add_captcha($cap);
+    /**
+     * This methode will get a string with a search criteria and forward it to
+     * a methode in the main_model, then it will load a new page where the search
+     * results will be displayed
+     */
+    function searchUserButton(){
+        if($this->input->post('search')){
+            $search = $this->input->post('search');
+            $data['searchdata'] = $this->main_model->searchUser($search);
+            $data['main_content'] = 'searchUser_view';
+            $this->load->view('/include/template1_view', $data);
+        }
+    }
+    
+    function showProfile() {
+    	$userid = 0;
+    	
+    	if($this->uri->segment(3))
+    	{
+    	$userid = $this->uri->segment(3);
+    	}
+    	$data['profile'] = $this->main_model->getUserById($userid);
+    	
+    	$data['main_content'] = 'profile_view';
+ 		$this->load->view('/include/template1_view', $data);
     }
 
 }
+
+
 
 /* End of file welcome.php */
 /* Location: ./application/controllers/welcome.php */
