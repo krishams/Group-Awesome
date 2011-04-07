@@ -26,20 +26,26 @@ class Main_Controller extends CI_Controller {
      * @param <type> $id
      */
     function getHome() {//$id)
-        if($this->verifyLogin()){
+        if ($this->verifyLogin()) {
             $data['main_content'] = 'home_view';
             $this->load->view('/include/template1_view', $data);
+        } else {
+            redirect();
         }
-        else {
-        	redirect();
-        }
+    }
+
+    /**
+     * This function will open the home_view
+     */
+    function goHome() {
+        $data['main_content'] = 'home_view';
+        $this->load->view('include/template1_view', $data);
     }
 
     /**
      * loads the registration view page
      */
-    function getRegistration()
-    {
+    function getRegistration() {
         $data['main_content'] = 'registration_view';
         $this->load->view('/include/template_view', $data);
     }
@@ -81,8 +87,7 @@ class Main_Controller extends CI_Controller {
     /**
      * loads the page to request a password
      */
-    function getRequestPassword()
-    {
+    function getRequestPassword() {
         $data['main_content'] = 'requestPass_view';
         $this->load->view('/include/template_view', $data);
     }
@@ -104,50 +109,41 @@ class Main_Controller extends CI_Controller {
         //make random key as a temp password in usertabel:
         //2. call to model to generate a random string
         //send email with an activation link and a temp password - ½done
-            $config = Array(
-
-                    'protocol' => 'smtp',
-                    'smtp_host' => 'ssl://smtp.googlemail.com',
-                    'smtp_port' => 465,
-                    'smtp_user' => 'awesome.pubcrawl2011@gmail.com',
-                    'smtp_pass' => 'group.awesome'
-            );
+        $config = Array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'awesome.pubcrawl2011@gmail.com',
+            'smtp_pass' => 'group.awesome'
+        );
 
         $this->load->library('form_validation');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
 
-        if($this->form_validation->run() == FALSE)
-        {
+        if ($this->form_validation->run() == FALSE) {
             $this->load->view('requestPass_view');
-        }
-        else if (!$this->main_model->emailValidation()) {
+        } else if (!$this->main_model->emailValidation()) {
             redirect('main_controller/getRequestPassword');
             //print error message
+        } else {
+            //validation has passed, so send email
+            $email = $this->input->post('email');
+            $this->load->library('email', $config);
+
+            $this->email->set_newline("\r\n"); //just has to be there
+
+            $this->email->from('The Pub Crawl Team');
+            $this->email->to($email);
+            $this->email->subject('Reset password');
+            $this->email->message('Test mail');
+
+            if ($this->email->send()) {
+                $data['main_content'] = 'checkMail2_view';
+                $this->load->view('include/template_view', $data);
+            } else {
+                show_error($this->email->print_debugger);
+            }
         }
-        else
-        {
-                //validation has passed, so send email
-                $email = $this->input->post('email');
-                $this->load->library('email', $config);
-
-                $this->email->set_newline("\r\n"); //just has to be there
-
-                $this->email->from('The Pub Crawl Team');
-                $this->email->to($email);
-                $this->email->subject('Reset password');
-                $this->email->message('Test mail');
-
-                    if($this->email->send())
-                    {
-                        $data['main_content'] = 'checkMail2_view';
-                        $this->load->view('include/template_view', $data);
-                    }
-                    else
-                    {
-                        show_error($this->email->print_debugger);
-                    }
-        }
-
     }
 
     /**
@@ -158,9 +154,9 @@ class Main_Controller extends CI_Controller {
     function emailExistsInDb($email) {
         return true;
     }
+
 //        else
 //            redirect();
-
 
     /**
      *
@@ -177,20 +173,19 @@ class Main_Controller extends CI_Controller {
         if ($this->input->post('email')) {
             $mail = $this->input->post('email');
             $pw = $this->input->post('passw');
-            if($this->main_model->verifyUser($mail, $pw)){
-                if($_SESSION['userid'] > 0) {
-                    return true;
-                }
-                else
-                    return false;
+            $data = $this->main_model->verifyUser($mail, $pw);
+            if ($data != null) {
+                $_SESSION['userid'] = $data['id'];
+                $_SESSION['username'] = $data['email'];
+                return true;
             }
             else
                 return false;
         }
     }
 
-    function searchUser(){
-        if($this->input->get('search')){
+    function searchUser() {
+        if ($this->input->get('search')) {
             $search = $this->uri->segment(3);
             $data['searchdata'] = $this->main_model->searchUser($search);
             $this->load->view('searchUser_view', $data);
@@ -202,30 +197,28 @@ class Main_Controller extends CI_Controller {
      * a methode in the main_model, then it will load a new page where the search
      * results will be displayed
      */
-    function searchUserButton(){
-        if($this->input->post('search')){
+    function searchUserButton() {
+        if ($this->input->post('search')) {
             $search = $this->input->post('search');
             $data['searchdata'] = $this->main_model->searchUser($search);
             $data['main_content'] = 'searchUser_view';
             $this->load->view('/include/template1_view', $data);
         }
     }
-    
+
     function showProfile() {
-    	$userid = 0;
-    	
-    	if($this->uri->segment(3))
-    	{
-    	$userid = $this->uri->segment(3);
-    	}
-    	$data['profile'] = $this->main_model->getUserById($userid);
-    	
-    	$data['main_content'] = 'profile_view';
- 		$this->load->view('/include/template1_view', $data);
+        $userid = 0;
+
+        if ($this->uri->segment(3)) {
+            $userid = $this->uri->segment(3);
+        }
+        $data['profile'] = $this->main_model->getUserById($userid);
+
+        $data['main_content'] = 'profile_view';
+        $this->load->view('/include/template1_view', $data);
     }
+
 }
-
-
 
 /* End of file welcome.php */
 /* Location: ./application/controllers/welcome.php */
