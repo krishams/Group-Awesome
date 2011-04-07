@@ -30,6 +30,9 @@ class Main_Controller extends CI_Controller {
             $data['main_content'] = 'home_view';
             $this->load->view('/include/template1_view', $data);
         }
+        else {
+        	redirect();
+        }
     }
 
     /**

@@ -18,9 +18,10 @@ class main_model extends CI_Model {
      * into our tabel called users.
      */
     function saveUserdata() {
+    	$passwHash = hash('sha512', $this->input->post('passw'), FALSE);
         $new_user_data = array(
             'email' => $this->input->post('email'),
-            'pass' => $this->input->post('passw'),
+            'pass' => $passwHash,
             'f_name' => $this->input->post('firstname'),
             'l_name' => $this->input->post('lastname'),
             'is_admin' => '0'
@@ -62,9 +63,10 @@ class main_model extends CI_Model {
      * @param <type> $pw
      */
     function verifyUser($email, $pw){
+    	$passwHash = hash('sha512', $pw, FALSE);
         $this->db->select('id, email');
         $this->db->where('email', $email);
-        $this->db->where('pass', $pw);
+        $this->db->where('pass', $passwHash);
         $this->db->limit(1);
         $Q = $this->db->get('users');
         if($Q->num_rows() > 0){
