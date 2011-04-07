@@ -79,15 +79,14 @@ class Main_Controller extends CI_Controller {
                 $data['main_content'] = 'checkMail_view';
                 $this->load->view('include/template_view', $data);
 
-                $linkString = $this->main_model->createLink($id ,0);
+                $linkString = $this->main_model->createLink($id, 1);
 
                 $config = Array(
-
-                        'protocol' => 'smtp',
-                        'smtp_host' => 'ssl://smtp.googlemail.com',
-                        'smtp_port' => 465,
-                        'smtp_user' => 'awesome.pubcrawl2011@gmail.com',
-                        'smtp_pass' => 'group.awesome'
+                    'protocol' => 'smtp',
+                    'smtp_host' => 'ssl://smtp.googlemail.com',
+                    'smtp_port' => 465,
+                    'smtp_user' => 'awesome.pubcrawl2011@gmail.com',
+                    'smtp_pass' => 'group.awesome'
                 );
 
                 $email = $this->input->post('email');
@@ -99,9 +98,8 @@ class Main_Controller extends CI_Controller {
                 $this->email->to($email);
                 $this->email->subject('Activate account');
                 $this->email->message("Click the following link to activate your account:\n\n" .
-                base_url() . "index.php/main_controller/activate/" . $linkString);
+                        base_url() . "index.php/main_controller/activate/" . $linkString);
                 $this->email->send();
-
             } else {
                 $this->load->view('registration_view');
             }
@@ -146,11 +144,10 @@ class Main_Controller extends CI_Controller {
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('requestPass_view');
-        } else if (!$this->main_model->emailValidation()) {
-            redirect('main_controller/getRequestPassword');
-            //print error message
-        } else {
+        } else if ($id = $this->main_model->emailValidation()) {
             //validation has passed, so send email
+            $linkString = $this->main_model->createLink($id, 2);
+
             $email = $this->input->post('email');
             $this->load->library('email', $config);
 
@@ -159,7 +156,8 @@ class Main_Controller extends CI_Controller {
             $this->email->from('The Pub Crawl Team');
             $this->email->to($email);
             $this->email->subject('Reset password');
-            $this->email->message('Test mail');
+            $this->email->message("Click the following link to reset your password:\n\n" .
+                    base_url() . "index.php/main_controller/activate/" . $linkString);
 
             if ($this->email->send()) {
                 $data['main_content'] = 'checkMail2_view';
@@ -167,16 +165,10 @@ class Main_Controller extends CI_Controller {
             } else {
                 show_error($this->email->print_debugger);
             }
+        } else {
+                    redirect('main_controller/getRequestPassword');
+            //print error message
         }
-    }
-
-    /**
-     * Checks the database to see if the email exists
-     * @param <string> $email the users email address
-     * @return <boolean> whether the email exists
-     */
-    function emailExistsInDb($email) {
-        return true;
     }
 
     /**
@@ -184,13 +176,32 @@ class Main_Controller extends CI_Controller {
      */
     function activate($linkVal) {
         list($user_id, $type) = $this->main_model->getUserForLink($linkVal);
-        if ($type == 0) { //link type == activate
+        if ($type == 1) { //link type == activate
             $this->main_model->activateUser($user_id);
             $this->load->view('activateSuccess_view');
-
         }
+        else if ($type == 2) { //link type == reset pasword
+            $data['linkval'] = $linkVal;
+            $this->load->view('resetPass_view', $data);
+        }
+    }
 
-//        error_log("user: $user_id type $type");
+    function resetPassSuccess() {
+//        error_log(print_r($_POST, true));
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('passw', 'Password', 'trim|required|min_length[6]|max_length[32]');
+        $this->form_validation->set_rules('confirmPassw', 'Confirm Password', 'trim|required|matches[passw]');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('resetPass_view');
+        } else {
+            error_log(print_r($_POST, true));
+            list($user_id, ) = $this->main_model->getUserForLink($this->input->post('linkVal'));
+            $newPass = $this->input->post('passw');
+            $this->main_model->resetPassword(array($user_id, $newPass));
+            $this->load->view('resetPassSuccess_view');
+        }
     }
 
     /**
@@ -212,12 +223,13 @@ class Main_Controller extends CI_Controller {
         }
     }
 
-
     /**
-     * 
+     * This methode will get a string with a search criteria and forward it to
+     * a methode in the main_model, then it will load a new page where the search
+     * results will be displayed
      */
-    function searchUser(){
-        if($this->input->get('search')){
+    function searchUser() {
+        if ($this->input->get('search')) {
             $search = $this->uri->segment(3);
             $data['searchdata'] = $this->main_model->searchUser($search);
             $this->load->view('searchUser_view', $data);
@@ -225,9 +237,8 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
-     * This methode will get a string with a search criteria and forward it to
-     * a methode in the main_model, then it will load a new page where the search
-     * results will be displayed
+     * It will work together with the ajax code on the home_view page
+     * !!!!!!!!!!!    This function is currently not working !!!!!!!!!!!!!!!!
      */
     function searchUserButton() {
         if ($this->input->post('search')) {
@@ -238,28 +249,31 @@ class Main_Controller extends CI_Controller {
         }
     }
 
+    /**
+     * Will pass the users id to the db, and gets all the users data back, and
+     * forwards it to the users profilpage
+     */
     function showProfile() {
 
-    	$userid = 0;
-    	
-    	if($this->uri->segment(3))
-    	{
-    	$userid = $this->uri->segment(3);
-    	}
-    	$data['profile'] = $this->main_model->getUserById($userid);
-    	
-    	$data['main_content'] = 'profile_view';
- 		$this->load->view('/include/template1_view', $data);
+        $userid = 0;
+
+        if ($this->uri->segment(3)) {
+            $userid = $this->uri->segment(3);
+        }
+        $data['profile'] = $this->main_model->getUserById($userid);
+
+        $data['main_content'] = 'profile_view';
+        $this->load->view('/include/template1_view', $data);
     }
 
     /**
      * This function is needed when the user wants to log out of the webpage
      */
-    function logOut(){
+    function logOut() {
         session_destroy();
         redirect('');
-        //$this->index();
     }
+
 }
 
 /* End of file welcome.php */

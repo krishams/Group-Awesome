@@ -7,15 +7,15 @@
         <table class="registrationTabel">
             <tr>
                 <td>First name:</td>
-                <td><?php echo form_input('firstname','');?></td>
+                <td><?php echo form_input('firstname', set_value('firstname', ''));?></td>
             </tr>
             <tr>
                 <td>Last name:</td>
-                <td><?php echo form_input('lastname','');?></td>
+                <td><?php echo form_input('lastname', set_value('lastname', ''));?></td>
             </tr>
             <tr>
                 <td>Email:</td>
-                <td><?php echo form_input('email','');?></td>
+                <td><?php echo form_input('email', set_value('email', ''));?></td>
             </tr>
             <tr>
                 <td>Password:</td>
@@ -31,8 +31,8 @@
         	</tr>
         </table>
 
-        Her skal der være en captcha funktion: linket her kan hjælpe med det http://codeigniter.com/user_guide/helpers/captcha_helper.html
-        
+        <!--Her skal der være en captcha funktion: linket her kan hjælpe med det http://codeigniter.com/user_guide/helpers/captcha_helper.html
+        -->
         <br />
 
         <?php echo anchor('', 'Back to sign in') ?>

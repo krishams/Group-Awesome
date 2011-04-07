@@ -73,28 +73,40 @@ class main_model extends CI_Model {
         $this->db->delete('email_links');
     }
 
+    function resetPassword($data){
+        error_log(print_r($data, true));
+        list($id, $pw) = $data;
+    	$passwHash = hash('sha512', $pw, FALSE);
+
+        $data = array('pass' => $passwHash);
+        $this->db->where('id', $id);
+        $this->db->update('users', $data);
+
+        //now delete the user from the email_links table
+        $this->db->where('user_id', $id);
+        $this->db->delete('email_links');
+    }
+
     /**
      * This function is to validate if an email is already used by another user.
      * It gets the email from the view, and selects all emails in the database.
      * Then it checks to see if the email is the same as anyone of those in the
      * database. It returns a true or false boolean depending on the outcome.
-     * @return boolean
+     * @return the id of the user with that email or false if none exist
      */
     function emailValidation(){
         $validemail = $this->input->post('email');
-        $validate = false;
-        $this->db->select('email');
+        $this->db->select('id, email');
         $Q = $this->db->get('users');
         if ($Q->num_rows() > 0) {
             foreach ($Q->result_array() as $row) {
                 if ($row['email'] == $validemail) {
                     $this->session->set_flashdata('error', 'This email is already in use.');
-                    $validate = true;
-                    return $validate;
+                    return $row['id'];
                 }
             }
         }
-        return $validate;
+        return false;
     }
 
     /**
@@ -114,6 +126,10 @@ class main_model extends CI_Model {
         $Q = $this->db->get('users');
         if($Q->num_rows() > 0){
             $row = $Q->row_array();
+            if($row['active'] != 1){
+                $this->session->set_flashdata('errorVerify', 'You need to activate your account');
+                return null;
+            }
             return $row;
         }
         else{
