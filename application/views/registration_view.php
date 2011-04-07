@@ -31,8 +31,8 @@
         	</tr>
         </table>
 
-        Her skal der være en captcha funktion: linket her kan hjælpe med det http://codeigniter.com/user_guide/helpers/captcha_helper.html
-        
+        <!--Her skal der være en captcha funktion: linket her kan hjælpe med det http://codeigniter.com/user_guide/helpers/captcha_helper.html
+        -->
         <br />
 
         <?php echo anchor('', 'Back to sign in') ?>
