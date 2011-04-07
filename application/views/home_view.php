@@ -4,6 +4,13 @@ It is the general idéar that on this page you will have an overview of which ev
 
 <?php
 
-echo $_SESSION['username'];
+echo form_open('main_controller/searchUser');
 
+echo form_input('search','');
 ?>
+
+<input type="submit" value="Search user" />
+
+<?php
+
+echo form_close();?>

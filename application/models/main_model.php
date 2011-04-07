@@ -88,15 +88,15 @@ class main_model extends CI_Model {
      */
     function searchUser($searh){
         $data = array();
-        $this->db->select('f_name', 'l_name');
+        $this->db->like('f_name', $search);
+        $this->db->or_like('l_name', $search);
         $Q = $this->db->get('users');
         if($Q->num_rows()>0){
             foreach($Q->result_array() as $row){
-                if($row['f_name'].contains($searh)||$row['l_name'].contains($searh)){
                     $data[] = $row;
-                }
             }
         }
+        return $data;
     }
 }
 ?>

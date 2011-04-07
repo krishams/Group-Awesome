@@ -192,6 +192,13 @@ class Main_Controller extends CI_Controller {
         }
     }
 
+    function searchUser(){
+        if($this->input->post('search')){
+            $search = $this->input->post('search');
+            $data = $this->main_model->searchUser($search);
+            
+        }
+    }
 }
 
 /* End of file welcome.php */
