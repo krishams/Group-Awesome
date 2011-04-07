@@ -20,8 +20,8 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
-     * This methode calls another methode to verify the login informations,
-     * if true it direkts the user to the home_view, otherwise it reloads the
+     * This methode calls another method to verify the login informations,
+     * if true it directs the user to the home_view, otherwise it reloads the
      * page with an error message.
      * @param <type> $id
      */
@@ -30,10 +30,69 @@ class Main_Controller extends CI_Controller {
             $data['main_content'] = 'home_view';
             $this->load->view('/include/template1_view', $data);
         }
-        else
-            redirect();
     }
 
+    /**
+     * loads the registration view page
+     */
+    function getRegistration()
+    {
+        $data['main_content'] = 'registration_view';
+        $this->load->view('/include/template_view', $data);
+    }
+
+    /**
+     * Saves the user registration information and sends a confirmation email with a link to log on
+     * @param <array> $data the user's registration information
+     */
+    function submitRegistration($data)
+    {
+        $data['main_content'] = 'checkMail_view';
+        $this->load->view('/include/template_view', $data);
+    }
+
+    /**
+     * loads the page to request a password
+     */
+    function getRequestPassword()
+    {
+        $data['main_content'] = 'requestPass_view';
+        $this->load->view('/include/template_view', $data);
+    }
+
+    /**
+     * Checks if the email exists and if so, sends a reset link.
+     * If not, the user is alerted so they can re-type the password.
+     * @param <string> $email
+     */
+    function submitRequestPassword() {
+        $email = $this->input->post('email');
+        error_log($email);
+        if ($this->emailExistsInDb($email)) {
+            $this->email->from('donotreply@pubcrawl.com');
+            $this->email->to($email);
+
+            $this->email->subject('log-in to Pub Crawl');
+            $this->email->message('Testing');
+
+            $this->email->send();
+        }
+    }
+
+    /**
+     * Checks the database to see if the email exists
+     * @param <string> $email the users email address
+     * @return <boolean> whether the email exists
+     */
+    function emailExistsInDb($email) {
+        return true;
+    }
+//        else
+//            redirect();
+
+    /**
+     *
+     */
     function getRegistration() {
         $data['main_content'] = 'registration_view';
         $this->load->view('/include/template_view', $data);

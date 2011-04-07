@@ -1,5 +1,5 @@
 <div class="requestpassDiv">
-    <form class="requestpassForm" action="" method="" >
+    <form class="requestpassForm" action="submitRequestPassword" method="POST" >
         <table class="requestpassTabel">
 
             <tr>
