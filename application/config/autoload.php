@@ -54,7 +54,6 @@ $autoload['packages'] = array(APPPATH.'third_party');
 
 $autoload['libraries'] = array('session', 'database');
 
-
 /*
 | -------------------------------------------------------------------
 |  Auto-load Helper Files

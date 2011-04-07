@@ -20,8 +20,8 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
-     * This methode calls another methode to verify the login informations,
-     * if true it direkts the user to the home_view, otherwise it reloads the
+     * This methode calls another method to verify the login informations,
+     * if true it directs the user to the home_view, otherwise it reloads the
      * page with an error message.
      * @param <type> $id
      */
@@ -30,11 +30,13 @@ class Main_Controller extends CI_Controller {
             $data['main_content'] = 'home_view';
             $this->load->view('/include/template1_view', $data);
         }
-        else
-            redirect();
     }
 
-    function getRegistration() {
+    /**
+     * loads the registration view page
+     */
+    function getRegistration()
+    {
         $data['main_content'] = 'registration_view';
         $this->load->view('/include/template_view', $data);
     }
@@ -73,10 +75,11 @@ class Main_Controller extends CI_Controller {
         }
     }
 
-    /*
-     * loads the request password and template
+    /**
+     * loads the page to request a password
      */
-    function getRequestPassword() {
+    function getRequestPassword()
+    {
         $data['main_content'] = 'requestPass_view';
         $this->load->view('/include/template_view', $data);
     }
@@ -95,6 +98,7 @@ class Main_Controller extends CI_Controller {
      * User logs in and changes his password to something he wants
      */
     function submitRequestPassword() {
+
         //1. first email validation - done
 
         //make random key as a temp password in usertabel:
@@ -102,7 +106,7 @@ class Main_Controller extends CI_Controller {
 
         //send email with an activation link and a temp password - ½done
         //3. call email function
-        
+
             $config = Array(
 
                     'protocol' => 'smtp',
@@ -151,9 +155,12 @@ class Main_Controller extends CI_Controller {
      * @param <string> $email the users email address
      * @return <boolean> whether the email exists
      */
-    function emailExistsInDb() {
+    function emailExistsInDb($email) {
         return true;
     }
+//        else
+//            redirect();
+
 
     /**
      *
