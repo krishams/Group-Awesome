@@ -115,22 +115,12 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
-     * Checks if the email exists and if so, sends a reset link.
-     * If not, the user is alerted so they can re-type the password.
-     * @param <string> $email
-     * 
      * User clicks on link, "Forgot your password"
-     * User types in his/her email address
-     * You put a random key and temporary password in the user table
-     * You send an email with a link to activate the password you set. The link has the random key
-     * User clicks on link. The link should match the random string
-     * You activate the password and clear the temporary password and the random string
-     * User logs in and changes his password to something he wants
+     * User receives an email with a link
+     * user presses the link a gets to a reset password page
      */
     function submitRequestPassword() {
-        //make random key as a temp password in usertabel:
-        //2. call to model to generate a random string
-        //send email with an activation link and a temp password - ½done
+   
         $config = Array(
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
@@ -186,8 +176,10 @@ class Main_Controller extends CI_Controller {
         }
     }
 
+    /**
+     * 
+     */
     function resetPassSuccess() {
-//        error_log(print_r($_POST, true));
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('passw', 'Password', 'trim|required|min_length[6]|max_length[32]');
@@ -196,7 +188,6 @@ class Main_Controller extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('resetPass_view');
         } else {
-            error_log(print_r($_POST, true));
             list($user_id, ) = $this->main_model->getUserForLink($this->input->post('linkVal'));
             $newPass = $this->input->post('passw');
             $this->main_model->resetPassword(array($user_id, $newPass));
@@ -275,6 +266,3 @@ class Main_Controller extends CI_Controller {
     }
 
 }
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
