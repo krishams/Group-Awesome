@@ -4,7 +4,7 @@ and open the template in the editor.
 -->
 <div id="logon">
     <!--?php form_open('getHome()'); ?>-->
-    <form class="loginForm" action="index.php/main_controller/getHome" method="POST">
+    <form class="loginForm" action="main/getHome" method="POST">
         <table>
             <tr>
                 <td>Email</td>
@@ -40,10 +40,10 @@ and open the template in the editor.
                 <td><input type="submit" value="Sign in"/></td>
             </tr>
             <tr>
-                <td><?php echo anchor('main_controller/getRegistration', 'Not signed up?'); ?></td>
+                <td><?php echo anchor('login/getRegistration', 'Not signed up?'); ?></td>
             </tr>
             <tr>
-                <td><?php echo anchor('main_controller/getRequestPassword', 'Forgot your password?'); ?></td>
+                <td><?php echo anchor('login/getRequestPassword', 'Forgot your password?'); ?></td>
             </tr>
         </table>
         <!--This code will only be used if the password or email is incorrect,
