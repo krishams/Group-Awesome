@@ -58,7 +58,7 @@ class User extends CI_Controller {
 		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
         $this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-        $this->form_validation->set_rules('Oldpsw', 'Password', 'trim|required|min_length[6]|max_length[32]');
+        $this->form_validation->set_rules('Oldpsw', 'Old Password', 'trim|required|min_length[6]|max_length[32]');
         $this->form_validation->set_rules('passw', 'Password', 'trim|required|min_length[6]|max_length[32]');
         $this->form_validation->set_rules('confirmPassw', 'Confirm Password', 'trim|required|matches[passw]');
         
