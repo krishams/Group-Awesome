@@ -1,16 +1,14 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
-    </head>
-    <body>
+
         <?php
-        // put your code here
+        	echo "<form name='input' action='html_form_action.asp' method='get'>";
+			echo "Username: <input type='text' name='user' />";
+			echo "<input type='submit' value='Submit' />";
+			echo "</form>";
+        	
+        	echo $profile['email'];
+			echo $profile['f_name'];
+			echo $profile['l_name'];
+			
+
         ?>
-    </body>
-</html>
+   
