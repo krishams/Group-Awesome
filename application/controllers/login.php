@@ -3,12 +3,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-/**
- * Description of login_controller
- *
- * @author Kristian
- */
 class Login extends CI_Controller {
 
     function __construct() {
