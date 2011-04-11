@@ -25,5 +25,7 @@
 		</tr>				
 	</table>
 	<?php echo validation_errors('<p class="error">'); ?>
+
+        <?php echo anchor('upload/getupload', 'Change profile picture') ?>
 </form>
 
