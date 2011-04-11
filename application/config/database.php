@@ -41,7 +41,7 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'http://ec2-46-137-103-159.eu-west-1.compute.amazonaws.com:3020';
+$db['default']['hostname'] = 'http://ec2-46-137-103-159.eu-west-1.compute.amazonaws.com';
 $db['default']['username'] = 'groupawesome';
 $db['default']['password'] = 'awesome';
 $db['default']['database'] = 'pubcrawl';
