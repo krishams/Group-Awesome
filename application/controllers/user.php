@@ -13,6 +13,7 @@ class User extends CI_Controller {
 
     function __construct() {
         parent::__construct();
+        session_start();
     }
 
     /**
@@ -31,6 +32,24 @@ class User extends CI_Controller {
         $data['main_content'] = 'profile_view';
         $this->load->view('/include/template1_view', $data);
     }
+    
+    /**
+    
+    */
+    
+    function editProfile() {
+
+        $userid = 0;
+
+        if ($this->uri->segment(3)) {
+            $userid = $this->uri->segment(3);
+        }
+        $data['profile'] = $this->main_model->getUserById($userid);
+
+        $data['main_content'] = 'profile_view';
+        $this->load->view('/include/template1_view', $data);
+    }
+
 
     /**
      * This method is called when a user clicks on a link in an email they have been sent.
