@@ -50,7 +50,12 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
-     * loads the page to request a password
+     *
+     * Used when the user clicks on the link, "Forgot your password"
+     * User types in his/her email address
+     * You put a random key and temporary password in the user table
+     * You send an email with a link to activate the password you set. The link has the random key
+     * User clicks on link. The link should match the random string
      */
     function getRequestPassword() {
         $data['main_content'] = 'requestPass_view';
@@ -114,17 +119,12 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
-     * 
-     * Used when the user clicks on the link, "Forgot your password"
-     * User types in his/her email address
-     * You put a random key and temporary password in the user table
-     * You send an email with a link to activate the password you set. The link has the random key
-     * User clicks on link. The link should match the random string
+     * User clicks on link, "Forgot your password"
+     * User receives an email with a link
+     * user presses the link a gets to a reset password page
      */
     function submitRequestPassword() {
-        //make random key as a temp password in usertabel:
-        //2. call to model to generate a random string
-        //send email with an activation link and a temp password - ½done
+   
         $config = Array(
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
@@ -275,6 +275,3 @@ class Main_Controller extends CI_Controller {
         redirect('');
     }
 }
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
