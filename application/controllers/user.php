@@ -14,8 +14,22 @@ class User extends CI_Controller {
     function __construct() {
         parent::__construct();
         session_start();
+        $this->logged_in->status();
+    }
+	function login(){	
+		$status = $_SESSION['userid'];
+        // if user already logged in, redirect to user index
+        if ($this->logged_in())
+        {
+            redirect('/include/profile_view');
+        }
+        else
+        {
+            $this->load->view('/include/index_view');
+        }
     }
 
+	
     /**
      * Will pass the users id to the db, and gets all the users data back, and
      * forwards it to the users profilpage
@@ -39,7 +53,7 @@ class User extends CI_Controller {
      */
     
     function showEditProfile() {
-
+		
         $userid = $_SESSION['userid'];
 
 		$data['profile'] = $this->main_model->getUserById($userid);
@@ -58,7 +72,7 @@ class User extends CI_Controller {
 		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
         $this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-        $this->form_validation->set_rules('Oldpsw', 'Password', 'trim|required|min_length[6]|max_length[32]');
+        $this->form_validation->set_rules('Oldpsw', 'Old Password', 'trim|required|min_length[6]|max_length[32]');
         $this->form_validation->set_rules('passw', 'Password', 'trim|required|min_length[6]|max_length[32]');
         $this->form_validation->set_rules('confirmPassw', 'Confirm Password', 'trim|required|matches[passw]');
         
