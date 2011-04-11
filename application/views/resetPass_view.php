@@ -1,5 +1,5 @@
 <div class="resetPassDiv">
-    <?php echo form_open('main_controller/resetPassSuccess'); ?>
+    <?php echo form_open('main/resetPassSuccess'); ?>
         <table class="resetTable">
             <tr>
                 <td>New password:</td>
