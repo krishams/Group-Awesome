@@ -48,6 +48,7 @@ and open the template in the editor.
         </table>
         <!--This code will only be used if the password or email is incorrect,
             gets the error code from main_model -> verifyUser -->
+
         <?php
             if ($this->session->flashdata('errorVerify')) {
                 echo "<div class='errorMessage'>";
