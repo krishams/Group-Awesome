@@ -3,7 +3,6 @@
 /**
  * Description of main_model
  *
- * @author Kristian
  */
 class main_model extends CI_Model {
 
@@ -15,7 +14,7 @@ class main_model extends CI_Model {
      * This methode saves the userdate. It creates a array which contains all the
      * informations that we need about the user, it gets the information directly
      * from the view that are displayed for the user. Lastly it inserts the data
-     * into our tabel called users.
+     * into our table called users.
      * @return the id of the newly created user
      */
     function saveUserdata() {
@@ -51,6 +50,12 @@ class main_model extends CI_Model {
         return $link_string;
     }
 
+    /**
+     * Get the user_id and type for a link string received from an email link. The type
+     * is 1 for activate and 2 for reset password
+     * @param <string> $linkString
+     * @return <type> an array with the user_id and type
+     */
     function getUserForLink($linkString){
         $this->db->select('user_id, type');
         $this->db->where('link_string', $linkString);
@@ -74,7 +79,6 @@ class main_model extends CI_Model {
     }
 
     function resetPassword($data){
-        error_log(print_r($data, true));
         list($id, $pw) = $data;
     	$passwHash = hash('sha512', $pw, FALSE);
 

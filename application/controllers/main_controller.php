@@ -23,7 +23,6 @@ class Main_Controller extends CI_Controller {
      * This methode calls another method to verify the login informations,
      * if true it directs the user to the home_view, otherwise it reloads the
      * page with an error message.
-     * @param <type> $id
      */
     function getHome() {//$id)
         if ($this->verifyLogin()) {
@@ -35,7 +34,7 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
-     * This function will open the home_view
+     * This function will open the home_view, if the user is already logged in
      */
     function goHome() {
         $data['main_content'] = 'home_view';
@@ -51,9 +50,22 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
+     *
+     * Used when the user clicks on the link, "Forgot your password"
+     * User types in his/her email address
+     * You put a random key and temporary password in the user table
+     * You send an email with a link to activate the password you set. The link has the random key
+     * User clicks on link. The link should match the random string
+     */
+    function getRequestPassword() {
+        $data['main_content'] = 'requestPass_view';
+        $this->load->view('/include/template_view', $data);
+    }
+
+    /**
      * Saves the user registration information and sends a confirmation email with a link to log on.
-     * First we load the helper form_validation, which makes it possible to set som rules for our form.
-     * in the rules we 3 parameters, 1: the fieldname, 2: errormessage and 3: the validation rule.
+     * First we load the helper form_validation, which makes it possible to set rules for our form.
+     * In the rules we 3 parameters, 1: the fieldname, 2: errormessage and 3: the validation rule.
      * trim means removing malicious code.
      */
     function submitRegistration() {
@@ -107,14 +119,6 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
-     * loads the page to request a password
-     */
-    function getRequestPassword() {
-        $data['main_content'] = 'requestPass_view';
-        $this->load->view('/include/template_view', $data);
-    }
-
-    /**
      * User clicks on link, "Forgot your password"
      * User receives an email with a link
      * user presses the link a gets to a reset password page
@@ -162,7 +166,11 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
-     *
+     * This method is called when a user clicks on a link in an email they have been sent.
+     * The method receives a string parameter, and checks the database for the string, If the
+     * link type is 1 (activate), the method to activate the user is called and if type is
+     * 2 (reset password), the user is sent to a screen to create a new password
+     * @param <type> $linkVal
      */
     function activate($linkVal) {
         list($user_id, $type) = $this->main_model->getUserForLink($linkVal);
@@ -177,7 +185,9 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
-     * 
+     * Used after a user has entered a new password from the reset password screen. This checks
+     * that the passwords are the same and meet the minimum length. If so, it will call the
+     * resetPassword method from the model and send the user to a new screen.
      */
     function resetPassSuccess() {
         $this->load->library('form_validation');
@@ -196,8 +206,8 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
-     * This methode helps to verify the user that is trying to log into our web-
-     * page. It controls to see if the user has a session.
+     * This method helps to verify the user that is trying to log into our web-
+     * page. It verifies that the user has a session.
      */
     function verifyLogin() {
         if ($this->input->post('email')) {
@@ -215,8 +225,8 @@ class Main_Controller extends CI_Controller {
     }
 
     /**
-     * This methode will get a string with a search criteria and forward it to
-     * a methode in the main_model, then it will load a new page where the search
+     * This method will get a string with a search criteria and forward it to
+     * a method in the main_model, then it will load a new page where the search
      * results will be displayed
      */
     function searchUser() {
@@ -264,5 +274,4 @@ class Main_Controller extends CI_Controller {
         session_destroy();
         redirect('');
     }
-
 }
