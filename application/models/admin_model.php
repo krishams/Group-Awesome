@@ -1,16 +1,28 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
-    </head>
-    <body>
-        <?php
-        // put your code here
-        ?>
-    </body>
-</html>
+<?php
+
+class admin_model extends CI_Model {
+
+    function admin_model() {
+        parent::__construct();
+    }
+
+    /**
+     * The function controlls to see if the user has admin privileges
+     * @param <type> $id
+     * @return <type>
+     */
+    function verifyAdmin($id) {
+        $this->db->select('is_admin');
+        $this->db->where('id', $id);
+        $this->db->limit(1);
+        $Q = $this->db->get('users');
+        if ($Q->num_rows() > 0) {
+            $row = $Q->row_array();
+            return $row['is_admin'];
+        } else {
+            return false;
+        }
+    }
+
+}
+?>

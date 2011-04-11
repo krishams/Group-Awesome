@@ -18,19 +18,24 @@ class Admin extends CI_Controller {
     }
 
     function login() {
-        if (controlIsAdmin) {
+        if ($this->controlIsAdmin()) {
             $data['main_content'] = 'admin/adminlogin_view';
             $this->load->view('/include/admintemplate_view', $data);
+        }
+        else{
+            $data['main_content'] = 'admin/adminLoginError_view';
+            $this->load->view('/include/template1_view', $data);
         }
     }
 
 
     function controlIsAdmin(){
-        if($this->admin_model->controlAdmin){
-        return true;
+        $id = $_SESSION['userid'];
+        if($this->admin_model->verifyAdmin($id)){
+            return true;
         }
         else
-        return false;
+            return false;
     }
 
 }
