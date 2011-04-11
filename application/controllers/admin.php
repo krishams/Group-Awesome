@@ -17,9 +17,12 @@ class Admin extends CI_Controller {
         session_start();
     }
 
+    /**
+     * The function is called when a user want's to go to the admin menu
+     */
     function login() {
         if ($this->controlIsAdmin()) {
-            $data['main_content'] = 'admin/adminlogin_view';
+            $data['main_content'] = 'admin/adminhome_view';
             $this->load->view('/include/admintemplate_view', $data);
         }
         else{
@@ -28,7 +31,11 @@ class Admin extends CI_Controller {
         }
     }
 
-
+    /**
+     * The function controls if the user is an admin or not,
+     * by checking his id in the database.
+     * @return <type>
+     */
     function controlIsAdmin(){
         $id = $_SESSION['userid'];
         if($this->admin_model->verifyAdmin($id)){
@@ -37,7 +44,5 @@ class Admin extends CI_Controller {
         else
             return false;
     }
-
 }
-
 ?>
