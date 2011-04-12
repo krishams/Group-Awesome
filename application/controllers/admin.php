@@ -50,8 +50,18 @@ class Admin extends CI_Controller {
      */
     function viewUsers(){
         $data['users'] = $this->user_model->getAllUsers();
+        $data = $this->getPermissions();
         $data['main_content'] = 'admin/adminViewUsers_view';
         $this->load->view('include/admintemplate_view', $data);
+    }
+
+    /**
+     *
+     * @return <type> 
+     */
+    function getPermissions(){
+        $data['permissions'] = $this->role_model->getAllRoles();
+        return $data;
     }
 }
 ?>
