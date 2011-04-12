@@ -168,9 +168,7 @@ class main_model extends CI_Model {
     		foreach($Q->result_array() as $row){
                     $data = $row;
             }
-
     	}
-    	
     	return $data;
     }
 }

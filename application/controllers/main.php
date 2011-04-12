@@ -115,7 +115,7 @@ class Main extends CI_Controller {
      */
     function logOut() {
         session_destroy();
-        redirect('');
+        redirect(base_url());
     }
 
     /**
