@@ -15,8 +15,11 @@
             <td><?= $row['id']; ?></td>
             <td><?= $row['email']; ?></td>
             <td>
-                <form_open
-                <input type="submit" value="Change password"/>
+            <?php
+            $hidden = array('email' => $row['email']);
+            echo form_open('main/submitRequestPassword','',$hidden); ?>
+            <input type="submit" value="Change password"/>
+            <?= form_close(); ?>
             </td>
             <td><?= $row['f_name']; ?></td>
             <td><?= $row['l_name']; ?></td>
