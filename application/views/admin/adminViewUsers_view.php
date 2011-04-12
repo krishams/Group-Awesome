@@ -1,15 +1,16 @@
 <table class="adminEditUsersTable" border="1">
     <tr>
         <th>Id</th>
-        <th>Email</th>
-        <th>Password</th>
         <th>First name</th>
         <th>Last name</th>
+        <th>Email</th>
+        <th>Password</th>
         <th>Is admin</th>
         <th>Active</th>
     </tr>
-
-    <?php foreach ($users as $row) {
+    <?php 
+        $options = array('0' => 'False', '1' => 'True');
+        foreach ($users as $row) {
     ?>
         <tr>
             <td><?= $row['id']; ?></td>
@@ -28,9 +29,9 @@
             <?= form_close(); ?>
             </td>
 
-            <td><input type='text' name='isadmin' value='<?= $row['is_admin']; ?>'/></td>
+            <td><?= form_dropdown('is_admin', $options, $row['is_admin']); ?></td>
 
-            <td><input type='text' name='isactive' value='<?= $row['active']; ?>'/></td>
+            <td><?= form_dropdown('is_active', $options, $row['active']); ?></td>
         </tr>
     <?php } ?>
 </table>
