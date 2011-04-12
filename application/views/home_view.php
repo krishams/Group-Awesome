@@ -14,7 +14,7 @@ echo form_close();
 <div id="searchResults">
 
 </div>
-
+<!--
 <script type="text/javascript">
     function showResult(str)
     {
@@ -43,5 +43,6 @@ echo form_close();
         xmlhttp.open("GET","/main/searchUser?q="+str,true);
         xmlhttp.send();
     }
-</script>
+</script>-->
 </div>
+<script type="text/javascript" src="<?php echo base_url(); ?>/assets/js/home.js"></script>

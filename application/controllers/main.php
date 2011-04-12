@@ -31,8 +31,9 @@ class Main extends CI_Controller {
             $this->load->view('/include/template1_view', $data);
         } else {
 //            error_log("log in not ok");
-            $data['main_content'] = 'index_view';
-            $this->load->view('/include/template_view', $data);
+//            $data['main_content'] = 'index_view';
+//            $this->load->view('/include/template_view', $data);
+            redirect();
         }
     }
 
@@ -115,7 +116,7 @@ class Main extends CI_Controller {
      */
     function logOut() {
         session_destroy();
-        redirect('');
+        redirect(base_url());
     }
 
     /**
