@@ -15,6 +15,7 @@ class Admin extends CI_Controller {
     function __construct() {
         parent::__construct();
         session_start();
+        $this->logged_in->status();
     }
 
     /**
@@ -43,6 +44,25 @@ class Admin extends CI_Controller {
         }
         else
             return false;
+    }
+
+    /**
+     *
+     */
+    function viewUsers(){
+        $data = $this->getPermissions();
+        $data['users'] = $this->user_model->getAllUsers();
+        $data['main_content'] = 'admin/adminViewUsers_view';
+        $this->load->view('include/admintemplate_view', $data);
+    }
+
+    /**
+     *
+     * @return <type> 
+     */
+    function getPermissions(){
+        $data['permissions'] = $this->role_model->getAllRoles();
+        return $data;
     }
 }
 ?>

@@ -1,27 +1,27 @@
 <?php
-
-/*
+/* 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
 /**
+ * Description of role_model
  *
  * @author Kristian
  */
-class user_model extends CI_Model {
+class role_model extends CI_Model {
 
-    function user_model() {
+    function role_model() {
         parent::__construct();
     }
 
     /**
-     * The function returns an array which contains all users orderby user id
+     * Get all the roles in the database from the roles table
      */
-    function getAllUsers() {
+    function getAllRoles(){
         $data = array();
-        $this->db->order_by('id');
-        $Q = $this->db->get('Users');
+        $this->db->order_by('role_id');
+        $Q = $this->db->get('roles');
         if ($Q->num_rows() > 0) {
             foreach ($Q->result_array() as $row) {
                 $data[] = $row;
@@ -29,7 +29,5 @@ class user_model extends CI_Model {
         }
         return $data;
     }
-
 }
-
 ?>
