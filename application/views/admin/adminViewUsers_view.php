@@ -8,6 +8,7 @@
         <th>Role</th>
         <th>Is admin</th>
         <th>Active</th>
+        <th></th>
     </tr>
 
     <?php
@@ -20,29 +21,34 @@
 
     foreach ($users as $row) {
     ?>
-        <tr>
-            <td><?= $row['id']; ?></td>
+    <tr>
+        <td><?= $row['id']; ?></td>
 
-            <td><input type='text' name='firstname' value='<?= $row['f_name']; ?>'/></td>
+        <td><input type='text' name='firstname' value='<?= $row['f_name']; ?>'/></td>
 
-            <td><input type='text' name='lastname' value='<?= $row['l_name']; ?>'/></td>
+        <td><input type='text' name='lastname' value='<?= $row['l_name']; ?>'/></td>
 
-            <td><input type='text' name='email' value='<?= $row['email'] ?>'/></td>
+        <td><input type='text' name='email' value='<?= $row['email'] ?>'/></td>
 
-            <td>
-            <?php
-            $hidden = array('email' => $row['email']);
-            echo form_open('login/submitRequestPassword', '', $hidden); ?>
-            <input type="submit" value="Change password"/>
-            <?= form_close(); ?>
+        <td>
+        <?php
+        $hidden = array('email' => $row['email']);
+        echo form_open('login/submitRequestPassword', '', $hidden); ?>
+        <input type="submit" value="Change password"/>
+        <?= form_close();?>
         </td>
 
         <td><?= form_dropdown('role_id', $roleOptions, $row['role_id']); ?></td>
 
-        <!-- This one should be removed, it will be checked on the role_id instead -->
-        <td><?= form_dropdown('is_admin', $activeOptions, $row['is_admin']); ?></td>
-
         <td><?= form_dropdown('is_active', $activeOptions, $row['active']); ?></td>
+
+        <td>
+            <?php
+            $hidden = array('id' => $row['id']);
+            echo form_open('admin/deleteUser','', $hidden); ?>
+            <input type="submit" value="Delete"/>
+            <?= form_close(); ?>
+        </td>
     </tr>
     <?php } ?>
 </table>
