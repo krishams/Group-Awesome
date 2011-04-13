@@ -29,3 +29,4 @@
 
         <?php echo anchor('upload/getupload', 'Change profile picture') ?>
 
+
