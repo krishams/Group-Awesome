@@ -17,18 +17,20 @@ class main_model extends CI_Model {
      * into our table called users.
      * @return the id of the newly created user
      */
-    function saveUserdata() {
-    	$passwHash = hash('sha512', $this->input->post('passw'), FALSE);
-        $new_user_data = array(
-            'email' => $this->input->post('email'),
-            'pass' => $passwHash,
-            'f_name' => $this->input->post('firstname'),
-            'l_name' => $this->input->post('lastname'),
-            'is_admin' => '0',
-            'active' => '0'
-        );
-        $this->db->insert('users', $new_user_data);
+    function Userdata($user_data) {
+    	if(isset($user_data['userid'])){
+    	
+    	error_log("isset");
+    	$this->db->where('id', $user_data['userid']);
+    	unset($user_data['userid']);
+        $this->db->update('users', $user_data);
+    	
+    	
+    	}else if (empty($user_data['userid'])){
+    	
+    	$this->db->insert('users', $user_data);
         return $this->db->insert_id();
+        }
     }
 
     /**
@@ -98,13 +100,13 @@ class main_model extends CI_Model {
      * database. It returns a true or false boolean depending on the outcome.
      * @return the id of the user with that email or false if none exist
      */
-    function emailValidation(){
-        $validemail = $this->input->post('email');
-        $this->db->select('id, email');
+    function getUserforEmail($email){
+    	$this->db->where('email', $email);
+       	$this->db->select('id, email');
         $Q = $this->db->get('users');
         if ($Q->num_rows() > 0) {
             foreach ($Q->result_array() as $row) {
-                if ($row['email'] == $validemail) {
+                if ($row['email'] == $email) {
                     $this->session->set_flashdata('error', 'This email is already in use.');
                     return $row['id'];
                 }
@@ -112,6 +114,8 @@ class main_model extends CI_Model {
         }
         return false;
     }
+    
+ 
 
     /**
      * This methode selects an user by finding him with the help of his email and

@@ -15,6 +15,7 @@ class Admin extends CI_Controller {
     function __construct() {
         parent::__construct();
         session_start();
+        $this->logged_in->status();
     }
 
     /**
@@ -46,12 +47,32 @@ class Admin extends CI_Controller {
     }
 
     /**
-     *
+     * This functions displays all users for the admin in a table
      */
     function viewUsers(){
+        $data = $this->getPermissions();
         $data['users'] = $this->user_model->getAllUsers();
         $data['main_content'] = 'admin/adminViewUsers_view';
         $this->load->view('include/admintemplate_view', $data);
     }
+
+    /**
+     *
+     * @return <type> 
+     */
+    function getPermissions(){
+        $data['permissions'] = $this->role_model->getAllRoles();
+        return $data;
+    }
+
+    /**
+     * A function that deletes the user
+     */
+    function deleteUser(){
+        $id = $this->input->post('id');
+        $Q = $this->user_model->deleteUser($id);
+        if($Q){
+           $this->viewUsers();
+        }
+    }
 }
-?>

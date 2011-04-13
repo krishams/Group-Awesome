@@ -30,6 +30,34 @@ class user_model extends CI_Model {
         return $data;
     }
 
+    /**
+     * Delete an user, but so far only in the User table
+     */
+    function deleteUser($id){
+        $this->db->where('id', $id);
+        $Q = $this->db->delete('users');
+        if($Q)
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * The function gets the users role
+     * @param <type> $id
+     * @return <type>
+     */
+    function getUserRole($id) {
+        $this->db->select('role_id');
+        $this->db->where('id', $id);
+        $Q = $this->db->get('users');
+        if ($Q->num_rows() > 0) {
+            $row = $Q->row_array();
+            return $row['role_id'];
+        } else {
+            return false;
+        }
+    }
 }
 
 ?>
