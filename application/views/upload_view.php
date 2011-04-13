@@ -24,4 +24,6 @@
 
 <br />
 <?php echo anchor('user/showEditProfile', 'Back to edit profile'); ?>
+
+
 </div>

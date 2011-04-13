@@ -1,5 +1,5 @@
 <h2>profile view</h2>
-<div id="profile"></div>
+<div id="profile"><img src="<?php echo ?>"/></div>
 <div id="profile-left">
 <?php
 echo '</br>' . $profile['email'] . '</br>';
