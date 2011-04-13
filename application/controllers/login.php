@@ -7,7 +7,7 @@ class Login extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->logged_in->status();
+        
     }
 
     /**
@@ -56,7 +56,17 @@ class Login extends CI_Controller {
             redirect('main_controller/getRegistration');
             //print error message
         } else {
-            if ($id = $this->main_model->saveUserdata()) {
+        	$passwHash = hash('sha512', $this->input->post('passw'), FALSE);
+        	$user_data = array(
+            'email' => $this->input->post('email'),
+            'pass' => $passwHash,
+            'f_name' => $this->input->post('firstname'),
+            'l_name' => $this->input->post('lastname'),
+            'is_admin' => '0',
+            'active' => '0'
+        	);
+
+            if ($id = $this->main_model->Userdata($user_data)) {
                 $data['main_content'] = 'checkMail_view';
                 $this->load->view('include/template_view', $data);
 
@@ -104,11 +114,13 @@ class Login extends CI_Controller {
 
         $this->load->library('form_validation');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-
+		error_log("1");
         if ($this->form_validation->run() == FALSE) {
+        
             $this->load->view('requestPass_view');
         } else if ($id = $this->main_model->getUserforEmail($this->input->post('email'))) {
             //validation has passed, so send email
+            error_log("3");
             $linkString = $this->main_model->createLink($id, 2);
 
             $email = $this->input->post('email');
