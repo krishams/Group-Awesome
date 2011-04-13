@@ -41,6 +41,23 @@ class user_model extends CI_Model {
         else
             return false;
     }
+
+    /**
+     * The function gets the users role
+     * @param <type> $id
+     * @return <type>
+     */
+    function getUserRole($id) {
+        $this->db->select('role_id');
+        $this->db->where('id', $id);
+        $Q = $this->db->get('users');
+        if ($Q->num_rows() > 0) {
+            $row = $Q->row_array();
+            return $row['role_id'];
+        } else {
+            return false;
+        }
+    }
 }
 
 ?>

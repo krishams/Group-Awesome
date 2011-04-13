@@ -38,10 +38,11 @@ class role_model extends CI_Model {
         $this->db->where('role_id',$role_id);
         $Q = $this->db->get('roles');
         if($Q->num_rows() > 0){
-            return $Q;
+            $row = $Q->row_array();
+            return $row['is_admin'];
         }
         else
-            return null;
+            return false;
     }
 }
 ?>
