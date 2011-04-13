@@ -98,13 +98,13 @@ class main_model extends CI_Model {
      * database. It returns a true or false boolean depending on the outcome.
      * @return the id of the user with that email or false if none exist
      */
-    function emailValidation(){
-        $validemail = $this->input->post('email');
-        $this->db->select('id, email');
+    function getUserforEmail($email){
+    	$this->db->where('email', $email);
+       	$this->db->select('id, email');
         $Q = $this->db->get('users');
         if ($Q->num_rows() > 0) {
             foreach ($Q->result_array() as $row) {
-                if ($row['email'] == $validemail) {
+                if ($row['email'] == $email) {
                     $this->session->set_flashdata('error', 'This email is already in use.');
                     return $row['id'];
                 }
@@ -112,6 +112,8 @@ class main_model extends CI_Model {
         }
         return false;
     }
+    
+ 
 
     /**
      * This methode selects an user by finding him with the help of his email and

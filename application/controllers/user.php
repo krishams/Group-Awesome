@@ -55,7 +55,7 @@ class User extends CI_Controller {
     function showEditProfile() {
 		
         $userid = $_SESSION['userid'];
-
+		
 		$data['profile'] = $this->main_model->getUserById($userid);
 
         $data['main_content'] = 'showEditProfile_view';
@@ -67,7 +67,7 @@ class User extends CI_Controller {
     */
     
     function editProfile() {
-    	
+    	$userid = $_SESSION['userid'];
     	$this->load->library('form_validation');
 		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
         $this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
@@ -79,10 +79,26 @@ class User extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
         	error_log("false");
         	$this->showEditProfile();
-        } else if($this->form_validation->run() == TRUE) {
-        	error_log("true");
-        } 
-       
+        } else if ($this->main_model->getUserforEmail($this->input->post('email'),$userid)) {
+            error_log("email false");
+            redirect('user/showEditProfile');
+            //print error message
+        } else {
+        	$passwHash = hash('sha512', $this->input->post('passw'), FALSE);
+        	$new_user_data = array(
+        		'userid' => $userid,
+	            'email' => $this->input->post('email'),
+	            'pass' => $passwHash,
+	            'f_name' => $this->input->post('firstname'),
+	            'l_name' => $this->input->post('lastname'),
+	            'is_admin' => '0',
+	            'active' => '1'
+        	);
+        	if($this->main_model->saveUserdata($new_user_data)){
+        		redirect('user/showEditProfile');
+        	}
+        	
+        }      
     
     }
 
