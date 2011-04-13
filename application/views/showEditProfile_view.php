@@ -12,13 +12,13 @@
 			<td>E-Mail:</td><td><input type='text' name='email' value='<?php echo $profile['email']?>'/></td>
 		</tr>
 		<tr>
-			<td>Old password:</td><td><input type='text' name='Oldpsw'/></td>
+			<td>Old password:</td><td><input type='password' name='Oldpsw'/></td>
 		</tr>
 		<tr>
-			<td>New password:</td><td><input type='text' name='passw'/></td>
+			<td>New password:</td><td><input type='password' name='passw'/></td>
 		</tr>
 		<tr>
-			<td>New password again:</td><td><input type='text' name='confirmPassw'/></td>
+			<td>New password again:</td><td><input type='password' name='confirmPassw'/></td>
 		</tr>
 		<tr>
 			<td><input type='Submit' value='Save Changes'</td>
@@ -28,4 +28,11 @@
 
         <?php echo anchor('upload/getupload', 'Change profile picture') ?>
 </form>
+<?php
+            if($this->session->flashdata('error')){
+                echo "<div class='errorMessage'>";
+                echo $this->session->flashdata('error');
+                echo "</div>";
+            }
+        ?>
 
