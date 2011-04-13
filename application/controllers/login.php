@@ -51,7 +51,7 @@ class Login extends CI_Controller {
 
         if ($this->form_validation->run() == FALSE) {
             $this->getRegistration();
-        } else if ($this->main_model->emailValidation()) {
+        } else if ($this->main_model->getUserforEmail($this->input->post('email'))) {
             redirect('main_controller/getRegistration');
             //print error message
         } else {
@@ -106,7 +106,7 @@ class Login extends CI_Controller {
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('requestPass_view');
-        } else if ($id = $this->main_model->emailValidation()) {
+        } else if ($id = $this->main_model->getUserforEmail($this->input->post('email'))) {
             //validation has passed, so send email
             $linkString = $this->main_model->createLink($id, 2);
 
