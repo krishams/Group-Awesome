@@ -29,5 +29,20 @@ class role_model extends CI_Model {
         }
         return $data;
     }
+
+    /**
+     * Controls to see if the users role has admin privileges
+     */
+    function isAdmin($role_id){
+        $this->db->select('is_admin');
+        $this->db->where('role_id',$role_id);
+        $Q = $this->db->get('roles');
+        if($Q->num_rows() > 0){
+            $row = $Q->row_array();
+            return $row['is_admin'];
+        }
+        else
+            return false;
+    }
 }
 ?>

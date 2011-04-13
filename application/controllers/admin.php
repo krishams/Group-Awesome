@@ -47,7 +47,7 @@ class Admin extends CI_Controller {
     }
 
     /**
-     *
+     * This functions displays all users for the admin in a table
      */
     function viewUsers(){
         $data = $this->getPermissions();
@@ -64,5 +64,15 @@ class Admin extends CI_Controller {
         $data['permissions'] = $this->role_model->getAllRoles();
         return $data;
     }
+
+    /**
+     * A function that deletes the user
+     */
+    function deleteUser(){
+        $id = $this->input->post('id');
+        $Q = $this->user_model->deleteUser($id);
+        if($Q){
+           $this->viewUsers();
+        }
+    }
 }
-?>
