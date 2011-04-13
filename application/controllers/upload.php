@@ -35,7 +35,7 @@ class Upload extends CI_Controller {
                 }
 
                 $config['upload_path'] = $pathname;
-		$config['allowed_types'] = 'gif|jpg|png';
+		$config['allowed_types'] = 'jpg|png';
 		$config['max_size']	= '1024';
 		$config['max_width']  = '0';
 		$config['max_height']  = '0';
@@ -52,11 +52,21 @@ class Upload extends CI_Controller {
 		}
 		else
 		{
-                    //if everything is ok upload image
-                    $image = array('upload_data' => $this->upload->data());
+                    //if everything is ok upload image and store path and filename in db
+                    $image_data = $this->upload->data();
 
-//			$this->load->view('showEditProfile_view', $data);
+                    $data = array (
+                      'user_id' => $_SESSION['userid'],
+                      'path' => $image_data['full_path'],
+                      'name' => $image_data['file_name']
+             
+                    );
+
+                    //call to model to set the path and name in profile tabel
+                    $this->upload_model->saveProfilePic($data);
+                    
                     redirect('user/showEditProfile');
+
 		}
 	}
 
