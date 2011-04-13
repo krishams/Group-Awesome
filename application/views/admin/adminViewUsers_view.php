@@ -6,9 +6,10 @@
         <th>Email</th>
         <th>Password</th>
         <th>Role</th>
-        <th>Is admin</th>
-        <th>Active</th>
-        <th></th>
+        <th>Is active</th>
+        <th>Delete</th>
+        <th>Edit</th>
+        <th>More</th>
     </tr>
 
     <?php
@@ -44,10 +45,15 @@
 
         <td>
             <?php
+            if($row['role_id']==1){
             $hidden = array('id' => $row['id']);
             echo form_open('admin/deleteUser','', $hidden); ?>
             <input type="submit" value="Delete"/>
-            <?= form_close(); ?>
+            <?= form_close(); }?>
+        </td>
+        <td>Edit
+        </td>
+        <td>More
         </td>
     </tr>
     <?php } ?>
