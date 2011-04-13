@@ -17,18 +17,20 @@ class main_model extends CI_Model {
      * into our table called users.
      * @return the id of the newly created user
      */
-    function saveUserdata() {
-    	$passwHash = hash('sha512', $this->input->post('passw'), FALSE);
-        $new_user_data = array(
-            'email' => $this->input->post('email'),
-            'pass' => $passwHash,
-            'f_name' => $this->input->post('firstname'),
-            'l_name' => $this->input->post('lastname'),
-            'is_admin' => '0',
-            'active' => '0'
-        );
-        $this->db->insert('users', $new_user_data);
+    function Userdata($user_data) {
+    	if(isset($user_data['userid'])){
+    	
+    	error_log("isset");
+    	$this->db->where('id', $user_data['userid']);
+    	unset($user_data['userid']);
+        $this->db->update('users', $user_data);
+    	
+    	
+    	}else if (empty($user_data['userid'])){
+    	
+    	$this->db->insert('users', $user_data);
         return $this->db->insert_id();
+        }
     }
 
     /**

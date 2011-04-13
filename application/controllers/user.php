@@ -79,13 +79,13 @@ class User extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
         	error_log("false");
         	$this->showEditProfile();
-        } else if ($this->main_model->getUserforEmail($this->input->post('email'),$userid)) {
+        } else if ($userid != $this->main_model->getUserforEmail($this->input->post('email'))) {
             error_log("email false");
             redirect('user/showEditProfile');
             //print error message
         } else {
         	$passwHash = hash('sha512', $this->input->post('passw'), FALSE);
-        	$new_user_data = array(
+        	$user_data = array(
         		'userid' => $userid,
 	            'email' => $this->input->post('email'),
 	            'pass' => $passwHash,
@@ -94,7 +94,7 @@ class User extends CI_Controller {
 	            'is_admin' => '0',
 	            'active' => '1'
         	);
-        	if($this->main_model->saveUserdata($new_user_data)){
+        	if($this->main_model->Userdata($user_data)){
         		redirect('user/showEditProfile');
         	}
         	
