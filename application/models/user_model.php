@@ -30,6 +30,17 @@ class user_model extends CI_Model {
         return $data;
     }
 
+    /**
+     * Delete an user, but so far only in the User table
+     */
+    function deleteUser($id){
+        $this->db->where('id', $id);
+        $Q = $this->db->delete('users');
+        if($Q)
+            return true;
+        else
+            return false;
+    }
 }
 
 ?>

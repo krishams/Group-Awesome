@@ -64,5 +64,13 @@ class Admin extends CI_Controller {
         $data['permissions'] = $this->role_model->getAllRoles();
         return $data;
     }
+
+    function deleteUser(){
+        $id = $this->input->post('id');
+        error_log('This is the id = '.$id);
+        $Q = $this->user_model->deleteUser($id);
+        if($Q){
+           $this->viewUsers();
+        }
+    }
 }
-?>
