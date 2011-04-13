@@ -40,9 +40,6 @@
 
         <td><?= form_dropdown('role_id', $roleOptions, $row['role_id']); ?></td>
 
-        <!-- This one should be removed, it will be checked on the role_id instead -->
-        <td><?= form_dropdown('is_admin', $activeOptions, $row['is_admin']); ?></td>
-
         <td><?= form_dropdown('is_active', $activeOptions, $row['active']); ?></td>
 
         <td>
