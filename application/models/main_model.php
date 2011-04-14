@@ -132,6 +132,7 @@ class main_model extends CI_Model {
         $this->db->where('pass', $passwHash);
         $this->db->limit(1);
         $Q = $this->db->get('users');
+        error_log($Q->num_rows . ", pw: " . $pw . " pwhash: " . $passwHash . " email: " .$email);
         if($Q->num_rows() > 0){
             $row = $Q->row_array();
             if($row['active'] != 1){
