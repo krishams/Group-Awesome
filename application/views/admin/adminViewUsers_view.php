@@ -24,55 +24,44 @@
     };
 
     foreach ($users as $row) {
+        $hidden = array(
+                    'id' => $row['id']
+                );
+        echo form_open('admin/controlInput', '', $hidden);
     ?>
         <tr>
             <td><?= $row['id']; ?></td>
 
-            <td><input type='text' name='firstname' size="10" value='<?= $row['f_name']; ?>'/></td>
+            <td><input type='text' name='firstname<?= $row['id']?>' size="10" value='<?= $row['f_name']?>'/></td>
 
-            <td><input type='text' name='lastname' size="15" value='<?= $row['l_name']; ?>'/></td>
+            <td><input type='text' name='lastname<?= $row['id']?>' size="15" value='<?= $row['l_name'] ?>'/></td>
 
-            <td><input type='text' name='email' value='<?= $row['email'] ?>'/></td>
+            <td><input type='text' name='email<?= $row['id']?>' value='<?= $row['email'] ?>'/></td>
 
             <td>
-            <?php
-            $hidden = array('email' => $row['email']);
-            echo form_open('login/submitRequestPassword', '', $hidden); ?>
-            <input type="submit" value="Change password"/>
-            <?= form_close(); ?>
+            <input type="submit" name="option" value="Change password"/>
         </td>
 
-        <td><?= form_dropdown('roleid', $roleOptions, $row['role_id']); ?></td>
+        <td><?= form_dropdown('roleid'.$row['id'], $roleOptions, $row['role_id']); ?></td>
 
-        <td><?= form_checkbox('isactive', '', $row['active']); ?></td>
+        <td><?= form_checkbox('isactive'.$row['id'], '', $row['active']); ?></td>
 
         <td>
             <?php
             //makes sure that only a super admin can delete an admin
             if (($row['role_id'] == 1&& !$editAdmin)||($row['role_id'] == 2 && !$editAdmin)) {
                 
-            } else {
-                $hidden = array('id' => $row['id']);
-                echo form_open('admin/deleteUser', '', $hidden); ?>
-                <input type="submit" value="Delete"/>
-            <?= form_close();
-            } ?>
+            } else { ?>
+                <input type="submit" name="option" value="Delete"/>
+                <?php } ?>
         </td>
         <td>
             <?php
             //makes sure that only a super admin can edit an admin
             if (($row['role_id'] == 1&& !$editAdmin)||($row['role_id'] == 2 && !$editAdmin)) {
                 
-            } else {
-                $list = array(
-                    'f_name' => 'firstname',
-                    'l_name' => 'lastname',
-                    'email' => 'email',
-                    'role_id' => 'roleid',
-                    'is_active' => 'isactive'
-                );
-                echo form_open('admin/editUser', $list); ?>
-                <input type="submit" value="Edit"/>
+            } else { ?>
+                <input type="submit" name="option" value="Edit"/>
             <?= form_close();
             } ?>
         </td>

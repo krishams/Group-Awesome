@@ -61,6 +61,23 @@ class Admin extends CI_Controller {
     }
 
     /**
+     *
+     */
+    function controlInput(){
+        switch($_POST['option']){
+            case 'Delete':
+                $this->deleteUser();
+                break;
+            case 'Edit':
+                $this->editUser();
+                break;
+            case 'Change password':
+                $this->login->submitRequestPassword();
+                break;
+        }
+    }
+
+    /**
      * returns a data set with all the roles id and name from the roles tabel in the db
      */
     function getPermissions(){
@@ -89,7 +106,16 @@ class Admin extends CI_Controller {
         }
     }
 
-    function editUser($data){
-
+    /**
+     * This function will get information from the editUser_view,
+     * and edit the user in the db
+     */
+    function editUser(){
+        $id = $this->input->post('id');
+        $email = $this->input->post('email'.$id);
+        $role_id = $this->input->post('roleid'.$id);
+        $is_active = $this->input->post('isactive'.$id);
+        error_log('ID: '.$id.', Email: '.$email.', Role: '.$role_id.', Active: '.$is_active);
+        $this->viewUsers();
     }
 }
