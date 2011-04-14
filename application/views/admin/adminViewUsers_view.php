@@ -46,7 +46,7 @@
         <td>
             <?php
             //makes sure that only a super admin can delete an admin
-            if ($row['role_id'] == 1 && $_SESSION['role_id'] != 2) {
+            if (($row['role_id'] == 1||$row['role_id'] == 2) && $_SESSION['role_id'] != 2) {
                 
             } else {
                 $hidden = array('id' => $row['id']);
@@ -58,7 +58,7 @@
         <td>
             <?php
             //makes sure that only a super admin can delete an admin
-            if ($row['role_id'] == 1 && $_SESSION['role_id'] != 2) {
+            if (($row['role_id'] == 1||$row['role_id'] == 2) && $_SESSION['role_id'] != 2) {
                 
             } else {
                 $list = array(

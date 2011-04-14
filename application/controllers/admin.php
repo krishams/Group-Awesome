@@ -39,7 +39,8 @@ class Admin extends CI_Controller {
      */
     function controlIsAdmin(){
         $id = $_SESSION['userid'];
-        if($this->admin_model->verifyAdmin($id)){
+        $role = $this->user_model->getUserRole($id);
+        if($this->role_model->isAdmin($role)){
             $_SESSION['role_id'] = $this->user_model->getUserRole($id);
             return true;
         }
@@ -51,7 +52,9 @@ class Admin extends CI_Controller {
      * This functions displays all users for the admin in a table
      */
     function viewUsers(){
-        $data = $this->getPermissions();
+        $id = $_SESSION['userid'];
+        $data['permissions'] = $this->getPermissions();
+        $data['admin'] = $this->getAdminPriv($id);
         $data['users'] = $this->user_model->getAllUsers();
         $data['main_content'] = 'admin/adminViewUsers_view';
         $this->load->view('include/admintemplate_view', $data);
@@ -59,10 +62,18 @@ class Admin extends CI_Controller {
 
     /**
      *
-     * @return <type> 
      */
     function getPermissions(){
-        $data['permissions'] = $this->role_model->getAllRoles();
+        $data = $this->role_model->getAllRoles();
+        return $data;
+    }
+
+    /**
+     *
+     */
+    function getAdminPriv($id){
+        $role = $this->user_model->getUserRole($id);
+        $data = $this->role_model->getAdminPrivs($role);
         return $data;
     }
 
