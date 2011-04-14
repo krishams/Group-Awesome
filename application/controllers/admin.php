@@ -61,7 +61,7 @@ class Admin extends CI_Controller {
     }
 
     /**
-     *
+     * returns a data set with all the roles id and name from the roles tabel in the db
      */
     function getPermissions(){
         $data = $this->role_model->getAllRoles();
@@ -69,7 +69,8 @@ class Admin extends CI_Controller {
     }
 
     /**
-     *
+     * The function will return an $data set with a specific roles priviliges,
+     * basically it returns everything from the roles tabel in the db, with a specifik id.
      */
     function getAdminPriv($id){
         $role = $this->user_model->getUserRole($id);

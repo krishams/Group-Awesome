@@ -45,6 +45,9 @@ class role_model extends CI_Model {
             return false;
     }
 
+    /**
+     * The function returns all the data for a specifik role
+     */
     function getAdminPrivs($role_id){
         $data = array();
         $this->db->where('role_id', $role_id);

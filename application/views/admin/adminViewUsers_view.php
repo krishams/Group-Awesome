@@ -60,7 +60,7 @@
         </td>
         <td>
             <?php
-            //makes sure that only a super admin can delete an admin
+            //makes sure that only a super admin can edit an admin
             if (($row['role_id'] == 1&& !$editAdmin)||($row['role_id'] == 2 && !$editAdmin)) {
                 
             } else {
