@@ -10,31 +10,6 @@ class main_model extends CI_Model {
         parent::__construct();
     }
 
-    /**
-     * This methode saves the userdate. It creates a array which contains all the
-     * informations that we need about the user, it gets the information directly
-     * from the view that are displayed for the user. Lastly it inserts the data
-     * into our table called users.
-     * @return the id of the newly created user
-     */
-    function Userdata($user_data) {
-    	if(isset($user_data['userid'])){
-    	
-    	error_log("isset");
-    	$this->db->where('id', $user_data['userid']);
-    	unset($user_data['userid']);
-        $this->db->update('users', $user_data);
-        error_log("query Userdata" . $this->db->last_query());
-        
-        return TRUE;
-    	
-    	
-    	}else if (empty($user_data['userid'])){
-    	
-    	$this->db->insert('users', $user_data);
-        return $this->db->insert_id();
-        }
-    }
 
     /**
      *
@@ -104,7 +79,7 @@ class main_model extends CI_Model {
      * @return the id of the user with that email or false if none exist
      */
     function getUserforEmail($email){
-    	error_log("tjek:" . $email);
+    	
     	//$this->db->select('id, email');
     	//$this->db->where('email', $email);
        	$Q = $this->db->get('users');

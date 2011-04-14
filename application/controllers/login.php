@@ -64,9 +64,7 @@ class Login extends CI_Controller {
             'l_name' => $this->input->post('lastname'),
             'active' => '0'
         	);
-			error_log("login=" . " email: " . $this->input->post('email') . " passhash:" . $passwHash . "pass: " .  $this->input->post('passw') . " f_name: " . $this->input->post('firstname') . "l_name: " . $this->input->post('lastname'));
-
-            if ($id = $this->main_model->Userdata($user_data)) {
+			            if ($id = $this->user_model->saveUserdata($user_data)) {
                 $data['main_content'] = 'checkMail_view';
                 $this->load->view('include/template_view', $data);
 
