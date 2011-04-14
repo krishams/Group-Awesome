@@ -20,7 +20,7 @@ class Upload extends CI_Controller {
     {
                 //defining a path to folder with same name as userid
                 $pathname = './assets/img/profile_pics/' . $_SESSION['userid'] . '/';
-//                $pathname = base_url() . '/assets/img/profile_pics/' . $_SESSION['userid'] . '/';
+
                 //a permission or rights to create a folder
                 $mode = 0777;
                 
@@ -56,7 +56,7 @@ class Upload extends CI_Controller {
                     //everything is ok upload image and store path and filename in db
                     $image_data = $this->upload->data();
 
-                    $img_path = base_url() . 'assets/img/profile_pics/' . $_SESSION['userid'] . '/';
+                    $img_path = base_url() . 'assets/img/profile_pics/' . $_SESSION['userid'] . '/' . $image_data['file_name'];
                 
                     $data = array (
                       'user_id' => $_SESSION['userid'],
@@ -71,12 +71,6 @@ class Upload extends CI_Controller {
 
 		}
 	}
-
-//        function get_Profile_Pic()
-//        {
-//            $user_id = $_SESSION['userid'];
-//            $this->upload_model->getProfilePic($user_id);
-//        }
 
 }
 

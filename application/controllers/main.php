@@ -126,18 +126,19 @@ class Main extends CI_Controller {
      * Will pass the users id to the db, and gets all the users data back, and
      * forwards it to the users profilpage
      */
-    function showProfile() {
-
-        $userid = 0;
-
-        if ($this->uri->segment(3)) {
-            $userid = $this->uri->segment(3);
-        }
-        $data['profile'] = $this->main_model->getUserById($userid);
-        error_log('nu er vi i showProfile()');
-        $data['profile_pic'] = $this->upload_model->getProfilePic($userid);
-
-        $data['main_content'] = 'profile_view';
-        $this->load->view('/include/template1_view', $data);
-    }
+//    function showProfile() {
+//
+//        $userid = 0;
+//
+//        if ($this->uri->segment(3)) {
+//            $userid = $this->uri->segment(3);
+//        }
+//        $data['profile'] = $this->main_model->getUserById($userid);
+//
+//        $data['pic_path'] = $this->upload_model->getProfilePic($userid);
+//
+//        $data['main_content'] = 'profile_view';
+//
+//        $this->load->view('/include/template1_view', $data);
+//    }
 }

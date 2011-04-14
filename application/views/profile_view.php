@@ -1,6 +1,6 @@
 <h2>profile view</h2>
 
-<div id="profile"><?php echo '<img src="' . $profile_pic['path'] . '"/>' ?></div>
+<div id="profile"><img src=" <?php echo $pic_path['path'] ?>  "/></div>
 
 <div id="profile-left">
 <?php
