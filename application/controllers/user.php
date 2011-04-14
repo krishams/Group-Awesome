@@ -16,6 +16,7 @@ class User extends CI_Controller {
         session_start();
         $this->logged_in->status();
     }
+    
 	function login(){	
 		$status = $_SESSION['userid'];
         // if user already logged in, redirect to user index

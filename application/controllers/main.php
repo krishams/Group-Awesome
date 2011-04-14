@@ -24,8 +24,8 @@ class Main extends CI_Controller {
      * if true it directs the user to the home_view, otherwise it reloads the
      * page with an error message.
      */
-    function getHome() {//$id)
-        if ($this->verifyLogin()) {
+    function home() {//$id)
+        if ($this->verifyLogin() || $this->logged_in->status()) {
 //            error_log("log in ok");
             $data['main_content'] = 'home_view';
             $this->load->view('/include/template1_view', $data);
@@ -40,10 +40,12 @@ class Main extends CI_Controller {
     /**
      * This function will open the home_view, if the user is already logged in
      */
+/*
     function goHome() {
         $data['main_content'] = 'home_view';
         $this->load->view('/include/template1_view', $data);
     }
+*/
 
     /**
      * Used after a user has entered a new password from the reset password screen. This checks

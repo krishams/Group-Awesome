@@ -62,7 +62,6 @@ class Login extends CI_Controller {
             'pass' => $passwHash,
             'f_name' => $this->input->post('firstname'),
             'l_name' => $this->input->post('lastname'),
-            'is_admin' => '0',
             'active' => '0'
         	);
 
