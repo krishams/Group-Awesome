@@ -24,8 +24,8 @@ class Main extends CI_Controller {
      * if true it directs the user to the home_view, otherwise it reloads the
      * page with an error message.
      */
-    function getHome() {//$id)
-        if ($this->verifyLogin()) {
+    function home() {//$id)
+        if ($this->verifyLogin() || $this->logged_in->status()) {
 //            error_log("log in ok");
             $data['main_content'] = 'home_view';
             $this->load->view('/include/template1_view', $data);
@@ -40,10 +40,12 @@ class Main extends CI_Controller {
     /**
      * This function will open the home_view, if the user is already logged in
      */
+/*
     function goHome() {
         $data['main_content'] = 'home_view';
         $this->load->view('/include/template1_view', $data);
     }
+*/
 
     /**
      * Used after a user has entered a new password from the reset password screen. This checks
@@ -100,6 +102,7 @@ class Main extends CI_Controller {
         if ($this->input->post('email')) {
             $mail = $this->input->post('email');
             $pw = $this->input->post('passw');
+            error_log("verifylogin" . $mail . $pw);
             $data = $this->main_model->verifyUser($mail, $pw);
             if ($data != null) {
                 $_SESSION['userid'] = $data['id'];
@@ -123,16 +126,19 @@ class Main extends CI_Controller {
      * Will pass the users id to the db, and gets all the users data back, and
      * forwards it to the users profilpage
      */
-    function showProfile() {
-
-        $userid = 0;
-
-        if ($this->uri->segment(3)) {
-            $userid = $this->uri->segment(3);
-        }
-        $data['profile'] = $this->main_model->getUserById($userid);
-
-        $data['main_content'] = 'profile_view';
-        $this->load->view('/include/template1_view', $data);
-    }
+//    function showProfile() {
+//
+//        $userid = 0;
+//
+//        if ($this->uri->segment(3)) {
+//            $userid = $this->uri->segment(3);
+//        }
+//        $data['profile'] = $this->main_model->getUserById($userid);
+//
+//        $data['pic_path'] = $this->upload_model->getProfilePic($userid);
+//
+//        $data['main_content'] = 'profile_view';
+//
+//        $this->load->view('/include/template1_view', $data);
+//    }
 }
