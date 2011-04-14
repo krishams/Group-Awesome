@@ -102,6 +102,7 @@ class Main extends CI_Controller {
         if ($this->input->post('email')) {
             $mail = $this->input->post('email');
             $pw = $this->input->post('passw');
+            error_log("verifylogin" . $mail . $pw);
             $data = $this->main_model->verifyUser($mail, $pw);
             if ($data != null) {
                 $_SESSION['userid'] = $data['id'];

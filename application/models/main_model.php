@@ -24,6 +24,9 @@ class main_model extends CI_Model {
     	$this->db->where('id', $user_data['userid']);
     	unset($user_data['userid']);
         $this->db->update('users', $user_data);
+        error_log("query Userdata" . $this->db->last_query());
+        
+        return TRUE;
     	
     	
     	}else if (empty($user_data['userid'])){
@@ -101,13 +104,17 @@ class main_model extends CI_Model {
      * @return the id of the user with that email or false if none exist
      */
     function getUserforEmail($email){
-    	$this->db->where('email', $email);
-       	$this->db->select('id, email');
-        $Q = $this->db->get('users');
+    	error_log("tjek:" . $email);
+    	//$this->db->select('id, email');
+    	//$this->db->where('email', $email);
+       	$Q = $this->db->get('users');
         if ($Q->num_rows() > 0) {
+        	error_log("if");
             foreach ($Q->result_array() as $row) {
-                if ($row['email'] == $email) {
-                    $this->session->set_flashdata('error', 'This email is already in use.');
+                if($email == $row['email']){
+                    //$this->session->set_flashdata('error', 'This email is already in use.');
+                    error_log("row" . $row['id']);
+                    
                     return $row['id'];
                 }
             }
@@ -127,13 +134,16 @@ class main_model extends CI_Model {
      */
     function verifyUser($email, $pw){
     	$passwHash = hash('sha512', $pw, FALSE);
+    	error_log("verify" . $passwHash);
         $this->db->select('id, email, active');
         $this->db->where('email', $email);
         $this->db->where('pass', $passwHash);
         $this->db->limit(1);
         $Q = $this->db->get('users');
+        error_log("query" . $this->db->last_query());
         if($Q->num_rows() > 0){
             $row = $Q->row_array();
+            error_log("array verify" . print_r($row,true));
             if($row['active'] != 1){
                 $this->session->set_flashdata('errorVerify', 'You need to activate your account');
                 return null;
