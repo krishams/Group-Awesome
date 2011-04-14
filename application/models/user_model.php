@@ -88,9 +88,7 @@ class user_model extends CI_Model {
     }
 
     /**
-     * The function gets the users role
-     * @param <type> $id
-     * @return <type>
+     * The function gets the users role_id
      */
     function getUserRole($id) {
         $this->db->select('role_id');
