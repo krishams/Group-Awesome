@@ -14,8 +14,9 @@ class User extends CI_Controller {
     function __construct() {
         parent::__construct();
         session_start();
-        $this->logged_in->status();
+        
     }
+    
 	function login(){	
 		$status = $_SESSION['userid'];
         // if user already logged in, redirect to user index
@@ -68,6 +69,7 @@ class User extends CI_Controller {
     
     function editProfile() {
     	$userid = $_SESSION['userid'];
+    	$email = $this->input->post('email');
     	$this->load->library('form_validation');
 		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
         $this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
@@ -75,11 +77,13 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('Oldpsw', 'Old Password', 'trim|required|min_length[6]|max_length[32]');
         $this->form_validation->set_rules('passw', 'Password', 'trim|required|min_length[6]|max_length[32]');
         $this->form_validation->set_rules('confirmPassw', 'Confirm Password', 'trim|required|matches[passw]');
-        
+        error_log("session:" . $userid);
+        error_log("db:" . $this->main_model->getUserforEmail($email));
+        error_log($this->input->post('email'));
         if ($this->form_validation->run() == FALSE) {
         	error_log("false");
         	$this->showEditProfile();
-        } else if ($userid != $this->main_model->getUserforEmail($this->input->post('email'))) {
+        } else if ($userid != $this->main_model->getUserforEmail($email)) {
             error_log("email false");
             redirect('user/showEditProfile');
             //print error message
@@ -91,9 +95,10 @@ class User extends CI_Controller {
 	            'pass' => $passwHash,
 	            'f_name' => $this->input->post('firstname'),
 	            'l_name' => $this->input->post('lastname'),
-	            'is_admin' => '0',
-	            'active' => '1'
+	            
         	);
+        	error_log("userid: " . $userid . " email: " . $this->input->post('email') . " passhash:" . $passwHash . "pass: " .  $this->input->post('passw') . " f_name: " . $this->input->post('firstname') . "l_name: " . $this->input->post('lastname'));
+        	
         	if($this->main_model->Userdata($user_data)){
         		redirect('user/showEditProfile');
         	}

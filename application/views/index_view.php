@@ -4,7 +4,7 @@ and open the template in the editor.
 -->
 <div id="logon">
     <!--?php form_open('getHome()'); ?>-->
-    <form class="loginForm" action="main/getHome" method="POST">
+    <form class="loginForm" action="main/home" method="POST">
         <table>
             <tr>
                 <td>Email</td>
