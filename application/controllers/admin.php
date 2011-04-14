@@ -56,12 +56,13 @@ class Admin extends CI_Controller {
         $data['permissions'] = $this->getPermissions();
         $data['admin'] = $this->getAdminPriv($id);
         $data['users'] = $this->user_model->getAllUsers();
+        $data['activeOptions'] = array('0' => 'False', '1' => 'True');
         $data['main_content'] = 'admin/adminViewUsers_view';
         $this->load->view('include/admintemplate_view', $data);
     }
 
     /**
-     *
+     * 
      */
     function controlInput(){
         switch($_POST['option']){

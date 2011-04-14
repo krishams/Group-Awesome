@@ -13,7 +13,6 @@
     </tr>
 
     <?php
-    $activeOptions = array('0' => 'False', '1' => 'True');
     $roleOptions = array();
     foreach($admin as $row2){
         $editUser = $row2['editUser'];
