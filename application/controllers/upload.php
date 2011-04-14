@@ -5,7 +5,7 @@ class Upload extends CI_Controller {
     function  __construct() {
         parent::__construct();
         session_start();
-        $this->logged_in->status();
+        
     }
 
       function getUpload() {
