@@ -58,6 +58,22 @@ class user_model extends CI_Model {
             return false;
         }
     }
+
+      /**
+     * This function is for getting a specific users path to his profile image from db
+     */
+        function getProfilePic($id) {
+    	$data = array();
+    	$this->db->where('user_id', $id);
+    	$Q = $this->db->get('profile_pics');
+    	if($Q->num_rows()>0){
+    		foreach($Q->result_array() as $row){
+
+                    $data = $row;
+            }
+    	}
+    	return $data;
+    }
 }
 
 ?>
