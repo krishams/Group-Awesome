@@ -8,9 +8,7 @@
 		<tr>
 			<td>Lastname:</td><td><input type='text' name='lastname' value='<?php echo $profile['l_name']?>'/></td>
 		</tr>
-		<tr>
-			<td>E-Mail:</td><td><input type='text' name='email' value='<?php echo $profile['email']?>'/></td>
-		</tr>
+		
 		<tr>
 			<td>Old password:</td><td><input type='password' name='Oldpsw'/></td>
 		</tr>

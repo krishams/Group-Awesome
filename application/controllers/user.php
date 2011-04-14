@@ -52,10 +52,10 @@ class User extends CI_Controller {
      * forwards it to the users editProfile page.
      */
     
-    function showEditProfile() {
+    function showEditProfile($user_data) {
 		
         $userid = $_SESSION['userid'];
-		
+		//if(isset($user_data))
 		$data['profile'] = $this->main_model->getUserById($userid);
 
         $data['main_content'] = 'showEditProfile_view';
@@ -68,37 +68,39 @@ class User extends CI_Controller {
     
     function editProfile() {
     	$userid = $_SESSION['userid'];
-    	$email = $this->input->post('email');
+    	//$email = $this->input->post('email');
     	$this->load->library('form_validation');
 		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
         $this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-        $this->form_validation->set_rules('Oldpsw', 'Old Password', 'trim|required|min_length[6]|max_length[32]');
-        $this->form_validation->set_rules('passw', 'Password', 'trim|required|min_length[6]|max_length[32]');
-        $this->form_validation->set_rules('confirmPassw', 'Confirm Password', 'trim|required|matches[passw]');
-        error_log("session:" . $userid);
-        error_log("db:" . $this->main_model->getUserforEmail($email));
-        error_log($this->input->post('email'));
-        if ($this->form_validation->run() == FALSE) {
-        	error_log("false");
-        	$this->showEditProfile();
-        } else if ($userid != $this->main_model->getUserforEmail($email)) {
-            error_log("email false");
-            redirect('user/showEditProfile');
-            //print error message
-        } else {
-        	$passwHash = hash('sha512', $this->input->post('passw'), FALSE);
-        	$user_data = array(
+        //$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+        $this->form_validation->set_rules('Oldpsw', 'Old Password', 'trim|min_length[6]|max_length[32]');
+        $this->form_validation->set_rules('passw', 'Password', 'trim|min_length[6]|max_length[32]');
+        $this->form_validation->set_rules('confirmPassw', 'Confirm Password', 'trim|matches[passw]');
+        //error_log("db:" . $this->main_model->getUserforEmail($email));
+        //error_log($this->input->post('email'));
+        $oldpassw = $this->input->post('Oldpsw');
+        $passw = $this->input->post('passw');
+        $oldpasswHash = hash('sha512', $oldpassw, FALSE );
+        $passwHash = hash('sha512', $passw, FALSE);
+        $user_data = array(
         		'userid' => $userid,
-	            'email' => $this->input->post('email'),
-	            'pass' => $passwHash,
 	            'f_name' => $this->input->post('firstname'),
 	            'l_name' => $this->input->post('lastname'),
 	            
-        	);
-        	error_log("userid: " . $userid . " email: " . $this->input->post('email') . " passhash:" . $passwHash . "pass: " .  $this->input->post('passw') . " f_name: " . $this->input->post('firstname') . "l_name: " . $this->input->post('lastname'));
+        );
+        
+        if ($this->form_validation->run() == FALSE) {
+        	error_log("false");
+        	$this->showEditProfile($user_data);
+        } else {
+        	if(isset($oldpassw, $passw)){
+        		if($this->user_model->tjeckPass($userid, $oldpasswHash)){
+        			$user_data['pass'] = $passwHash;
+        			$this->showEditProfile($user_data);
+        		}
+        	}
         	
-        	if($this->main_model->Userdata($user_data)){
+        	if($this->user_model->saveUserdata($user_data)){
         		redirect('user/showEditProfile');
         	}
         	
