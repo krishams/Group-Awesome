@@ -10,28 +10,6 @@ class main_model extends CI_Model {
         parent::__construct();
     }
 
-    /**
-     * This methode saves the userdate. It creates a array which contains all the
-     * informations that we need about the user, it gets the information directly
-     * from the view that are displayed for the user. Lastly it inserts the data
-     * into our table called users.
-     * @return the id of the newly created user
-     */
-    function Userdata($user_data) {
-    	if(isset($user_data['userid'])){
-    	
-    	error_log("isset");
-    	$this->db->where('id', $user_data['userid']);
-    	unset($user_data['userid']);
-        $this->db->update('users', $user_data);
-    	
-    	
-    	}else if (empty($user_data['userid'])){
-    	
-    	$this->db->insert('users', $user_data);
-        return $this->db->insert_id();
-        }
-    }
 
     /**
      *
@@ -101,13 +79,17 @@ class main_model extends CI_Model {
      * @return the id of the user with that email or false if none exist
      */
     function getUserforEmail($email){
-    	$this->db->where('email', $email);
-       	$this->db->select('id, email');
-        $Q = $this->db->get('users');
+    	
+    	//$this->db->select('id, email');
+    	//$this->db->where('email', $email);
+       	$Q = $this->db->get('users');
         if ($Q->num_rows() > 0) {
+        	error_log("if");
             foreach ($Q->result_array() as $row) {
-                if ($row['email'] == $email) {
-                    $this->session->set_flashdata('error', 'This email is already in use.');
+                if($email == $row['email']){
+                    //$this->session->set_flashdata('error', 'This email is already in use.');
+                    error_log("row" . $row['id']);
+                    
                     return $row['id'];
                 }
             }
@@ -115,8 +97,6 @@ class main_model extends CI_Model {
         return false;
     }
     
- 
-
     /**
      * This methode selects an user by finding him with the help of his email and
      * password. It then sets some settings in the session data, so the user
@@ -127,6 +107,7 @@ class main_model extends CI_Model {
      */
     function verifyUser($email, $pw){
     	$passwHash = hash('sha512', $pw, FALSE);
+    	error_log("verify" . $passwHash);
         $this->db->select('id, email, active');
         $this->db->where('email', $email);
         $this->db->where('pass', $passwHash);
@@ -135,6 +116,7 @@ class main_model extends CI_Model {
         error_log($Q->num_rows . ", pw: " . $pw . " pwhash: " . $passwHash . " email: " .$email);
         if($Q->num_rows() > 0){
             $row = $Q->row_array();
+            error_log("array verify" . print_r($row,true));
             if($row['active'] != 1){
                 $this->session->set_flashdata('errorVerify', 'You need to activate your account');
                 return null;
@@ -164,7 +146,7 @@ class main_model extends CI_Model {
         }
         return $data;
     }
-    
+   
     function getUserByid($id) {
     	$data = array();
     	$this->db->where('id', $id);
