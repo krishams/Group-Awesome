@@ -15,7 +15,10 @@
     <?php
     $activeOptions = array('0' => 'False', '1' => 'True');
     $roleOptions = array();
-    $editUser = 0;
+    foreach($admin as $row2){
+        $editUser = $row2['editUser'];
+        $editAdmin = $row2['editAdmin'];
+    }
     foreach ($permissions as $row1) {
         $roleOptions[$row1['role_id']] = $row1['role_name'];
     };
@@ -46,7 +49,7 @@
         <td>
             <?php
             //makes sure that only a super admin can delete an admin
-            if (($row['role_id'] == 1||$row['role_id'] == 2) && $_SESSION['role_id'] != 2) {
+            if (($row['role_id'] == 1&& !$editAdmin)||($row['role_id'] == 2 && !$editAdmin)) {
                 
             } else {
                 $hidden = array('id' => $row['id']);
@@ -58,7 +61,7 @@
         <td>
             <?php
             //makes sure that only a super admin can delete an admin
-            if (($row['role_id'] == 1||$row['role_id'] == 2) && $_SESSION['role_id'] != 2) {
+            if (($row['role_id'] == 1&& !$editAdmin)||($row['role_id'] == 2 && !$editAdmin)) {
                 
             } else {
                 $list = array(

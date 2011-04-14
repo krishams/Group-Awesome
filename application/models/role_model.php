@@ -44,5 +44,16 @@ class role_model extends CI_Model {
         else
             return false;
     }
+
+    function getAdminPrivs($role_id){
+        $data = array();
+        $this->db->where('role_id', $role_id);
+        $Q = $this->db->get('roles');
+        if($Q->num_rows > 0){
+            $data = $Q->result_array();
+            return $data;
+        }
+        return false;
+    }
 }
 ?>
