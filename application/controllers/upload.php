@@ -17,9 +17,10 @@ class Upload extends CI_Controller {
      * This function is called when a user is uploading a profile picture
      */
     function do_upload()
-	{
+    {
                 //defining a path to folder with same name as userid
-                $pathname = './assets/img/profilePics/' . $_SESSION['userid'] . '/';
+                $pathname = './assets/img/profile_pics/' . $_SESSION['userid'] . '/';
+//                $pathname = base_url() . '/assets/img/profile_pics/' . $_SESSION['userid'] . '/';
                 //a permission or rights to create a folder
                 $mode = 0777;
                 
@@ -52,14 +53,15 @@ class Upload extends CI_Controller {
 		}
 		else
 		{
-                    //if everything is ok upload image and store path and filename in db
+                    //everything is ok upload image and store path and filename in db
                     $image_data = $this->upload->data();
 
+                    $img_path = base_url() . 'assets/img/profile_pics/' . $_SESSION['userid'] . '/';
+                
                     $data = array (
                       'user_id' => $_SESSION['userid'],
-                      'path' => $image_data['full_path'],
+                      'path' => $img_path,
                       'name' => $image_data['file_name']
-             
                     );
 
                     //call to model to set the path and name in profile tabel
@@ -69,6 +71,12 @@ class Upload extends CI_Controller {
 
 		}
 	}
+
+//        function get_Profile_Pic()
+//        {
+//            $user_id = $_SESSION['userid'];
+//            $this->upload_model->getProfilePic($user_id);
+//        }
 
 }
 
