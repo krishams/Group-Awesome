@@ -97,8 +97,6 @@ class main_model extends CI_Model {
         return false;
     }
     
- 
-
     /**
      * This methode selects an user by finding him with the help of his email and
      * password. It then sets some settings in the session data, so the user
@@ -148,7 +146,7 @@ class main_model extends CI_Model {
         }
         return $data;
     }
-    
+   
     function getUserByid($id) {
     	$data = array();
     	$this->db->where('id', $id);
