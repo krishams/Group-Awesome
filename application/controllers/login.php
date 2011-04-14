@@ -62,9 +62,9 @@ class Login extends CI_Controller {
             'pass' => $passwHash,
             'f_name' => $this->input->post('firstname'),
             'l_name' => $this->input->post('lastname'),
-            'is_admin' => '0',
             'active' => '0'
         	);
+			error_log("login=" . " email: " . $this->input->post('email') . " passhash:" . $passwHash . "pass: " .  $this->input->post('passw') . " f_name: " . $this->input->post('firstname') . "l_name: " . $this->input->post('lastname'));
 
             if ($id = $this->main_model->Userdata($user_data)) {
                 $data['main_content'] = 'checkMail_view';
@@ -114,13 +114,11 @@ class Login extends CI_Controller {
 
         $this->load->library('form_validation');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-		error_log("1");
         if ($this->form_validation->run() == FALSE) {
         
             $this->load->view('requestPass_view');
         } else if ($id = $this->main_model->getUserforEmail($this->input->post('email'))) {
             //validation has passed, so send email
-            error_log("3");
             $linkString = $this->main_model->createLink($id, 2);
 
             $email = $this->input->post('email');
