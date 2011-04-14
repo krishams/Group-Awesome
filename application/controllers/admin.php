@@ -40,6 +40,7 @@ class Admin extends CI_Controller {
     function controlIsAdmin(){
         $id = $_SESSION['userid'];
         if($this->admin_model->verifyAdmin($id)){
+            $_SESSION['role_id'] = $this->user_model->getUserRole($id);
             return true;
         }
         else
@@ -74,5 +75,9 @@ class Admin extends CI_Controller {
         if($Q){
            $this->viewUsers();
         }
+    }
+
+    function editUser($data){
+
     }
 }
