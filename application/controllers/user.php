@@ -62,6 +62,8 @@ class User extends CI_Controller {
 		//if(isset($user_data))
 		$data['profile'] = $this->main_model->getUserById($userid);
 
+                $data['pic_path'] = $this->user_model->getProfilePic($userid);
+
         $data['main_content'] = 'showEditProfile_view';
         $this->load->view('/include/template1_view', $data);
     }

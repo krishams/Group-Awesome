@@ -25,9 +25,32 @@
 	<?php echo validation_errors('<p class="error">'); ?>
 </form>
 
-        <?php echo anchor('upload/getupload', 'Change profile picture') ?>
-<h2>Favorit </h2>
-<?php
+
+       
+<h2>Favorit Bars</h2>
+
+
+        <div id="profile">
+            <img alt="Profile image"  src="
+            <?php
+                if(empty($pic_path))
+                {
+                    echo base_url() . "assets/img/avatar.svg";
+                }
+                else if(isset($pic_path))
+                {
+                    echo $pic_path['path'];
+                }
+            ?>
+           "/>
+              <?php echo anchor('upload/getupload', 'Change profile picture') ?>
+        </div> <!-- profile -->
+
+
+      
+
+       <?php
+
             if($this->session->flashdata('error')){
                 echo "<div class='errorMessage'>";
                 echo $this->session->flashdata('error');
