@@ -100,8 +100,12 @@ class User extends CI_Controller {
         	if(isset($oldpassw, $passw)){
         		if($this->user_model->tjeckPass($userid, $oldpasswHash)){
         			$user_data['pass'] = $passwHash;
-        			$this->showEditProfile($user_data);
+        			//$this->showEditProfile($user_data);
+        		} else {
+        			$this->session->set_flashdata('error', 'Old password is not correct');
+        			redirect(base_url() . "user/showEditProfile");
         		}
+        		
         	}
         	
         	if($this->user_model->saveUserdata($user_data)){
