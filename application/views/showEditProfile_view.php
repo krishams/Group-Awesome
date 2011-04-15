@@ -1,5 +1,21 @@
 <h2>Basic Information</h2>
 
+<div id="profile">
+            <img alt="Profile image"  src="
+            <?php
+                if(empty($pic_path))
+                {
+                    echo base_url() . "assets/img/avatar.svg";
+                }
+                else if(isset($pic_path))
+                {
+                    echo $pic_path['path'];
+                }
+            ?>
+           "/>
+              <?php echo anchor('upload/getupload', 'Change profile picture') ?>
+        </div> <!-- profile -->
+
 <form name='input' action='<?php echo base_url()?>user/editProfile' method='post'>
 	<table>
 		<tr>
@@ -27,25 +43,11 @@
 
 
        
+
+
+
+        
 <h2>Favorit Bars</h2>
-
-
-        <div id="profile">
-            <img alt="Profile image"  src="
-            <?php
-                if(empty($pic_path))
-                {
-                    echo base_url() . "assets/img/avatar.svg";
-                }
-                else if(isset($pic_path))
-                {
-                    echo $pic_path['path'];
-                }
-            ?>
-           "/>
-              <?php echo anchor('upload/getupload', 'Change profile picture') ?>
-        </div> <!-- profile -->
-
 
       
 
