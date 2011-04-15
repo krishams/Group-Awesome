@@ -26,7 +26,7 @@
 </form>
 
         <?php echo anchor('upload/getupload', 'Change profile picture') ?>
-<h2>interests</h2>
+<h2>Favorit </h2>
 <?php
             if($this->session->flashdata('error')){
                 echo "<div class='errorMessage'>";
