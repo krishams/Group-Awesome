@@ -12,4 +12,4 @@ and open the template in the editor.
     </head>
     <body>
 
-    <div id="wrapper" class="<?=($this->logged_in->status())?'hello':''?>">
+    <div id="wrapper" class="">

@@ -8,8 +8,11 @@ class Logged_in{
 			//error_log("true");
 			return true;
 		}else{
+			
 			//error_log("false");
-			redirect(base_url());
+			
+			redirect(base_url() . "main/login");
+			
 		}
 	}
 }

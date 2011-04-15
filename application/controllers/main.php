@@ -14,9 +14,10 @@ class Main extends CI_Controller {
      * loads the initial log-in screen
      */
     function index() {
-        $data['error'] = $this->session->flashdata('error');
-        $data['main_content'] = 'index_view';
-        $this->load->view('/include/template_view', $data);
+        	$this->logged_in->status();
+            $data['main_content'] = 'home_view';
+            $this->load->view('/include/template1_view', $data);
+                
     }
 
     /**
@@ -24,17 +25,15 @@ class Main extends CI_Controller {
      * if true it directs the user to the home_view, otherwise it reloads the
      * page with an error message.
      */
-    function home() {//$id)
-        if ($this->verifyLogin() || $this->logged_in->status()) {
-//            error_log("log in ok");
-            $data['main_content'] = 'home_view';
-            $this->load->view('/include/template1_view', $data);
-        } else {
-//            error_log("log in not ok");
-//            $data['main_content'] = 'index_view';
-//            $this->load->view('/include/template_view', $data);
-            redirect();
+    function login() {//$id)
+    	if ($this->verifyLogin()) {
+    		redirect(base_url());
+    	} else {
+      	$data['error'] = $this->session->flashdata('error');
+        $data['main_content'] = 'index_view';
+        $this->load->view('/include/template_view', $data);
         }
+    
     }
 
     /**
