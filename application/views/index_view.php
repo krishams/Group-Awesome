@@ -2,9 +2,10 @@
 To change this template, choose Tools | Templates
 and open the template in the editor.
 -->
+
 <div id="logon">
     <!--?php form_open('getHome()'); ?>-->
-    <form class="loginForm" action="main/home" method="POST">
+    <form class="loginForm" action="<?php echo base_url() . 'main/login'?>" method="POST">
         <table>
             <tr>
                 <td>Email</td>
@@ -48,8 +49,9 @@ and open the template in the editor.
         </table>
         <!--This code will only be used if the password or email is incorrect,
             gets the error code from main_model -> verifyUser -->
-
+		
         <?php
+        	
             if ($this->session->flashdata('errorVerify')) {
                 echo "<div class='errorMessage'>";
                 echo "<br />";
