@@ -1,4 +1,4 @@
-<h2>Edit profile view</h2>
+<h2>Basic Information</h2>
 
 <form name='input' action='<?php echo base_url()?>user/editProfile' method='post'>
 	<table>
@@ -26,7 +26,7 @@
 </form>
 
         <?php echo anchor('upload/getupload', 'Change profile picture') ?>
-</form>
+<h2>interests</h2>
 <?php
             if($this->session->flashdata('error')){
                 echo "<div class='errorMessage'>";
