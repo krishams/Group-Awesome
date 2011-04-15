@@ -44,7 +44,7 @@ class User extends CI_Controller {
         }
         $data['profile'] = $this->main_model->getUserById($userid);
 
-        $data['pic_path'] = $this->upload_model->getProfilePic($userid);
+        $data['pic_path'] = $this->user_model->getProfilePic($userid);
 
         $data['main_content'] = 'profile_view';
 
