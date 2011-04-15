@@ -36,7 +36,7 @@ class User extends CI_Controller {
      * forwards it to the users profilpage
      */
     function showProfile() {
-
+		$this->logged_in->status();
         $userid = 0;
 
         if ($this->uri->segment(3)) {
@@ -56,7 +56,7 @@ class User extends CI_Controller {
      * forwards it to the users editProfile page.
      */
     
-    function showEditProfile($user_data) {
+    function showEditProfile() {
 		
         $userid = $_SESSION['userid'];
 		//if(isset($user_data))
@@ -95,7 +95,7 @@ class User extends CI_Controller {
         
         if ($this->form_validation->run() == FALSE) {
         	error_log("false");
-        	$this->showEditProfile($user_data);
+        	redirect(base_url() . "user/showEditProfile");
         } else {
         	if(isset($oldpassw, $passw)){
         		if($this->user_model->tjeckPass($userid, $oldpasswHash)){
