@@ -20,7 +20,11 @@
  ?>
 <br/>
 
-<p>* Note: The image size has to be less than: 1024 kilobytes</p>
+<p>Note: <br/>
+    - The image: <br/>
+        * size has to be less than: 1024 kilobytes<br/>
+        * height max 155 pixel<br/>
+        * width max 180 pixel</p>
 
 <br />
 <?php echo anchor('user/showEditProfile', 'Back to edit profile'); ?>

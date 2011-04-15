@@ -1,6 +1,19 @@
 <h2>profile view</h2>
 
-<div id="profile"><img src=" <?php echo $pic_path['path'] ?>  "/></div>
+<div id="profile">
+    <img alt="Profile image"  src="
+    <?php
+        if(empty($pic_path))
+        {
+            echo base_url() . "assets/img/avatar.svg";
+        }
+        else if(isset($pic_path))
+        {
+            echo $pic_path['path']; 
+        }
+    ?>
+   "/>
+</div> <!-- profile -->
 
 <div id="profile-left">
 <?php
@@ -8,5 +21,4 @@ echo '</br>' . $profile['email'] . '</br>';
 echo $profile['f_name'] . '</br>';
 echo $profile['l_name'] . '</br>';
 ?>
-
 </div>
