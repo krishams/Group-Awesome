@@ -41,9 +41,9 @@
             <input type="submit" name="option" value="Change password"/>
         </td>
 
-        <td><?= form_dropdown('roleid'.$row['id'], $roleOptions, $row['role_id']); ?></td>
+        <td><?= form_dropdown('roleid' . $row['id'], $roleOptions, $row['role_id']); ?></td>
 
-        <td><?= form_checkbox('isactive'.$row['id'], '', $row['active']); ?></td>
+        <td><?= form_checkbox('isactive' . $row['id'], '', $row['active']); ?></td>
 
         <td>
             <?php
