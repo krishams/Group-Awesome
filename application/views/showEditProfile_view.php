@@ -1,5 +1,5 @@
 <h2>Basic Information</h2>
-
+<?php echo validation_errors(); ?>
 <div id="profile">
             <img alt="Profile image"  src="
             <?php
@@ -38,16 +38,10 @@
 			<td><input type='Submit' value='Save Changes'</td>
 		</tr>				
 	</table>
-	<?php echo validation_errors('<p class="error">'); ?>
+	
 </form>
 
 
-       
-
-
-
-        
-<h2>Favorit Bars</h2>
 
       
 
@@ -59,6 +53,7 @@
                 echo "</div>";
             }
         ?>
+
 
 
 
