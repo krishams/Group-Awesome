@@ -15,8 +15,8 @@ class Search extends CI_Controller {
     {
           $data['main_content'] = 'findBuddies_view';
           $this->load->view('/include/template1_view', $data);
-
     }
+    
 }
 
 ?>
