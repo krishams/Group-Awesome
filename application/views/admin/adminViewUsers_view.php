@@ -1,8 +1,7 @@
-<table class="adminEditUsersTable" border="1">
+<br/>
+<table class="adminEditUsersTable" border="1s">
     <tr>
         <th>Id</th>
-        <th>First name</th>
-        <th>Last name</th>
         <th>Email</th>
         <th>Password</th>
         <th>Role</th>
@@ -14,7 +13,7 @@
 
     <?php
     $roleOptions = array();
-    foreach($admin as $row2){
+    foreach ($admin as $row2) {
         $editUser = $row2['editUser'];
         $editAdmin = $row2['editAdmin'];
     }
@@ -24,49 +23,78 @@
 
     foreach ($users as $row) {
         $hidden = array(
-                    'id' => $row['id']
-                );
+            'id' => $row['id']
+        );
         echo form_open('admin/controlInput', '', $hidden);
     ?>
         <tr>
             <td><?= $row['id']; ?></td>
-
-            <td><input type='text' name='firstname<?= $row['id']?>' size="10" value='<?= $row['f_name']?>'/></td>
-
-            <td><input type='text' name='lastname<?= $row['id']?>' size="15" value='<?= $row['l_name'] ?>'/></td>
-
-            <td><input type='text' name='email<?= $row['id']?>' value='<?= $row['email'] ?>'/></td>
+            
+            <td><input type='text' name='email<?= $row['id'] ?>' value='<?= $row['email'] ?>'/></td>
 
             <td>
-            <input type="submit" name="option" value="Change password"/>
-        </td>
+                <input type="submit" name="option" value="Change password"/>
+            </td>
 
-        <td><?= form_dropdown('roleid' . $row['id'], $roleOptions, $row['role_id']); ?></td>
+            <td><?= form_dropdown('roleid' . $row['id'], $roleOptions, $row['role_id']); ?></td>
 
-        <td><?= form_checkbox('isactive' . $row['id'], '', $row['active']); ?></td>
+            <td><?= form_checkbox('isactive' . $row['id'], '', $row['active']); ?></td>
 
-        <td>
+            <td>
             <?php
             //makes sure that only a super admin can delete an admin
-            if (($row['role_id'] == 1&& !$editAdmin)||($row['role_id'] == 2 && !$editAdmin)) {
+            if (($row['role_id'] == 1 && !$editAdmin) || ($row['role_id'] == 2 && !$editAdmin)) {
                 
-            } else { ?>
+            } else {
+            ?>
                 <input type="submit" name="option" value="Delete"/>
-                <?php } ?>
+            <?php } ?>
         </td>
         <td>
             <?php
             //makes sure that only a super admin can edit an admin
-            if (($row['role_id'] == 1&& !$editAdmin)||($row['role_id'] == 2 && !$editAdmin)) {
+            if (($row['role_id'] == 1 && !$editAdmin) || ($row['role_id'] == 2 && !$editAdmin)) {
                 
-            } else { ?>
+            } else {
+            ?>
                 <input type="submit" name="option" value="Edit"/>
-            <?= form_close();
-            } ?>
+            <?php } ?>
         </td>
         <td>
-            More
+            <a class="seemore">More</a>
         </td>
     </tr>
-<?php } ?>
+    <tr class="hiddentr" style="display: none">
+        <td class="td"></td>
+
+        <td colspan="7">
+            <div>
+                <table>
+                <tr>
+                    <td>First name:</td> <td><input type='text' name='firstname<?= $row['id'] ?>' size="15" value='<?= $row['f_name'] ?>'/></td>
+                </tr>
+                <tr>
+                <td>Last name:</td> <td><input type='text' name='lastname<?= $row['id'] ?>' size="15" value='<?= $row['l_name'] ?>'/></td>
+                </tr>
+                </table>
+            </div>
+        </td>
+
+
+    </tr>
+    <?php echo form_close();
+        } ?>
 </table>
+
+
+<!--
+ This script should be in another class, because it is bad code to have it here.
+ The script makes some more information about the user, display beneath the information that already is there.
+-->
+<script type="text/javascript">
+    $('.seemore').click(function() {
+        $('.hiddentr').toggle('slow', function() {
+            // Animation complete.
+        });
+    });
+</script>
