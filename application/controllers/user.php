@@ -66,6 +66,8 @@ class User extends CI_Controller {
 
         $data['main_content'] = 'showEditProfile_view';
         $this->load->view('/include/template1_view', $data);
+        //Print_r ($_SESSION);
+        print_r($this->session->all_userdata());
     }
     
     /**
@@ -78,12 +80,9 @@ class User extends CI_Controller {
     	$this->load->library('form_validation');
 		$this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
         $this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
-        //$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
         $this->form_validation->set_rules('Oldpsw', 'Old Password', 'trim|min_length[6]|max_length[32]');
         $this->form_validation->set_rules('passw', 'Password', 'trim|min_length[6]|max_length[32]');
         $this->form_validation->set_rules('confirmPassw', 'Confirm Password', 'trim|matches[passw]');
-        //error_log("db:" . $this->main_model->getUserforEmail($email));
-        //error_log($this->input->post('email'));
         $oldpassw = $this->input->post('Oldpsw');
         $passw = $this->input->post('passw');
         $oldpasswHash = hash('sha512', $oldpassw, FALSE );
@@ -96,7 +95,8 @@ class User extends CI_Controller {
         );
         
         if ($this->form_validation->run() == FALSE) {
-        	error_log("false");
+        	error_log("validation false");
+        	//$this->session->set_flashdata('error', 'Old password is not correct');
         	redirect(base_url() . "user/showEditProfile");
         } else {
         	if(isset($oldpassw, $passw)){
