@@ -27,14 +27,14 @@ class message_model extends CI_Model {
      */
     function getMessages($id){
         $data = array();
-        $this->db->order_by('msg_date');
-        $this->db->where('user_id', $id);
+        $this->db->order_by('msg_date', 'desc');
+        $this->db->where('owner_id', $id);
         $Q = $this->db->get('messages');
         if($Q->num_rows() > 0){
             foreach($Q->result_array() as $row){
                 $data[] = $row;
-                return $data;
             }
+            return $data;
         }
         else
             return false;

@@ -17,5 +17,12 @@
         });
     });
 </script>
+<script type="text/javascript">
+    $('.reply').click(function() {
+        $(this).next('.hidden').toggle('slow', function() {
+            // Animation complete.
+        });
+    });
+</script>
 </html>
 

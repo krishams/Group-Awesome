@@ -155,5 +155,9 @@ class User extends CI_Controller {
         $data['main_content'] = 'message_view';
         $this->load->view('/include/template1_view', $data);
     }
+
+    function insertMessage(){
+        
+    }
 }
 ?>
