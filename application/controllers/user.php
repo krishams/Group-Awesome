@@ -145,5 +145,15 @@ class User extends CI_Controller {
         $user_data = array();
         $this->user_model->createFriend($user_data);
     }
+
+    /**
+     * This function will make sure to get the user to his inbox, where all his messages are.
+     */
+    function goToInbox(){
+        $id = $_SESSION['userid'];
+        $data['messages'] = $this->message_model->getMessages($id);
+        $data['main_content'] = 'message_view';
+        $this->load->view('/include/template1_view', $data);
+    }
 }
 ?>

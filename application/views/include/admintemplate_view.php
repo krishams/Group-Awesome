@@ -3,5 +3,7 @@
         <?php $this->load->view('include/adminNavigation_view'); ?>
 
         <?php $this->load->view($main_content); ?>
+
+        <?php $this->load->view('include/footer_view'); ?>
     </body>
 </html>
