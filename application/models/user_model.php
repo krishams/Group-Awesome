@@ -117,6 +117,14 @@ class user_model extends CI_Model {
     	}
     	return $data;
     }
+
+    /**
+     * This function will create the relation between 2 users
+     * Is called from User controller, function createRelation
+     */
+    function createFriend($user_data){
+        $this->db->insert('relation', $user_data);
+    }
 }
 
 ?>

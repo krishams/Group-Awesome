@@ -137,5 +137,13 @@ class User extends CI_Controller {
             $this->load->view('resetPass_view', $data);
         }
     }
+
+    /**
+     * Will create a relation between 2 users, passing the users id to the model
+     */
+    function createRelation(){
+        $user_data = array();
+        $this->user_model->createFriend($user_data);
+    }
 }
 ?>
