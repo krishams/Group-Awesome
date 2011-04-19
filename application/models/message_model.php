@@ -14,5 +14,12 @@ class message_model extends CI_Model {
     function message_model() {
         parent::__construct();
     }
+
+    /**
+     * inserts a message into the message tabel in the db
+     */
+    function insertMessage($data){
+        $this->db->insert('messages', $data);
+    }
 }
 ?>

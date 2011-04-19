@@ -6,5 +6,16 @@
 </ul>
 </body>
 
+<!--
+ This script should be in another class, because it is bad code to have it here.
+ The script makes some more information about the user, display beneath the information that already is there.
+-->
+<script type="text/javascript">
+    $('.seemore').click(function() {
+        $('.hiddentr').toggle('slow', function() {
+            // Animation complete.
+        });
+    });
+</script>
 </html>
 
