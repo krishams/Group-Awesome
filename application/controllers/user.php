@@ -134,5 +134,10 @@ class User extends CI_Controller {
             $this->load->view('resetPass_view', $data);
         }
     }
+
+    function test() {
+        $data = $this->bar_model->getListOfBars();
+        error_log(print_r($data, true));
+    }
 }
 ?>
