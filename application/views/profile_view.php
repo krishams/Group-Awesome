@@ -22,3 +22,6 @@ echo $profile['f_name'] . '</br>';
 echo $profile['l_name'] . '</br>';
 ?>
 </div>
+<?= form_open('user/goToInbox', ''); ?>
+<input type="submit" value="Inbox" />
+<?= form_close(); ?>

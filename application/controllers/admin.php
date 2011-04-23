@@ -113,10 +113,21 @@ class Admin extends CI_Controller {
      */
     function editUser(){
         $id = $this->input->post('id');
+        $f_name = $this->input->post('firstname'.$id);
+        $l_name = $this->input->post('lastname'.$id);
         $email = $this->input->post('email'.$id);
         $role_id = $this->input->post('roleid'.$id);
         $is_active = $this->input->post('isactive'.$id);
         error_log('ID: '.$id.', Email: '.$email.', Role: '.$role_id.', Active: '.$is_active);
+        $user_data = array(
+            'userid' => $id,
+            'email' => $email,
+            'role_id' => $role_id,
+            'f_name' => $f_name,
+            'l_name' => $l_name,
+            'active' => true //this is not correct!!!!! This needs to be $is_active, but that is not coming from the checkbox
+        );
+        $this->user_model->saveUserdata($user_data);
         $this->viewUsers();
     }
 }
