@@ -129,13 +129,12 @@ class user_model extends CI_Model {
     /**
      * gets the name of the user
      */
-    function getUserName($ids){
+    function getUserName($id){
         $this->db->select('f_name, l_name');
-        $this->db->where('id', $ids);
+        $this->db->where('id', $id);
         $this->db->limit(1);
         $T = $this->db->get('users');
         if($T->num_rows() >0){
-            error_log('here: ' . $T); // test =  comes with nothing ? why?
             $data = $T->result_array();
             return $data;
         }
