@@ -38,7 +38,7 @@ class User extends CI_Controller {
         if ($this->uri->segment(3)) {
             $userid = $this->uri->segment(3);
         }
-        $data['profile'] = $this->main_model->getUserById($userid);
+        $data['profile'] = $this->user_model->getUserById($userid);
 
         $data['pic_path'] = $this->user_model->getProfilePic($userid);
 
@@ -135,9 +135,13 @@ class User extends CI_Controller {
      * Will create a relation between 2 users, passing the users id to the model
      */
     function createRelation() {
-        $user_data = array(//needs to contain user_id1 and user_id2
-        );
+        $user_data = array();
+        $id = $_POST['msg_id'];
+        $user_data['id1'] = $_POST['owner_id'];
+        $user_data['id2'] = $_POST['submit_id'];
         $this->user_model->createFriend($user_data);
+        $this->message_model->deleteMessage($id);
+        redirect();
     }
 
     /**
@@ -153,7 +157,7 @@ class User extends CI_Controller {
     /**
      * This function will get som parameters and save them in the db tabel messages
      */
-    function insertMessage() {
+    function sendRepley() {
         $submitter =  $_SESSION['userid'];
         $data['owner_id'] = $_POST['owner_id'];
         $data['message'] = $_POST['messagebody'];
@@ -164,7 +168,46 @@ class User extends CI_Controller {
         $data['submit_name'] = $first . ' ' . $sec;
         $data['parent'] = $_POST['parent'];
         $this->message_model->insertMessage($data);
+        redirect('user/goToInbox');
+    }
+
+    /*
+     * This is the function that is needed to send a message to another
+     */
+    function sendMessage(){
+        $submitter =  $_SESSION['userid'];
+        $data['submit_id'] = $submitter;
+        $name = $this->user_model->getUserName($submitter); //returns both first and last name
+        $first = $name['f_name'];
+        $sec = $name['l_name'];
+        $data['submit_name'] = $first . ' ' . $sec;
+        $data['owner_id'] = $_POST['msg_to'];
+        $data['msg_sub'] = $_POST['msg_sub'];
+        $data['message'] = $_POST['msg_msg'];
+        $data['parent'] = 0;
+        $this->message_model->insertMessage($data);
+        redirect('user/goToInbox');
+    }
+
+    /*
+     * Will send a friend request to the other person
+     */
+    function sendFriendRequest() {
+        $data['owner_id'] = $_POST['id'];
+        $data['msg_sub'] = 'friend request%&¤';
+        $submitter =  $_SESSION['userid'];
+        $data['submit_id'] = $submitter;
+        $name = $this->user_model->getUserName($submitter); //returns both first and last name
+        $first = $name['f_name'];
+        $sec = $name['l_name'];
+        $data['submit_name'] = $first . ' ' . $sec;
+        $data['parent'] = 0;
+        $this->message_model->insertMessage($data);
         redirect();
+    }
+
+    function acceptFriendRequest(){
+        
     }
 }
 

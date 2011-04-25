@@ -146,17 +146,5 @@ class main_model extends CI_Model {
         }
         return $data;
     }
-   
-    function getUserByid($id) {
-    	$data = array();
-    	$this->db->where('id', $id);
-    	$Q = $this->db->get('users');
-    	if($Q->num_rows()>0){
-    		foreach($Q->result_array() as $row){
-                    $data = $row;
-            }
-    	}
-    	return $data;
-    }
 }
 ?>
