@@ -12,7 +12,7 @@ class main_model extends CI_Model {
 
 
     /**
-     *
+     * Creates a link that can be emailed and saves to the database
      * @param int $type 0 for activate link
      *                  1 for reset link
      * @return string   the link we created

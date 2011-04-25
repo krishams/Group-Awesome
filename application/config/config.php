@@ -355,6 +355,11 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
+/*
+ * For sending emails
+ */
+$config['from'] = 'noreply@pubcrawl.dk';
+$config['name'] = 'The Pub Crawl Team';
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */
