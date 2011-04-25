@@ -22,6 +22,7 @@ echo $profile['f_name'] . '</br>';
 echo $profile['l_name'] . '</br>';
 ?>
 </div>
-<?= form_open('user/goToInbox', ''); ?>
+<?php if($_SESSION['userid'] == $profile['id']){
+form_open('user/goToInbox', ''); ?>
 <input type="submit" value="Inbox" />
-<?= form_close(); ?>
+<?= form_close(); } ?>
