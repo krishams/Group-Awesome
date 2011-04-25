@@ -28,7 +28,7 @@
 </div>
 <div id="friendrequest-button">
     <?php if ($_SESSION['userid'] != $profile['id']) {
-        $hidden =  $profile['id'];
+        $hidden = array('id' => $profile['id']);
         echo form_open('user/sendFriendRequest','', $hidden); ?>
         <input type="submit" value="Friend request" />
     <?= form_close();

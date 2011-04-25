@@ -7,19 +7,29 @@ Message: <br/>
 <input type="submit" value="Send message" />
 <?= form_close(); ?>
 
-
        <?php
        if ($messages != null) {
-           foreach ($messages as $row) { ?>
+           foreach ($messages as $row) {
+               if($row['msg_sub'] == 'friend request%&¤'){ ?>
+                    You have been ask if you want to be friends with <?php echo $row['submit_name']; ?>
+                    <?php $hiddenid = array(
+                        'msg_id' => $row['msg_id'],
+                        'owner_id' => $row['submit_id'],
+                        'submit_id' => $_SESSION['userid']);
+                        echo form_open('user/createRelation', '', $hiddenid); ?>
+                        <input type="submit" value="Accept friend request" />
+                    <?= form_close(); ?>
+               <?php }
+               else{ ?>
                <li class="message">
             <div class="msgbody">
-<?php echo $row['message']; ?>
+                <?php echo $row['message']; ?>
            </div>
            <div class="msgauthor">
                <i> <?php echo $row['submit_name']; ?> </i>
            </div>
            <div class="msgupdate">
-<?php echo $row['msg_date']; ?>
+                <?php echo $row['msg_date']; ?>
            </div>
            <a class="reply">Reply to message</a>
            <div class="hidden" id="<?php echo $row['msg_id']; ?>" style="display: none">
@@ -38,5 +48,5 @@ Message: <br/>
         <?php echo form_close(); ?>
            </div>
        </li>
-<?php }
+<?php } }
        } ?>

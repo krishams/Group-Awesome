@@ -39,5 +39,12 @@ class message_model extends CI_Model {
         else
             return false;
     }
+
+    /*
+     * deletes a message from the db
+     */
+    function deleteMessage($id){
+        $this->db->delete('messages', array('msg_id' => $id));
+    }
 }
 ?>
