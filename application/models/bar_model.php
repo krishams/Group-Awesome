@@ -8,7 +8,7 @@
  */
 class bar_model extends CI_Model {
 
-    function user_model() {
+    function bar_model() {
         parent::__construct();
     }
 
@@ -67,12 +67,48 @@ class bar_model extends CI_Model {
         return $data;
     }
 
-    function createBar() {
+    /**
+     * saves a new or existing bar
+     * @param array $bar an array containing ['id'] and ['name']
+     * @return int/boolean the id of the newly created bar, TRUE if an existing bar has been saved or FALSE if it can
+     * not be saved
+     */
+    function saveBar($bar) {
+        if (!isset($bar['name'])) {                 //no bar name = can't save!
+            return false;
+        }
 
+        if (isset($bar['id']) && $bar['id'] > 0) {  //existing bar
+            $this->db->where('id', $bar['id']);
+            $this->db->update('bars', $bar);
+            return true;
+        } else {                                    //create new bar
+            $this->db->insert('bars', $bar);
+            return $this->db->insert_id();
+        }
     }
 
-    function saveFavoriteBar($user_id, $bar_id) {
+    /**
+     * saves a new or existing favorite bar
+     * @param array $bar an array containing ['user_id'] and ['bar_id']
+     * @return int/boolean the id of the newly created bar, TRUE if an existing bar has been saved or FALSE if it can
+     * not be saved
+     */
+    function saveFavoriteBar($bar) {
+        if (!isset($bar['name'])) {
+            return false;
+        }
 
+        if (isset($bar['id']) && $bar['id'] > 0) { //existing bar
+            $this->db->where('id', $bar['id']);
+            $this->db->update('bars', $bar);
+            error_log("query Userdata" . $this->db->last_query());
+
+            return true;
+        } else { //create new bar
+            $this->db->insert('bars', $bar);
+            return $this->db->insert_id();
+        }
     }
 
     function deleteBar() {

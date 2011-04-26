@@ -142,9 +142,10 @@ class User extends CI_Controller {
     }
 
     function test() {
-//        $this->friend_model->get_friends(134);
-        $data = $this->bar_model->getUsersForBar(1);
-        error_log(print_r($data, true));
+        $this->friend_model->get_friends(134, true);
+//        $bar = array("id" => 3, "name" => "Byens Kro");
+//        $data = $this->bar_model->saveBar($bar);
+//        error_log(print_r($data, true));
     }
 
     /**
