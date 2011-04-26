@@ -36,3 +36,11 @@
     <?= form_close();
     } ?>
 </div>
+
+<div id="sendMessage">
+    <?php if(!$isUser){
+        $hidden = array('id' => $profile['id']);
+        echo form_open('user/getPrivateMsgView','',$hidden); ?>
+        <input type="submit" value="Send private message" />
+    <?php form_close(); }?>
+</div>

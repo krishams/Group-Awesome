@@ -239,6 +239,24 @@ class User extends CI_Controller {
         $sec = $name['l_name'];
         return $first . ' ' . $sec;
     }
-}
 
+    function sendPrivateMessage(){
+        $submitter =  $_SESSION['userid'];
+        $data['submit_id'] = $submitter;
+        $data['submit_name'] = $this->makeUserName($submitter);
+        $data['owner_id'] = $_POST['msg_to'];
+        $data['msg_sub'] = $_POST['msg_sub'];
+        $data['message'] = $_POST['msg_msg'];
+        $data['parent_id'] = 0;
+        $this->message_model->insertMessage($data);
+        redirect('user/showProfile/'.$_POST['msg_to']);
+    }
+
+    function getPrivateMsgView(){
+        $data['user'] = $_POST['id'];
+        error_log($_POST['id']);
+        $data['main_content'] = 'privateMessage_view';
+        $this->load->view('/include/template1_view', $data);
+        }
+}
 ?>
