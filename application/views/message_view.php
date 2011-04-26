@@ -10,8 +10,9 @@ Message: <br/>
        <?php
        if ($messages != null) {
            foreach ($messages as $row) {
+               echo '<br/> ----------------------------------- <br/>';
                if($row['msg_sub'] == 'friend request%&¤'){ ?>
-                    You have been ask if you want to be friends with <?php echo $row['submit_name']; ?>
+                    You have been ask if you want to be friends with <i><?php echo $row['submit_name']; ?></i>
                     <?php $hiddenid = array(
                         'msg_id' => $row['msg_id'],
                         'owner_id' => $row['submit_id'],
@@ -35,7 +36,7 @@ Message: <br/>
            <div class="hidden" id="<?php echo $row['msg_id']; ?>" style="display: none">
         <?php
                $hiddenid = array(
-                   'parent' => $row['msg_id'],
+                   'parent_id' => $row['msg_id'],
                    'owner_id' => $row['submit_id'],
                    'submit_id' => $_SESSION['userid']);
                echo form_open("user/sendRepley", '', $hiddenid);
