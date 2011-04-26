@@ -53,42 +53,26 @@ class Login extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->getRegistration();
         } else if ($this->main_model->getUserforEmail($this->input->post('email'))) {
-            redirect('main_controller/getRegistration');
+            redirect('login/getRegistration');
             //print error message
         } else {
         	$passwHash = hash('sha512', $this->input->post('passw'), FALSE);
         	$user_data = array(
-            'email' => $this->input->post('email'),
-            'pass' => $passwHash,
-            'f_name' => $this->input->post('firstname'),
-            'l_name' => $this->input->post('lastname'),
-            'active' => '0'
+                    'email' => $this->input->post('email'),
+                    'pass' => $passwHash,
+                    'f_name' => $this->input->post('firstname'),
+                    'l_name' => $this->input->post('lastname'),
+                    'active' => '0'
         	);
-			            if ($id = $this->user_model->saveUserdata($user_data)) {
+            if ($id = $this->user_model->saveUserdata($user_data)) {
                 $data['main_content'] = 'checkMail_view';
                 $this->load->view('include/template_view', $data);
+                $this->load->helper('emailService');
 
                 $linkString = $this->main_model->createLink($id, 1);
 
-                $config = Array(
-                    'protocol' => 'smtp',
-                    'smtp_host' => 'ssl://smtp.googlemail.com',
-                    'smtp_port' => 465,
-                    'smtp_user' => 'awesome.pubcrawl2011@gmail.com',
-                    'smtp_pass' => 'group.awesome'
-                );
-
                 $email = $this->input->post('email');
-                $this->load->library('email', $config);
-
-                $this->email->set_newline("\r\n"); //just has to be there
-
-                $this->email->from('The Pub Crawl Team');
-                $this->email->to($email);
-                $this->email->subject('Activate account');
-                $this->email->message("Click the following link to activate your account:\n\n" .
-                        base_url() . "user/activate/" . $linkString);
-                $this->email->send();
+                send_validation_email($email, $linkString);
             } else {
                 $this->load->view('registration_view');
             }
@@ -102,35 +86,21 @@ class Login extends CI_Controller {
      */
     function submitRequestPassword() {
 
-        $config = Array(
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_port' => 465,
-            'smtp_user' => 'awesome.pubcrawl2011@gmail.com',
-            'smtp_pass' => 'group.awesome'
-        );
-
         $this->load->library('form_validation');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
         if ($this->form_validation->run() == FALSE) {
         
             $this->load->view('requestPass_view');
         } else if ($id = $this->main_model->getUserforEmail($this->input->post('email'))) {
+
             //validation has passed, so send email
+            $email = $this->input->post('email');
             $linkString = $this->main_model->createLink($id, 2);
 
-            $email = $this->input->post('email');
-            $this->load->library('email', $config);
+            $this->load->helper('emailService');
+            $success = send_password_request_email($email, $linkString);
 
-            $this->email->set_newline("\r\n"); //just has to be there
-
-            $this->email->from('The Pub Crawl Team');
-            $this->email->to($email);
-            $this->email->subject('Reset password');
-            $this->email->message("Click the following link to reset your password:\n\n" .
-                    base_url() . "user/activate/" . $linkString);
-
-            if ($this->email->send()) {
+            if ($success) {
                 $data['main_content'] = 'checkMail2_view';
                 $this->load->view('include/template_view', $data);
             } else {

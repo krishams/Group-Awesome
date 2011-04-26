@@ -12,7 +12,7 @@ class main_model extends CI_Model {
 
 
     /**
-     *
+     * Creates a link that can be emailed and saves to the database
      * @param int $type 0 for activate link
      *                  1 for reset link
      * @return string   the link we created
@@ -113,7 +113,7 @@ class main_model extends CI_Model {
         $this->db->where('pass', $passwHash);
         $this->db->limit(1);
         $Q = $this->db->get('users');
-        error_log("query" . $this->db->last_query());
+        error_log($Q->num_rows . ", pw: " . $pw . " pwhash: " . $passwHash . " email: " .$email);
         if($Q->num_rows() > 0){
             $row = $Q->row_array();
             error_log("array verify" . print_r($row,true));
@@ -145,18 +145,6 @@ class main_model extends CI_Model {
             }
         }
         return $data;
-    }
-   
-    function getUserByid($id) {
-    	$data = array();
-    	$this->db->where('id', $id);
-    	$Q = $this->db->get('users');
-    	if($Q->num_rows()>0){
-    		foreach($Q->result_array() as $row){
-                    $data = $row;
-            }
-    	}
-    	return $data;
     }
 }
 ?>
