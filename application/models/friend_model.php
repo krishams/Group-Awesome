@@ -29,7 +29,21 @@ class friend_model extends CI_Model {
     }
 
     function get_friends($id) {
-        
+        $sql = "(SELECT id1 as id FROM `relations` WHERE id2 = 134)
+                UNION
+                (SELECT id2 FROM `relations` WHERE id1 = 134)";
+
+        $Q = $this->db->query($sql);
+
+        $data = array();
+        if ($Q->num_rows() > 0) {
+            foreach ($Q->result_array() as $row) {
+                $data[] = $row['id'];
+            }
+        }
+        error_log(print_r($data, true));
+        return $data;
+
     }
 
     function get_friend_requests($id) {

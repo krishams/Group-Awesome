@@ -127,8 +127,9 @@ class User extends CI_Controller {
     }
 
     function test() {
-        $data = $this->bar_model->getListOfBars();
-        error_log(print_r($data, true));
+        $this->friend_model->get_friends(134);
+//        $data = $this->bar_model->getListOfBars();
+//        error_log(print_r($data, true));
     }
 
     /**
