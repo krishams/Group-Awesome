@@ -1,3 +1,7 @@
 <div id="findBuddies">
-   <h1>Hi This is where you can find some beer buddies</h1>
+   <h1>Random people</h1>
+   <br/>
+
+   
+
 </div>

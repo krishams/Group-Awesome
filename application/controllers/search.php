@@ -13,8 +13,11 @@ class Search extends CI_Controller {
      */
     function findBuddies()
     {
+          $this->search_model->getRandomUsers();
+
           $data['main_content'] = 'findBuddies_view';
           $this->load->view('/include/template1_view', $data);
+          
     }
     
 }
