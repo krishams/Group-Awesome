@@ -62,12 +62,12 @@ class User extends CI_Controller {
 		//if(isset($user_data))
 		$data['profile'] = $this->main_model->getUserById($userid);
 
-                $data['pic_path'] = $this->user_model->getProfilePic($userid);
+        $data['pic_path'] = $this->user_model->getProfilePic($userid);
 
         $data['main_content'] = 'showEditProfile_view';
         $this->load->view('/include/template1_view', $data);
         //Print_r ($_SESSION);
-        print_r($this->session->all_userdata());
+        //print_r($this->session->all_userdata());
     }
     
     /**
@@ -85,7 +85,7 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('confirmPassw', 'Confirm Password', 'trim|matches[passw]');
         $oldpassw = $this->input->post('Oldpsw');
         $passw = $this->input->post('passw');
-        $oldpasswHash = hash('sha512', $oldpassw, FALSE );
+        $oldpasswHash = hash('sha512', $oldpassw, FALSE);
         $passwHash = hash('sha512', $passw, FALSE);
         $user_data = array(
         		'userid' => $userid,
@@ -96,22 +96,24 @@ class User extends CI_Controller {
         
         if ($this->form_validation->run() == FALSE) {
         	error_log("validation false");
-        	//$this->session->set_flashdata('error', 'Old password is not correct');
-        	redirect(base_url() . "user/showEditProfile");
+        	$this->showEditProfile();
+        	//redirect(base_url() . "user/showEditProfile");
         } else {
-        	if(isset($oldpassw, $passw)){
+        	if(strlen($oldpassw) >= 6 || strlen($passw) >= 6){
         		if($this->user_model->tjeckPass($userid, $oldpasswHash)){
         			$user_data['pass'] = $passwHash;
         			//$this->showEditProfile($user_data);
         		} else {
         			$this->session->set_flashdata('error', 'Old password is not correct');
-        			redirect(base_url() . "user/showEditProfile");
+        			
+        			//redirect(base_url() . "user/showEditProfile");
         		}
         		
         	}
         	
         	if($this->user_model->saveUserdata($user_data)){
-        		redirect('user/showEditProfile');
+        		$this->session->set_flashdata('error', 'Account data have been saved');
+        		$this->showEditProfile();
         	}
         	
         }      
