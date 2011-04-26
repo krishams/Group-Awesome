@@ -41,8 +41,17 @@ class User extends CI_Controller {
         if($userid == $_SESSION['userid']){
             $data['isUser'] = true;
         }
-        else
+        else{
             $data['isUser'] = false;
+        }
+        
+        $friends = $this->friend_model->get_friends($_SESSION['userid']);
+        $data['isFriend'] = false;
+        foreach($friends as $row){
+            if($row == $userid){
+                $data['isFriend'] = true;
+            }
+        }
 
         $data['profile'] = $this->user_model->getUserById($userid);
 
@@ -239,12 +248,30 @@ class User extends CI_Controller {
     /*
      * simpel function that gets the name of a user
      */
-    function makeUserName($id){
+    function makeUserName($submitter){
         $name = $this->user_model->getUserName($submitter); //returns both first and last name
         $first = $name['f_name'];
         $sec = $name['l_name'];
         return $first . ' ' . $sec;
     }
-}
 
+    function sendPrivateMessage(){
+        $submitter =  $_SESSION['userid'];
+        $data['submit_id'] = $submitter;
+        $data['submit_name'] = $this->makeUserName($submitter);
+        $data['owner_id'] = $_POST['msg_to'];
+        $data['msg_sub'] = $_POST['msg_sub'];
+        $data['message'] = $_POST['msg_msg'];
+        $data['parent_id'] = 0;
+        $this->message_model->insertMessage($data);
+        redirect('user/showProfile/'.$_POST['msg_to']);
+    }
+
+    function getPrivateMsgView(){
+        $data['user'] = $_POST['id'];
+        error_log($_POST['id']);
+        $data['main_content'] = 'privateMessage_view';
+        $this->load->view('/include/template1_view', $data);
+        }
+}
 ?>
