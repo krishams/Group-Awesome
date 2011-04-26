@@ -38,6 +38,12 @@ class User extends CI_Controller {
         if ($this->uri->segment(3)) {
             $userid = $this->uri->segment(3);
         }
+        if($userid == $_SESSION['userid']){
+            $data['isUser'] = true;
+        }
+        else
+            $data['isUser'] = false;
+
         $data['profile'] = $this->user_model->getUserById($userid);
 
         $data['pic_path'] = $this->user_model->getProfilePic($userid);
@@ -147,8 +153,16 @@ class User extends CI_Controller {
     function createRelation() {
         $user_data = array();
         $id = $_POST['msg_id'];
-        $user_data['id1'] = $_POST['owner_id'];
-        $user_data['id2'] = $_POST['submit_id'];
+        $id1 = $_POST['owner_id'];
+        $id2 = $_POST['submit_id'];
+        if($id1<$id2){
+            $user_data['id1'] = $id1;
+            $user_data['id2'] = $id2;
+        }
+        else{
+            $user_data['id1'] = $id2;
+            $user_data['id2'] = $id1;
+        }
         $this->friend_model->approve_friend($user_data);
         $this->message_model->deleteMessage($id);
         redirect();
@@ -172,10 +186,7 @@ class User extends CI_Controller {
         $data['owner_id'] = $_POST['owner_id'];
         $data['message'] = $_POST['messagebody'];
         $data['submit_id'] = $submitter;
-        $name = $this->user_model->getUserName($submitter); //returns both first and last name
-        $first = $name['f_name'];
-        $sec = $name['l_name'];
-        $data['submit_name'] = $first . ' ' . $sec;
+        $data['submit_name'] = $this->makeUserName($submitter);
         $data['parent_id'] = $_POST['parent'];
         $this->message_model->insertMessage($data);
         redirect('user/goToInbox');
@@ -187,10 +198,7 @@ class User extends CI_Controller {
     function sendMessage(){
         $submitter =  $_SESSION['userid'];
         $data['submit_id'] = $submitter;
-        $name = $this->user_model->getUserName($submitter); //returns both first and last name
-        $first = $name['f_name'];
-        $sec = $name['l_name'];
-        $data['submit_name'] = $first . ' ' . $sec;
+        $data['submit_name'] = $this->makeUserName($submitter);
         $data['owner_id'] = $_POST['msg_to'];
         $data['msg_sub'] = $_POST['msg_sub'];
         $data['message'] = $_POST['msg_msg'];
@@ -207,13 +215,20 @@ class User extends CI_Controller {
         $data['msg_sub'] = 'friend request%&¤';
         $submitter =  $_SESSION['userid'];
         $data['submit_id'] = $submitter;
-        $name = $this->user_model->getUserName($submitter); //returns both first and last name
-        $first = $name['f_name'];
-        $sec = $name['l_name'];
-        $data['submit_name'] = $first . ' ' . $sec;
+        $data['submit_name'] = $this->makeUserName($submitter);
         $data['parent_id'] = 0;
         $this->message_model->insertMessage($data);
         redirect();
+    }
+
+    /*
+     * simpel function that gets the name of a user
+     */
+    function makeUserName($id){
+        $name = $this->user_model->getUserName($submitter); //returns both first and last name
+        $first = $name['f_name'];
+        $sec = $name['l_name'];
+        return $first . ' ' . $sec;
     }
 }
 
