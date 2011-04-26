@@ -5,7 +5,8 @@
    <?php
         foreach($random as $row)
         { ?>
-            <img src="<?php echo $row['path'];?> "/>
+            <img alt="Profile image" src="<?php echo $row['path'];?> "/>
+            <p><?php echo $row['user_id']; ?></p>
    <?php
         }
    ?>
