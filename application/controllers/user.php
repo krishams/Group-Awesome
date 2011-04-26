@@ -48,8 +48,7 @@ class User extends CI_Controller {
         $friends = $this->friend_model->get_friends($_SESSION['userid']);
         $data['isFriend'] = false;
         foreach($friends as $row){
-            error_log('this is empty row'. $row['id']);
-            if($row['id'] == $userid){
+            if($row == $userid){
                 $data['isFriend'] = true;
             }
         }
