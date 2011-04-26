@@ -38,7 +38,7 @@ class User extends CI_Controller {
         if ($this->uri->segment(3)) {
             $userid = $this->uri->segment(3);
         }
-        $data['profile'] = $this->main_model->getUserById($userid);
+        $data['profile'] = $this->user_model->getUserById($userid);
 
         $data['pic_path'] = $this->user_model->getProfilePic($userid);
 
@@ -55,14 +55,14 @@ class User extends CI_Controller {
 
         $userid = $_SESSION['userid'];
         //if(isset($user_data))
-        $data['profile'] = $this->main_model->getUserById($userid);
+        $data['profile'] = $this->user_model->getUserById($userid);
 
         $data['pic_path'] = $this->user_model->getProfilePic($userid);
 
         $data['main_content'] = 'showEditProfile_view';
         $this->load->view('/include/template1_view', $data);
         //Print_r ($_SESSION);
-        print_r($this->session->all_userdata());
+        //print_r($this->session->all_userdata());
     }
 
     /**
@@ -88,25 +88,34 @@ class User extends CI_Controller {
         );
 
         if ($this->form_validation->run() == FALSE) {
-            error_log("validation false");
-            //$this->session->set_flashdata('error', 'Old password is not correct');
-            redirect(base_url() . "user/showEditProfile");
-        } else {
-            if (isset($oldpassw, $passw)) {
-                if ($this->user_model->tjeckPass($userid, $oldpasswHash)) {
-                    $user_data['pass'] = $passwHash;
-                    //$this->showEditProfile($user_data);
-                } else {
-                    $this->session->set_flashdata('error', 'Old password is not correct');
-                    redirect(base_url() . "user/showEditProfile");
-                }
-            }
 
-            if ($this->user_model->saveUserdata($user_data)) {
-                redirect('user/showEditProfile');
-            }
-        }
+        	error_log("validation false");
+        	$this->showEditProfile();
+        	//redirect(base_url() . "user/showEditProfile");
+        } else {
+        	if(strlen($oldpassw) >= 6 || strlen($passw) >= 6){
+        		if($this->user_model->tjeckPass($userid, $oldpasswHash)){
+        			$user_data['pass'] = $passwHash;
+        			//$this->showEditProfile($user_data);
+        		} else {
+        			$this->session->set_flashdata('error', 'Old password is not correct');
+        			
+        			//redirect(base_url() . "user/showEditProfile");
+        		}
+        		
+        	}
+        	
+        	if($this->user_model->saveUserdata($user_data)){
+        		$this->session->set_flashdata('error', 'Account data have been saved');
+        		$this->showEditProfile();
+        	}
+        	
+        }      
+    
     }
+
+     
+    
 
     /**
      * This method is called when a user clicks on a link in an email they have been sent.
@@ -126,13 +135,23 @@ class User extends CI_Controller {
         }
     }
 
+    function test() {
+        $this->friend_model->get_friends(134);
+//        $data = $this->bar_model->getListOfBars();
+//        error_log(print_r($data, true));
+    }
+
     /**
      * Will create a relation between 2 users, passing the users id to the model
      */
     function createRelation() {
-        $user_data = array(//needs to contain user_id1 and user_id2
-        );
-        $this->user_model->createFriend($user_data);
+        $user_data = array();
+        $id = $_POST['msg_id'];
+        $user_data['id1'] = $_POST['owner_id'];
+        $user_data['id2'] = $_POST['submit_id'];
+        $this->friend_model->approve_friend($user_data);
+        $this->message_model->deleteMessage($id);
+        redirect();
     }
 
     /**
@@ -148,7 +167,7 @@ class User extends CI_Controller {
     /**
      * This function will get som parameters and save them in the db tabel messages
      */
-    function insertMessage() {
+    function sendRepley() {
         $submitter =  $_SESSION['userid'];
         $data['owner_id'] = $_POST['owner_id'];
         $data['message'] = $_POST['messagebody'];
@@ -157,11 +176,45 @@ class User extends CI_Controller {
         $first = $name['f_name'];
         $sec = $name['l_name'];
         $data['submit_name'] = $first . ' ' . $sec;
-        $data['parent'] = $_POST['parent'];
+        $data['parent_id'] = $_POST['parent'];
+        $this->message_model->insertMessage($data);
+        redirect('user/goToInbox');
+    }
+
+    /*
+     * This is the function that is needed to send a message to another
+     */
+    function sendMessage(){
+        $submitter =  $_SESSION['userid'];
+        $data['submit_id'] = $submitter;
+        $name = $this->user_model->getUserName($submitter); //returns both first and last name
+        $first = $name['f_name'];
+        $sec = $name['l_name'];
+        $data['submit_name'] = $first . ' ' . $sec;
+        $data['owner_id'] = $_POST['msg_to'];
+        $data['msg_sub'] = $_POST['msg_sub'];
+        $data['message'] = $_POST['msg_msg'];
+        $data['parent_id'] = 0;
+        $this->message_model->insertMessage($data);
+        redirect('user/goToInbox');
+    }
+
+    /*
+     * Will send a friend request to the other person
+     */
+    function sendFriendRequest() {
+        $data['owner_id'] = $_POST['id'];
+        $data['msg_sub'] = 'friend request%&¤';
+        $submitter =  $_SESSION['userid'];
+        $data['submit_id'] = $submitter;
+        $name = $this->user_model->getUserName($submitter); //returns both first and last name
+        $first = $name['f_name'];
+        $sec = $name['l_name'];
+        $data['submit_name'] = $first . ' ' . $sec;
+        $data['parent_id'] = 0;
         $this->message_model->insertMessage($data);
         redirect();
     }
-
 }
 
 ?>
