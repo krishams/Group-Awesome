@@ -1,3 +1,5 @@
+<h1>Send a Message</h1>
+
 <?= form_open("user/sendMessage"); ?>
 To: <input type="text" name="msg_to"/> <br/>
 Subject: <input type="text" name="msg_sub"/> <br/>

@@ -1,7 +1,7 @@
-<h2>profile view</h2>
+<h1>Profile View</h1>
 
 <div id="profile">
-    <img alt="Profile image"  src="
+    <img width="155px" height="180px" alt="Profile image"  src="
     <?php
     if (empty($pic_path)) {
         echo base_url() . "assets/img/avatar.svg";

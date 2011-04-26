@@ -9,7 +9,9 @@ class Upload extends CI_Controller {
     }
 
       function getUpload() {
+      	$is_logged_in = $this->logged_in->status();
         $data['main_content'] = 'upload_view';
+        if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
         $this->load->view('/include/template1_view', $data);
     }
 
