@@ -27,6 +27,7 @@
     <?= form_close();
     } ?>
 </div>
+
 <div id="friendrequest-button">
     <?php if (!$isUser) {
         $hidden = array('id' => $profile['id']);
