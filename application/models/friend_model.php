@@ -33,9 +33,9 @@ class friend_model extends CI_Model {
     }
 
     function get_friends($id) {
-        $sql = "(SELECT id1 as id FROM `relations` WHERE id2 = 134)
+        $sql = "(SELECT id1 as id FROM `relations` WHERE id2 = $id)
                 UNION
-                (SELECT id2 FROM `relations` WHERE id1 = 134)";
+                (SELECT id2 FROM `relations` WHERE id1 = $id)";
 
         $Q = $this->db->query($sql);
 
