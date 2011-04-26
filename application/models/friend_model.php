@@ -32,17 +32,38 @@ class friend_model extends CI_Model {
 
     }
 
-    function get_friends($id) {
-        $sql = "(SELECT id1 as id FROM `relations` WHERE id2 = $id)
-                UNION
-                (SELECT id2 FROM `relations` WHERE id1 = $id)";
+    /**
+     *
+     * @param <type> $id
+     * @param boolean $getProfileData to also get the first name, last name and profile pic path
+     * @return <type>
+     */
+    function get_friends($id, $getProfileData = false) {
+        if ($getProfileData) {
+            $sql = "SELECT id, l_name, f_name, profile_pics.path FROM `users`, profile_pics WHERE
+                    users.id = profile_pics.user_id AND users.id in (SELECT id1 FROM `relations` WHERE id2 = $id)
+                    UNION
+                    SELECT id, l_name, f_name, profile_pics.path FROM `users`, profile_pics WHERE
+                    users.id = profile_pics.user_id AND users.id in (SELECT id2 FROM `relations` WHERE id1 = $id)";
+
+        }
+        else {
+            $sql = "(SELECT id1 as id FROM `relations` WHERE id2 = $id)
+                    UNION
+                    (SELECT id2 FROM `relations` WHERE id1 = $id)";
+        }
 
         $Q = $this->db->query($sql);
 
         $data = array();
         if ($Q->num_rows() > 0) {
             foreach ($Q->result_array() as $row) {
-                $data[] = $row['id'];
+                if ($getProfileData) {
+                    $data[] = $row;
+                }
+                else {
+                    $data[] = $row['id'];
+                }
             }
         }
         return $data;

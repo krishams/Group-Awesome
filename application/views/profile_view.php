@@ -1,7 +1,19 @@
 <h1>Profile View</h1>
-
+<div id="profile-wrapper2">
+<div id="profile-left">
+    <?php
+    echo $profile['email'] . '</br>';
+    echo $profile['f_name'] . '</br>';
+    echo $profile['l_name'] . '</br></br>';
+    if ($isUser) {
+        echo form_open('user/goToInbox', '');
+        echo '<input type="submit" value="Inbox" />';
+    	echo form_close();
+    }
+    ?>
+</div>
 <div id="profile">
-    <img width="155px" height="180px" alt="Profile image"  src="
+    <img width="130px" height="150px" alt="Profile image"  src="
     <?php
     if (empty($pic_path)) {
         echo base_url() . "assets/img/avatar.svg";
@@ -11,22 +23,8 @@
     ?>
          "/>
 </div> <!-- profile -->
-
-<div id="profile-left">
-    <?php
-    echo '</br>' . $profile['email'] . '</br>';
-    echo $profile['f_name'] . '</br>';
-    echo $profile['l_name'] . '</br>';
-    ?>
-</div>
-<br/>
-<div id="inbox-button">
-    <?php if ($isUser) {
-        echo form_open('user/goToInbox', ''); ?>
-        <input type="submit" value="Inbox" />
-    <?php echo form_close();
-    } ?>
-</div>
+</div>  
+<div class="clear"></div>
 
 <div id="friendrequest-button">
     <?php if (!$isUser&&!$isFriend) {
@@ -43,4 +41,17 @@
         echo form_open('user/getPrivateMsgView','',$hidden); ?>
         <input type="submit" value="Send private message" />
     <?php form_close(); }?>
+
+</div>
+
+<div id="myFriends">
+    <br/>
+    <h2>buddies</h2>
+
+    <?php
+    foreach($friends as $row)
+    {
+        echo '<a href="'.base_url().'user/showProfile/'.$row['id'].'"><img width="80px" height="120px" src="'.$row['path'].'"></a>';
+    }
+    ?>
 </div>

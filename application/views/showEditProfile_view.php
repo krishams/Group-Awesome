@@ -1,7 +1,8 @@
 <h1>Basic Information</h1>
 <?php echo validation_errors(); ?>
-<div id="profile">
-            <img width="155px" height="180px" alt="Profile image"  src="
+<div id="profile-wrapper">
+<div id="profile1">
+            <img width="130px" height="150px" alt="Profile image"  src="
             <?php
                 if(empty($pic_path))
                 {
@@ -35,12 +36,12 @@
 			<td>New password again:</td><td><input type='password' name='confirmPassw'/></td>
 		</tr>
 		<tr>
-			<td><input type='Submit' value='Save Changes'</td>
+			<td></td><td><input type='Submit' value='Save Changes'</td>
 		</tr>				
 	</table>
 	
 </form>
-
+</div>
 
 
       
