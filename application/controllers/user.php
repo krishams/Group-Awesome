@@ -233,7 +233,7 @@ class User extends CI_Controller {
     /*
      * simpel function that gets the name of a user
      */
-    function makeUserName($id){
+    function makeUserName($submitter){
         $name = $this->user_model->getUserName($submitter); //returns both first and last name
         $first = $name['f_name'];
         $sec = $name['l_name'];
