@@ -19,6 +19,7 @@
     echo $profile['l_name'] . '</br>';
     ?>
 </div>
+<br/>
 <div id="inbox-button">
     <?php if ($_SESSION['userid'] == $profile['id']) {
         echo form_open('user/goToInbox', ''); ?>
