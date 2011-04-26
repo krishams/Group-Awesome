@@ -42,8 +42,6 @@ class Login extends CI_Controller {
         //control that all fields have data in them, if not display which is missing - done
         //check if email already exist in db, if not then display error - ½ done
 
-        $this->load->library('form_validation');
-
         $this->form_validation->set_rules('firstname', 'First Name', 'trim|required');
         $this->form_validation->set_rules('lastname', 'Last Name', 'trim|required');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');

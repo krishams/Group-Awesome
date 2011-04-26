@@ -174,7 +174,7 @@ class User extends CI_Controller {
         }
         $this->friend_model->approve_friend($user_data);
         $this->message_model->deleteMessage($id);
-        redirect();
+        redirect('user/goToInbox');
     }
 
     /**
@@ -205,15 +205,18 @@ class User extends CI_Controller {
      * This is the function that is needed to send a message to another
      */
     function sendMessage(){
-        $submitter =  $_SESSION['userid'];
-        $data['submit_id'] = $submitter;
-        $data['submit_name'] = $this->makeUserName($submitter);
-        $data['owner_id'] = $_POST['msg_to'];
-        $data['msg_sub'] = $_POST['msg_sub'];
-        $data['message'] = $_POST['msg_msg'];
-        $data['parent_id'] = 0;
-        $this->message_model->insertMessage($data);
-        redirect('user/goToInbox');
+        $uri = $_POST['uri'];
+        if($this->validatInput($uri)){
+            $submitter =  $_SESSION['userid'];
+            $data['submit_id'] = $submitter;
+            $data['submit_name'] = $this->makeUserName($submitter);
+            $data['owner_id'] = $_POST['msg_to'];
+            $data['msg_sub'] = $_POST['msg_sub'];
+            $data['message'] = $_POST['msg_msg'];
+            $data['parent_id'] = 0;
+            $this->message_model->insertMessage($data);
+            redirect('user/goToInbox');
+        }
     }
 
     /*
@@ -227,7 +230,7 @@ class User extends CI_Controller {
         $data['submit_name'] = $this->makeUserName($submitter);
         $data['parent_id'] = 0;
         $this->message_model->insertMessage($data);
-        redirect();
+        redirect('user/showprofile/'.$_POST['id']);
     }
 
     /*
@@ -240,23 +243,40 @@ class User extends CI_Controller {
         return $first . ' ' . $sec;
     }
 
+    /*
+     * this function will send a private message
+     */
     function sendPrivateMessage(){
-        $submitter =  $_SESSION['userid'];
-        $data['submit_id'] = $submitter;
-        $data['submit_name'] = $this->makeUserName($submitter);
-        $data['owner_id'] = $_POST['msg_to'];
-        $data['msg_sub'] = $_POST['msg_sub'];
-        $data['message'] = $_POST['msg_msg'];
-        $data['parent_id'] = 0;
-        $this->message_model->insertMessage($data);
-        redirect('user/showProfile/'.$_POST['msg_to']);
+        $uri = 'user/showProfile/'.$_POST['msg_to'];
+        if($this->validatInput($uri)){
+            $data['submit_id'] = $submitter;
+            $submitter =  $_SESSION['userid'];
+            $data['submit_name'] = $this->makeUserName($submitter);
+            $data['owner_id'] = $_POST['msg_to'];
+            $data['msg_sub'] = $_POST['msg_sub'];
+            $data['message'] = $_POST['msg_msg'];
+            $data['parent_id'] = 0;
+            $this->message_model->insertMessage($data);
+            redirect('user/showProfile/'.$_POST['msg_to']);
+        }
     }
 
     function getPrivateMsgView(){
         $data['user'] = $_POST['id'];
-        error_log($_POST['id']);
         $data['main_content'] = 'privateMessage_view';
         $this->load->view('/include/template1_view', $data);
+    }
+
+    function validatInput($uri){
+        $this->form_validation->set_rules('msg_to', 'Message To', 'trim|required');
+        $this->form_validation->set_rules('msg_sub', 'Message subject', 'trim|required');
+        $this->form_validation->set_rules('msg_msg', 'Message', 'trim|required');
+        if ($this->form_validation->run() == FALSE) {
+            redirect($uri);
+            return false;
         }
+        else
+            return true;
+    }
 }
 ?>
