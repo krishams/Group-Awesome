@@ -45,7 +45,6 @@ class friend_model extends CI_Model {
                 $data[] = $row['id'];
             }
         }
-        error_log(print_r($data, true));
         return $data;
 
     }
