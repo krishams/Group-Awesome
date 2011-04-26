@@ -85,6 +85,10 @@ class User extends CI_Controller {
             'userid' => $userid,
             'f_name' => $this->input->post('firstname'),
             'l_name' => $this->input->post('lastname'),
+            's_name' => $this->input->post('s_name'),
+            'city'	 => $this->input->post('city'),
+            'zip'	 => $this->input->post('zip'),
+            'age'	 => $this->input->post('age')	
         );
 
         if ($this->form_validation->run() == FALSE) {
