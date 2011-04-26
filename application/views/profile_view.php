@@ -24,7 +24,7 @@
     <?php if ($isUser) {
         echo form_open('user/goToInbox', ''); ?>
         <input type="submit" value="Inbox" />
-    <?= form_close();
+    <?php echo form_close();
     } ?>
 </div>
 
@@ -33,7 +33,7 @@
         $hidden = array('id' => $profile['id']);
         echo form_open('user/sendFriendRequest','', $hidden); ?>
         <input type="submit" value="Friend request" />
-    <?= form_close();
+    <?php echo form_close();
     } ?>
 </div>
 
