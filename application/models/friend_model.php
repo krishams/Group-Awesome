@@ -24,7 +24,7 @@ class friend_model extends CI_Model {
      * This function will create the relation between 2 users
      * Is called from User controller, function createRelation
      */
-    function approve_friend($requester_id, $receiver_id) {
+    function approve_friend($user_data) {
         $this->db->insert('relations', $user_data);
     }
 
