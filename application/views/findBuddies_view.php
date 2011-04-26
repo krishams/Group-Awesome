@@ -1,5 +1,5 @@
 <div id="findBuddies">
-   <h1>Random people</h1>
+   <h1>Random pub crawlers</h1>
    <br/>
 
    <?php
