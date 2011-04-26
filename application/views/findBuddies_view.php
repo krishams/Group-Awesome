@@ -4,9 +4,8 @@
 
    <?php
         foreach($random as $row)
-        { ?>
-            <img src="<?php echo $row['path'];?> "/>
-   <?php
+        {
+           echo '<a href="'.base_url().'user/showProfile/'.$row['user_id'].'"><img src="'.$row['path'].'"></a>';
         }
    ?>
 

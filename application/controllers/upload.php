@@ -38,8 +38,8 @@ class Upload extends CI_Controller {
                 $config['upload_path'] = $pathname;
 		$config['allowed_types'] = 'jpg|png';
 		$config['max_size']	= '1024';
-		$config['max_width']  = '180';
-		$config['max_height']  = '155';
+		$config['max_width']  = '155';
+		$config['max_height']  = '180';
 
 		$this->load->library('upload', $config);
 
