@@ -48,6 +48,8 @@ class User extends CI_Controller {
 
         $data['pic_path'] = $this->user_model->getProfilePic($userid);
 
+        $data['friends'] = $this->friend_model->get_friends($userid);
+
         $data['main_content'] = 'profile_view';
 
         $this->load->view('/include/template1_view', $data);

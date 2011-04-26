@@ -36,3 +36,18 @@
     <?php echo form_close();
     } ?>
 </div>
+
+<div id="myFriends">
+    <br/>
+    <h2>buddies</h2>
+
+    <?php 
+    foreach($friends as $row)
+    {
+        echo $row . " ";
+        
+    }
+
+    ?>
+
+</div>
