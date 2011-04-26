@@ -53,8 +53,7 @@
     <?php
     foreach($friends as $row)
     {
-        echo $row . " ";
-
+        echo '<a href="'.base_url().'user/showProfile/'.$row['id'].'"><img width="80px" height="120px" src="'.$row['path'].'"></a>';
     }
     ?>
 </div>

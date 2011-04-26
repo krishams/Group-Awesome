@@ -57,7 +57,7 @@ class User extends CI_Controller {
 
         $data['pic_path'] = $this->user_model->getProfilePic($userid);
 
-        $data['friends'] = $this->friend_model->get_friends($userid);
+        $data['friends'] = $this->friend_model->get_friends($userid, true);
 
         $data['main_content'] = 'profile_view';
         if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
