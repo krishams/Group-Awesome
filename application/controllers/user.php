@@ -139,7 +139,7 @@ class User extends CI_Controller {
         $id = $_POST['msg_id'];
         $user_data['id1'] = $_POST['owner_id'];
         $user_data['id2'] = $_POST['submit_id'];
-        $this->user_model->createFriend($user_data);
+        $this->friend_model->approve_friend($user_data);
         $this->message_model->deleteMessage($id);
         redirect();
     }
@@ -166,7 +166,7 @@ class User extends CI_Controller {
         $first = $name['f_name'];
         $sec = $name['l_name'];
         $data['submit_name'] = $first . ' ' . $sec;
-        $data['parent'] = $_POST['parent'];
+        $data['parent_id'] = $_POST['parent'];
         $this->message_model->insertMessage($data);
         redirect('user/goToInbox');
     }
@@ -184,7 +184,7 @@ class User extends CI_Controller {
         $data['owner_id'] = $_POST['msg_to'];
         $data['msg_sub'] = $_POST['msg_sub'];
         $data['message'] = $_POST['msg_msg'];
-        $data['parent'] = 0;
+        $data['parent_id'] = 0;
         $this->message_model->insertMessage($data);
         redirect('user/goToInbox');
     }
@@ -201,13 +201,9 @@ class User extends CI_Controller {
         $first = $name['f_name'];
         $sec = $name['l_name'];
         $data['submit_name'] = $first . ' ' . $sec;
-        $data['parent'] = 0;
+        $data['parent_id'] = 0;
         $this->message_model->insertMessage($data);
         redirect();
-    }
-
-    function acceptFriendRequest(){
-        
     }
 }
 
