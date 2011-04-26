@@ -55,7 +55,7 @@ class User extends CI_Controller {
 
         $userid = $_SESSION['userid'];
         //if(isset($user_data))
-        $data['profile'] = $this->main_model->getUserById($userid);
+        $data['profile'] = $this->user_model->getUserById($userid);
 
         $data['pic_path'] = $this->user_model->getProfilePic($userid);
 
@@ -114,11 +114,8 @@ class User extends CI_Controller {
     
     }
 
-            if ($this->user_model->saveUserdata($user_data)) {
-                redirect('user/showEditProfile');
-            }
-        }
-    }
+     
+    
 
     /**
      * This method is called when a user clicks on a link in an email they have been sent.
