@@ -1,3 +1,4 @@
+<h1>Upload a Picture</h1>
 <div class="uploadPic">
 
 <?php echo form_open_multipart('upload/do_upload');?>

@@ -13,4 +13,4 @@ and open the template in the editor.
     </head>
     <body>
 
-    <div id="wrapper" class="">
+    <div id="wrapper" class="<?php if(isset($is_logged_in)){echo $is_logged_in;}else{echo "not_logged_in";}?>">

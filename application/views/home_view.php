@@ -1,3 +1,4 @@
 <div id="home">
 <h1>Welcome to home</h1>
- </div>
+<p>Stay, find friends and get drunk!</p>
+</div>

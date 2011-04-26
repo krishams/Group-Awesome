@@ -32,7 +32,7 @@ class User extends CI_Controller {
      * forwards it to the users profilpage
      */
     function showProfile() {
-        $this->logged_in->status();
+        $is_logged_in = $this->logged_in->status();
         $userid = 0;
 
         if ($this->uri->segment(3)) {
@@ -41,8 +41,17 @@ class User extends CI_Controller {
         if($userid == $_SESSION['userid']){
             $data['isUser'] = true;
         }
-        else
+        else{
             $data['isUser'] = false;
+        }
+        
+        $friends = $this->friend_model->get_friends($_SESSION['userid']);
+        $data['isFriend'] = false;
+        foreach($friends as $row){
+            if($row == $userid){
+                $data['isFriend'] = true;
+            }
+        }
 
         $data['profile'] = $this->user_model->getUserById($userid);
 
@@ -51,6 +60,7 @@ class User extends CI_Controller {
         $data['friends'] = $this->friend_model->get_friends($userid);
 
         $data['main_content'] = 'profile_view';
+        if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
 
         $this->load->view('/include/template1_view', $data);
     }
@@ -60,14 +70,20 @@ class User extends CI_Controller {
      * forwards it to the users editProfile page.
      */
     function showEditProfile() {
-
+		$is_logged_in = $this->logged_in->status();
+		
         $userid = $_SESSION['userid'];
         //if(isset($user_data))
         $data['profile'] = $this->user_model->getUserById($userid);
 
         $data['pic_path'] = $this->user_model->getProfilePic($userid);
-
+		
+		if($is_logged_in){$data['is_logged_in'] = "logged_in";}
+		
         $data['main_content'] = 'showEditProfile_view';
+        
+        if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
+
         $this->load->view('/include/template1_view', $data);
         //Print_r ($_SESSION);
         //print_r($this->session->all_userdata());
@@ -174,9 +190,12 @@ class User extends CI_Controller {
      * This function will make sure to get the user to his inbox, where all his messages are.
      */
     function goToInbox() {
+    	$is_logged_in = $this->logged_in->status();
+    	
         $id = $_SESSION['userid'];
         $data['messages'] = $this->message_model->getMessages($id);
         $data['main_content'] = 'message_view';
+        if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
         $this->load->view('/include/template1_view', $data);
     }
 
@@ -184,12 +203,14 @@ class User extends CI_Controller {
      * This function will get som parameters and save them in the db tabel messages
      */
     function sendRepley() {
+    	$is_logged_in = $this->logged_in->status();
         $submitter =  $_SESSION['userid'];
         $data['owner_id'] = $_POST['owner_id'];
         $data['message'] = $_POST['messagebody'];
         $data['submit_id'] = $submitter;
         $data['submit_name'] = $this->makeUserName($submitter);
         $data['parent_id'] = $_POST['parent'];
+        if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
         $this->message_model->insertMessage($data);
         redirect('user/goToInbox');
     }
@@ -205,6 +226,7 @@ class User extends CI_Controller {
         $data['msg_sub'] = $_POST['msg_sub'];
         $data['message'] = $_POST['msg_msg'];
         $data['parent_id'] = 0;
+        if($is_logged_in == "1"){error_log("inde i metode"); $data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
         $this->message_model->insertMessage($data);
         redirect('user/goToInbox');
     }
@@ -213,12 +235,14 @@ class User extends CI_Controller {
      * Will send a friend request to the other person
      */
     function sendFriendRequest() {
+    	$is_logged_in = $this->logged_in->status();
         $data['owner_id'] = $_POST['id'];
         $data['msg_sub'] = 'friend request%&¤';
         $submitter =  $_SESSION['userid'];
         $data['submit_id'] = $submitter;
         $data['submit_name'] = $this->makeUserName($submitter);
         $data['parent_id'] = 0;
+        if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
         $this->message_model->insertMessage($data);
         redirect();
     }
@@ -226,12 +250,30 @@ class User extends CI_Controller {
     /*
      * simpel function that gets the name of a user
      */
-    function makeUserName($id){
+    function makeUserName($submitter){
         $name = $this->user_model->getUserName($submitter); //returns both first and last name
         $first = $name['f_name'];
         $sec = $name['l_name'];
         return $first . ' ' . $sec;
     }
-}
 
+    function sendPrivateMessage(){
+        $submitter =  $_SESSION['userid'];
+        $data['submit_id'] = $submitter;
+        $data['submit_name'] = $this->makeUserName($submitter);
+        $data['owner_id'] = $_POST['msg_to'];
+        $data['msg_sub'] = $_POST['msg_sub'];
+        $data['message'] = $_POST['msg_msg'];
+        $data['parent_id'] = 0;
+        $this->message_model->insertMessage($data);
+        redirect('user/showProfile/'.$_POST['msg_to']);
+    }
+
+    function getPrivateMsgView(){
+        $data['user'] = $_POST['id'];
+        error_log($_POST['id']);
+        $data['main_content'] = 'privateMessage_view';
+        $this->load->view('/include/template1_view', $data);
+        }
+}
 ?>

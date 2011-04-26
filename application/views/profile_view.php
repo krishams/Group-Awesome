@@ -1,7 +1,7 @@
-<h2>profile view</h2>
+<h1>Profile View</h1>
 
 <div id="profile">
-    <img alt="Profile image"  src="
+    <img width="155px" height="180px" alt="Profile image"  src="
     <?php
     if (empty($pic_path)) {
         echo base_url() . "assets/img/avatar.svg";
@@ -29,7 +29,7 @@
 </div>
 
 <div id="friendrequest-button">
-    <?php if (!$isUser) {
+    <?php if (!$isUser&&!$isFriend) {
         $hidden = array('id' => $profile['id']);
         echo form_open('user/sendFriendRequest','', $hidden); ?>
         <input type="submit" value="Friend request" />
@@ -37,17 +37,24 @@
     } ?>
 </div>
 
+<div id="sendMessage">
+    <?php if(!$isUser){
+        $hidden = array('id' => $profile['id']);
+        echo form_open('user/getPrivateMsgView','',$hidden); ?>
+        <input type="submit" value="Send private message" />
+    <?php form_close(); }?>
+
+</div>
+
 <div id="myFriends">
     <br/>
     <h2>buddies</h2>
 
-    <?php 
+    <?php
     foreach($friends as $row)
     {
         echo $row . " ";
-        
+
     }
-
     ?>
-
 </div>
