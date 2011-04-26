@@ -62,7 +62,7 @@ class User extends CI_Controller {
         $data['main_content'] = 'showEditProfile_view';
         $this->load->view('/include/template1_view', $data);
         //Print_r ($_SESSION);
-        print_r($this->session->all_userdata());
+        //print_r($this->session->all_userdata());
     }
 
     /**
@@ -88,19 +88,31 @@ class User extends CI_Controller {
         );
 
         if ($this->form_validation->run() == FALSE) {
-            error_log("validation false");
-            //$this->session->set_flashdata('error', 'Old password is not correct');
-            redirect(base_url() . "user/showEditProfile");
+
+        	error_log("validation false");
+        	$this->showEditProfile();
+        	//redirect(base_url() . "user/showEditProfile");
         } else {
-            if (isset($oldpassw, $passw)) {
-                if ($this->user_model->tjeckPass($userid, $oldpasswHash)) {
-                    $user_data['pass'] = $passwHash;
-                    //$this->showEditProfile($user_data);
-                } else {
-                    $this->session->set_flashdata('error', 'Old password is not correct');
-                    redirect(base_url() . "user/showEditProfile");
-                }
-            }
+        	if(strlen($oldpassw) >= 6 || strlen($passw) >= 6){
+        		if($this->user_model->tjeckPass($userid, $oldpasswHash)){
+        			$user_data['pass'] = $passwHash;
+        			//$this->showEditProfile($user_data);
+        		} else {
+        			$this->session->set_flashdata('error', 'Old password is not correct');
+        			
+        			//redirect(base_url() . "user/showEditProfile");
+        		}
+        		
+        	}
+        	
+        	if($this->user_model->saveUserdata($user_data)){
+        		$this->session->set_flashdata('error', 'Account data have been saved');
+        		$this->showEditProfile();
+        	}
+        	
+        }      
+    
+    }
 
             if ($this->user_model->saveUserdata($user_data)) {
                 redirect('user/showEditProfile');
