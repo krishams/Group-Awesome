@@ -1,7 +1,7 @@
-<h2>profile view</h2>
+<h1>Profile View</h1>
 
 <div id="profile">
-    <img alt="Profile image"  src="
+    <img width="155px" height="180px" alt="Profile image"  src="
     <?php
     if (empty($pic_path)) {
         echo base_url() . "assets/img/avatar.svg";
@@ -43,4 +43,17 @@
         echo form_open('user/getPrivateMsgView','',$hidden); ?>
         <input type="submit" value="Send private message" />
     <?php form_close(); }?>
+
+</div>
+
+<div id="myFriends">
+    <br/>
+    <h2>buddies</h2>
+
+    <?php
+    foreach($friends as $row)
+    {
+        echo '<a href="'.base_url().'user/showProfile/'.$row['id'].'"><img width="80px" height="120px" src="'.$row['path'].'"></a>';
+    }
+    ?>
 </div>

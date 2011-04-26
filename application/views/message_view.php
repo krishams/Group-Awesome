@@ -2,15 +2,15 @@
 <?php echo validation_errors('<p class="error">'); ?>
 <table>
     <td>
+        <h1>Send a Message</h1>
         <?php
-        $hidden = array('uri' => $this->uri->uri_string());
-        echo form_open("user/sendMessage", '', $hidden); ?>
-        To: <input type="text" name="msg_to"/> <br/>
-        Subject: <input type="text" name="msg_sub"/> <br/>
-        Message: <br/>
-        <textarea name="msg_msg" rows="4" cols="20"></textarea> <br/>
-
-        <input type="submit" value="Send message" />
+            $hidden = array('uri' => $this->uri->uri_string());
+            echo form_open("user/sendMessage", '', $hidden); ?>
+            To: <input type="text" name="msg_to"/> <br/>
+            Subject: <input type="text" name="msg_sub"/> <br/>
+            Message: <br/>
+            <textarea name="msg_msg" rows="4" cols="20"></textarea> <br/>
+            <input type="submit" value="Send message" />
         <?= form_close(); ?>
         
     </td>
