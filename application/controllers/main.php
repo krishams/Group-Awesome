@@ -14,8 +14,9 @@ class Main extends CI_Controller {
      * loads the initial log-in screen
      */
     function index() {
-        	$this->logged_in->status();
+    		$is_logged_in = $this->logged_in->status();
             $data['main_content'] = 'home_view';
+            if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
             $this->load->view('/include/template1_view', $data);
                 
     }
@@ -76,6 +77,7 @@ class Main extends CI_Controller {
         if ($this->input->get('search')) {
             $search = $this->uri->segment(3);
             $data['searchdata'] = $this->main_model->searchUser($search);
+            if($is_logged_in == "1"){error_log("inde i metode"); $data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
             $this->load->view('searchUser_view', $data);
         }
     }

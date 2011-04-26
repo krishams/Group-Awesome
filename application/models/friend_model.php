@@ -66,7 +66,6 @@ class friend_model extends CI_Model {
                 }
             }
         }
-        error_log(print_r($data, true));
         return $data;
 
     }
