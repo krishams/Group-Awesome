@@ -21,17 +21,18 @@
 </div>
 <br/>
 <div id="inbox-button">
-    <?php if ($_SESSION['userid'] == $profile['id']) {
+    <?php if ($isUser) {
         echo form_open('user/goToInbox', ''); ?>
         <input type="submit" value="Inbox" />
-    <?= form_close();
+    <?php echo form_close();
     } ?>
 </div>
+
 <div id="friendrequest-button">
-    <?php if ($_SESSION['userid'] != $profile['id']) {
+    <?php if (!$isUser) {
         $hidden = array('id' => $profile['id']);
         echo form_open('user/sendFriendRequest','', $hidden); ?>
         <input type="submit" value="Friend request" />
-    <?= form_close();
+    <?php echo form_close();
     } ?>
 </div>

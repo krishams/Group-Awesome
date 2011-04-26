@@ -1,3 +1,12 @@
 <div id="findBuddies">
-   <h1>Hi This is where you can find some beer buddies</h1>
+   <h1>Random pub crawlers</h1>
+   <br/>
+
+   <?php
+        foreach($random as $row)
+        {
+           echo '<a href="'.base_url().'user/showProfile/'.$row['user_id'].'"><img src="'.$row['path'].'"></a>';
+        }
+   ?>
+
 </div>
