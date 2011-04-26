@@ -143,7 +143,7 @@ class User extends CI_Controller {
 
     function test() {
 //        $this->friend_model->get_friends(134);
-        $data = $this->bar_model->getFavoriteBars(135);
+        $data = $this->bar_model->getUsersForBar(1);
         error_log(print_r($data, true));
     }
 

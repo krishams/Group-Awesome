@@ -47,17 +47,21 @@ class bar_model extends CI_Model {
         return $data;
     }
 
-    function getUsersForBar(){
-        $this->db->select('*')->from('bars')->where('id', $id)->limit(10, 20);
-
-        $query = $this->db->get();
+    /**
+     * Get a list of the first 100 user_ids for a specific bar. To get the next 100 and so on, use
+     * the second parameter and set it in increments of 100
+     * @param int $bar_id the id for the bar
+     * @param int $offset OPTIONAL where to start searching. Default = 0 which searches from the start
+     * @return Array all user_ids for users that have this as a favorite bar
+     */
+    function getUsersForBar($bar_id, $offset = 0){
+        $this->db->select('user_id')->from('favorite_bars')->where('bar_id', $bar_id)->limit(100, $offset);
+        $Q = $this->db->get();
 
         $data = array();
-        $this->db->order_by('name');
-        $Q = $this->db->get('Users');
         if ($Q->num_rows() > 0) {
             foreach ($Q->result_array() as $row) {
-                $data[] = $row;
+                $data[] = $row['user_id'];
             }
         }
         return $data;
