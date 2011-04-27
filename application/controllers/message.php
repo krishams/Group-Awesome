@@ -72,14 +72,13 @@ class Message extends CI_Controller {
      * Will send a friend request to the other person
      */
     function sendFriendRequest() {
-    	$is_logged_in = $this->logged_in->status();
         $data['owner_id'] = $_POST['id'];
         $data['msg_sub'] = 'friend request%&¤';
         $submitter =  $_SESSION['userid'];
         $data['submit_id'] = $submitter;
         $data['submit_name'] = $this->makeUserName($submitter);
         $data['parent_id'] = 0;
-        if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
+
         $this->message_model->insertMessage($data);
         redirect('user/showprofile/'.$_POST['id']);
     }

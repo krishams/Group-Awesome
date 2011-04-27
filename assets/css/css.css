@@ -95,6 +95,19 @@ h1{
 	border: 3px solid #8C291B;
 }
 
+#profile-info{
+	width: 400px;
+}
+
+#float-right{
+	width: 200px;
+	float: right;
+}
+
+#float-left{
+	width: 200px;
+}
+
 #profile{
 	width: 130px;
 	height: 150px;
@@ -114,11 +127,11 @@ h1{
 }
 
 #profile-wrapper{
-	width: 500px;
+	width: 550px;
 }
 
 #profile-wrapper2{
-	width: 350px;
+	width: 450px;
 }
 
 #profile-left{
