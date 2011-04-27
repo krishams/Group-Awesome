@@ -58,7 +58,6 @@ class Message extends CI_Controller {
             $data['message'] = $_POST['msg_msg'];
             $data['parent_id'] = 0;
             if($is_logged_in == "1"){
-                error_log("inde i metode");
                 $data['is_logged_in'] = "logged_in";
                 }
                 else{
@@ -129,7 +128,7 @@ class Message extends CI_Controller {
     }
 
     /**
-     *
+     * This function will validate the input when sending a message
      */
     function validatInput($private = false, $id = false ){
         $this->form_validation->set_rules('msg_to', 'To', 'trim|required');

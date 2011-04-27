@@ -24,12 +24,9 @@ class user_model extends CI_Model {
      */
     function saveUserdata($user_data) {
         if (isset($user_data['userid'])) {
-
-            error_log("isset");
             $this->db->where('id', $user_data['userid']);
             unset($user_data['userid']);
             $this->db->update('users', $user_data);
-            error_log("query Userdata" . $this->db->last_query());
 
             return TRUE;
         } else if (empty($user_data['userid'])) {
@@ -49,7 +46,6 @@ class user_model extends CI_Model {
         $this->db->limit(1);
         $Q = $this->db->get('users');
         if ($Q->num_rows() > 0) {
-            error_log("if");
             foreach ($Q->result_array() as $row) {
                 return $row['id'];
             }

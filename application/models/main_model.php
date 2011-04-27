@@ -84,11 +84,9 @@ class main_model extends CI_Model {
     	//$this->db->where('email', $email);
        	$Q = $this->db->get('users');
         if ($Q->num_rows() > 0) {
-        	error_log("if");
             foreach ($Q->result_array() as $row) {
                 if($email == $row['email']){
                     //$this->session->set_flashdata('error', 'This email is already in use.');
-                    error_log("row" . $row['id']);
                     
                     return $row['id'];
                 }
@@ -107,16 +105,13 @@ class main_model extends CI_Model {
      */
     function verifyUser($email, $pw){
     	$passwHash = hash('sha512', $pw, FALSE);
-    	error_log("verify" . $passwHash);
         $this->db->select('id, email, active');
         $this->db->where('email', $email);
         $this->db->where('pass', $passwHash);
         $this->db->limit(1);
         $Q = $this->db->get('users');
-        error_log($Q->num_rows . ", pw: " . $pw . " pwhash: " . $passwHash . " email: " .$email);
         if($Q->num_rows() > 0){
             $row = $Q->row_array();
-            error_log("array verify" . print_r($row,true));
             if($row['active'] != 1){
                 $this->session->set_flashdata('errorVerify', 'You need to activate your account');
                 return null;
