@@ -17,8 +17,41 @@
               <?php echo anchor('upload/getupload', 'Change profile picture') ?>
         </div> <!-- profile -->
 
+<div id="profile-info">
 <form name='input' action='<?php echo base_url()?>user/editProfile' method='post'>
-	<table>
+	<table id="float-right">
+		<tr>
+			<td>Street name:</td>
+		</tr>
+		<tr>
+			<td><input type='text' name='s_name' value='<?php echo $profile['s_name']?>' /></td>
+		</tr>
+		<tr>
+			<td>City:</td>
+		</tr>
+		<tr>
+			<td><input type='text' name='city' value='<?php echo $profile['city']?>' /></td>
+		</tr>
+		<tr>
+			<td>Zip:</td>
+		</tr>
+		<tr>
+			<td><input type='text' name='zip' value='<?php echo $profile['zip']?>' /></td>
+		</tr>
+		<tr>
+			<td>Age:</td>
+		</tr>
+		<tr>
+			<td><input type='text' name='age' value='<?php echo $profile['age']?>'/></td>
+		</tr>
+		<tr>
+			<td></br></td>
+		</tr>
+		<tr>
+			<td><input type='Submit' value='Save Changes'</td>
+		</tr>				
+	</table>
+	<table id="float-left">
 		<tr>
 			<td>Firstname:</td>
 		</tr>
@@ -47,39 +80,14 @@
 		<tr>
 			<td>New password again:</td>
 		</tr>
+
 		<tr>
 			<td><input type='password' name='confirmPassw'/></td>
 		</tr>
-		<tr>
-			<td>Street name:</td>
-		</tr>
-		<tr>
-			<td><input type='text' name='s_name' value='<?php echo $profile['s_name']?>' /></td>
-		</tr>
-		<tr>
-			<td>City:</td>
-		</tr>
-		<tr>
-			<td><input type='text' name='city' value='<?php echo $profile['city']?>' /></td>
-		</tr>
-		<tr>
-			<td>Zip:</td>
-		</tr>
-		<tr>
-			<td><input type='text' name='zip' value='<?php echo $profile['zip']?>' /></td>
-		</tr>
-		<tr>
-			<td>Age:</td>
-		</tr>
-		<tr>
-			<td><input type='text' name='age' value='<?php echo $profile['age']?>'/></td>
-		</tr>
-		<tr>
-			<td></td><td><input type='Submit' value='Save Changes'</td>
-		</tr>				
 	</table>
 	
 </form>
+</div>
 </div>
 <h2>Favorit bars</h2>
 

@@ -94,7 +94,7 @@ class User extends CI_Controller {
      * Will save the editet tjeck the userdata and then save it to the DB.
      */
     function editProfile() {
-    	
+    	$is_logged_in = $this->logged_in->status();
     	if(strlen($this->input->post('firstname')) > 0){
     	
         $userid = $_SESSION['userid'];
@@ -152,6 +152,7 @@ class User extends CI_Controller {
         $data['pic_path'] = $this->user_model->getProfilePic($userid);
 
         $data['main_content'] = 'showEditProfile_view';
+        if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
         $this->load->view('/include/template1_view', $data);
         }     
     

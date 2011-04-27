@@ -52,7 +52,7 @@
     <?php
     foreach($friends as $row)
     {
-        echo '<a href="'.base_url().'user/showProfile/'.$row['id'].'"><img width="130px" height="150px" src="'.$row['path'].'"></a>';
+        echo '<div id="profile"><a href="'.base_url().'user/showProfile/'.$row['id'].'"><img width="130px" height="150px" src="'.$row['path'].'"></a></div> ';
     }
     ?>
 </div>
