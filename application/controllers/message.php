@@ -49,8 +49,7 @@ class Message extends CI_Controller {
      * This is the function that is needed to send a message to another
      */
     function sendMessage(){
-        $uri = $_POST['uri'];
-        if($this->validatInput($uri)){
+        if($this->validatInput()){
             $submitter =  $_SESSION['userid'];
             $data['submit_id'] = $submitter;
             $data['submit_name'] = $this->makeUserName($submitter);
@@ -102,8 +101,7 @@ class Message extends CI_Controller {
     function sendPrivateMessage(){
         $private = true;
         $id = $_POST['msg_to'];
-        $uri = 'privateMessage_view';
-        if($this->validatInput($uri, $private, $id)){
+        if($this->validatInput($private, $id)){
             $data['submit_id'] = $submitter;
             $submitter =  $_SESSION['userid'];
             $data['submit_name'] = $this->makeUserName($submitter);
@@ -116,28 +114,30 @@ class Message extends CI_Controller {
         }
     }
 
+    /*
+     *
+     */
     function getPrivateMsgView($id = false){
-        if($id){
+        if($id != false){
             $data['user'] = $id;
         }
-        else
+        else{
             $data['user'] = $_POST['id'];
+        }
         $data['main_content'] = 'privateMessage_view';
-        error_log('Her er post: '.$_POST['id']);
         $this->load->view('/include/template1_view', $data);
     }
 
-    function validatInput($uri, $private = false, $id = false ){
-        $this->form_validation->set_rules('msg_to', 'Message To', 'trim|required');
-        $this->form_validation->set_rules('msg_sub', 'Message subject', 'trim|required');
+    function validatInput($private = false, $id = false ){
+        $this->form_validation->set_rules('msg_to', 'To', 'trim|required');
+        $this->form_validation->set_rules('msg_sub', 'Subject', 'trim|required');
         $this->form_validation->set_rules('msg_msg', 'Message', 'trim|required');
         if ($this->form_validation->run() == FALSE) {
             if($private){
                 $this->getPrivateMsgView($id);
             }
             else{
-                $data['main_content'] = ''.$uri;
-                $this->load->view('/include/template1_view', $data);
+                $this->goToInbox();
             }
         }
         else

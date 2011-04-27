@@ -22,7 +22,7 @@
 <br/>
 <div id="inbox-button">
     <?php if ($isUser) {
-        echo form_open('user/goToInbox', ''); ?>
+        echo form_open('message/goToInbox', ''); ?>
         <input type="submit" value="Inbox" />
     <?php echo form_close();
     } ?>
@@ -31,7 +31,7 @@
 <div id="friendrequest-button">
     <?php if (!$isUser&&!$isFriend) {
         $hidden = array('id' => $profile['id']);
-        echo form_open('user/sendFriendRequest','', $hidden); ?>
+        echo form_open('message/sendFriendRequest','', $hidden); ?>
         <input type="submit" value="Friend request" />
     <?php echo form_close();
     } ?>
@@ -40,7 +40,7 @@
 <div id="sendMessage">
     <?php if(!$isUser){
         $hidden = array('id' => $profile['id']);
-        echo form_open('user/getPrivateMsgView','',$hidden); ?>
+        echo form_open('message/getPrivateMsgView','',$hidden); ?>
         <input type="submit" value="Send private message" />
     <?php form_close(); }?>
 

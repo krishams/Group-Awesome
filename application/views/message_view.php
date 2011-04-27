@@ -1,18 +1,20 @@
-<!-- Is used to display type in errors-->
-<?php echo validation_errors('<p class="error">'); ?>
+
 <table>
     <td>
-        <h1>Send a Message</h1>
+        <h2>Send a Message</h2>
         <?php
             $hidden = array('uri' => $this->uri->uri_string());
             echo form_open("message/sendMessage", '', $hidden); ?>
-            To: <input type="text" name="msg_to"/> <br/>
-            Subject: <input type="text" name="msg_sub"/> <br/>
+            To: <?php echo form_input('msg_to', set_value('msg_to', '')); ?><br/>
+            Subject: <?php echo form_input('msg_sub', set_value('msg_sub', ''));?><br/>
             Message: <br/>
-            <textarea name="msg_msg" rows="4" cols="20"></textarea> <br/>
+            <?php $cdata = array('name' => 'msg_msg', 'cols' => '20', 'rows' => '4');
+            echo form_textarea($cdata, set_value('msg_msg', '')); ?>
+            <br/>
             <input type="submit" value="Send message" />
         <?= form_close(); ?>
-        
+        <!-- Is used to display type in errors-->
+        <?php echo validation_errors('<p class="error">'); ?>
     </td>
     <td>
         <?php
