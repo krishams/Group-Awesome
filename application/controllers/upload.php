@@ -69,7 +69,7 @@ class Upload extends CI_Controller {
                     //call to model to set the path and name in profile tabel
                     $this->upload_model->saveProfilePic($data);
                     
-                    redirect('user/showEditProfile');
+                    redirect('user/EditProfile');
 
 		}
 	}

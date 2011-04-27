@@ -1,7 +1,8 @@
 <h1>Basic Information</h1>
 <?php echo validation_errors(); ?>
-<div id="profile">
-            <img width="155px" height="180px" alt="Profile image"  src="
+<div id="profile-wrapper">
+<div id="profile1">
+            <img width="130px" height="150px" alt="Profile image"  src="
             <?php
                 if(empty($pic_path))
                 {
@@ -16,8 +17,41 @@
               <?php echo anchor('upload/getupload', 'Change profile picture') ?>
         </div> <!-- profile -->
 
+<div id="profile-info">
 <form name='input' action='<?php echo base_url()?>user/editProfile' method='post'>
-	<table>
+	<table id="float-right">
+		<tr>
+			<td>Street name:</td>
+		</tr>
+		<tr>
+			<td><input type='text' name='s_name' value='<?php echo $profile['s_name']?>' /></td>
+		</tr>
+		<tr>
+			<td>City:</td>
+		</tr>
+		<tr>
+			<td><input type='text' name='city' value='<?php echo $profile['city']?>' /></td>
+		</tr>
+		<tr>
+			<td>Zip:</td>
+		</tr>
+		<tr>
+			<td><input type='text' name='zip' value='<?php echo $profile['zip']?>' /></td>
+		</tr>
+		<tr>
+			<td>Age:</td>
+		</tr>
+		<tr>
+			<td><input type='text' name='age' value='<?php echo $profile['age']?>'/></td>
+		</tr>
+		<tr>
+			<td></br></td>
+		</tr>
+		<tr>
+			<td><input type='Submit' value='Save Changes'</td>
+		</tr>				
+	</table>
+	<table id="float-left">
 		<tr>
 			<td>Firstname:</td>
 		</tr>
@@ -46,38 +80,17 @@
 		<tr>
 			<td>New password again:</td>
 		</tr>
+
 		<tr>
 			<td><input type='password' name='confirmPassw'/></td>
 		</tr>
-		<tr>
-			<td>Street name:</td>
-		</tr>
-		<tr>
-			<td><input type='text' name='s_name' value='<?php echo $profile['s_name']?>' /></td>
-		</tr>
-		<tr>
-			<td>City:</td>
-		</tr>
-		<tr>
-			<td><input type='text' name='city' value='<?php echo $profile['city']?>' /></td>
-		</tr>
-		<tr>
-			<td>Zip:</td>
-		</tr>
-		<tr>
-			<td><input type='text' name='zip' value='<?php echo $profile['zip']?>' /></td>
-		</tr>
-		<tr>
-			<td>Age:</td>
-		</tr>
-		<tr>
-			<td><input type='text' name='age' value='<?php echo $profile['age']?>'/></td>
-		</tr>
-		<tr>
-			<td><input type='Submit' value='Save Changes'</td>
-		</tr>				
 	</table>
 	
+
+</form>
+</div>
+</div>
+
 
 <h2>Favorite bars</h2>
 

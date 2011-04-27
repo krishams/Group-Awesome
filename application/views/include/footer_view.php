@@ -1,8 +1,9 @@
 
 
 </div> <!-- end wrapper -->
-<ul>  
-    <li class="<?= ($this->uri->segment(2) === 'login') ? 'active' : '' ?>">><a class="seemore" href="<?php echo base_url() ?>admin/login">Admin login</a></li>
+
+<ul id="footer">  
+    <li class="<?php echo ($this->uri->segment(2) === 'login') ? 'active' : '' ?>"><a class="seemore" href="<?php echo base_url() ?>admin/login">Admin login</a></li>
 </ul>
 </body>
 
@@ -12,7 +13,7 @@
 -->
 <script type="text/javascript">
     $('.seemore').click(function() {
-        $('.hiddentr').toggle('slow', function() {
+        $('tr[name^="hide"]').toggle('slow', function() {
             // Animation complete.
         });
     });
