@@ -6,12 +6,13 @@
     echo $profile['f_name'] . '</br>';
     echo $profile['l_name'] . '</br></br>';
     if ($isUser) {
-        echo form_open('user/goToInbox', '');
-        echo '<input type="submit" value="Inbox" />';
+        echo form_open('message/goToInbox', '');
+        echo '<input type="submit" value="My inbox" />';
     	echo form_close();
     }
     ?>
 </div>
+
 <div id="profile">
     <img width="130px" height="150px" alt="Profile image"  src="
     <?php
@@ -29,7 +30,7 @@
 <div id="friendrequest-button">
     <?php if (!$isUser&&!$isFriend) {
         $hidden = array('id' => $profile['id']);
-        echo form_open('user/sendFriendRequest','', $hidden); ?>
+        echo form_open('message/sendFriendRequest','', $hidden); ?>
         <input type="submit" value="Friend request" />
     <?php echo form_close();
     } ?>
@@ -38,7 +39,7 @@
 <div id="sendMessage">
     <?php if(!$isUser){
         $hidden = array('id' => $profile['id']);
-        echo form_open('user/getPrivateMsgView','',$hidden); ?>
+        echo form_open('message/getPrivateMsgView','',$hidden); ?>
         <input type="submit" value="Send private message" />
     <?php form_close(); }?>
 
@@ -46,12 +47,12 @@
 
 <div id="myFriends">
     <br/>
-    <h2>buddies</h2>
+    <h2>Buddies</h2>
 
     <?php
     foreach($friends as $row)
     {
-        echo '<a href="'.base_url().'user/showProfile/'.$row['id'].'"><img width="80px" height="120px" src="'.$row['path'].'"></a>';
+        echo '<a href="'.base_url().'user/showProfile/'.$row['id'].'"><img width="130px" height="150px" src="'.$row['path'].'"></a>';
     }
     ?>
 </div>

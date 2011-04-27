@@ -20,7 +20,6 @@ function send_validation_email($email, $linkString)
         base_url() . "user/activate/" . $linkString);
 
     $success = $CI->email->send();
-//    error_log($CI->email->print_debugger());
     return $success;
 }
 
