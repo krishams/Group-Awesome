@@ -64,8 +64,9 @@
             <a class="seemore">More</a>
         </td>
     </tr>
-    <tr class="hiddentr" style="display: none">
-        <td class="td"></td>
+    <tr class="hiddentr" name="hide" style="display: none">
+    <div class="hidden" name="hide">
+        <td ></td>
 
         <td colspan="7">
             <div>
@@ -79,7 +80,7 @@
                 </table>
             </div>
         </td>
-
+    </div>
 
     </tr>
     <?php echo form_close();
