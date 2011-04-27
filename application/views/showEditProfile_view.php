@@ -19,20 +19,59 @@
 <form name='input' action='<?php echo base_url()?>user/editProfile' method='post'>
 	<table>
 		<tr>
-			<td>Firstname:</td><td><input type='text' name='firstname' value='<?php echo $profile['f_name']?>'/></td>
+			<td>Firstname:</td>
 		</tr>
 		<tr>
-			<td>Lastname:</td><td><input type='text' name='lastname' value='<?php echo $profile['l_name']?>'/></td>
+			<td><input type='text' name='firstname' value='<?php echo $profile['f_name']?>'/></td>
+		</tr>
+		<tr>
+			<td>Lastname:</td>
+		</tr>
+		<tr>
+			<td><input type='text' name='lastname' value='<?php echo $profile['l_name']?>'/></td>
 		</tr>
 		
 		<tr>
-			<td>Old password:</td><td><input type='password' name='Oldpsw'/></td>
+			<td>Old password:</td>
 		</tr>
 		<tr>
-			<td>New password:</td><td><input type='password' name='passw'/></td>
+			<td><input type='password' name='Oldpsw'/></td>
 		</tr>
 		<tr>
-			<td>New password again:</td><td><input type='password' name='confirmPassw'/></td>
+			<td>New password:</td>
+		</tr>
+		<tr>
+			<td><input type='password' name='passw'/></td>
+		</tr>
+		<tr>
+			<td>New password again:</td>
+		</tr>
+		<tr>
+			<td><input type='password' name='confirmPassw'/></td>
+		</tr>
+		<tr>
+			<td>Street name:</td>
+		</tr>
+		<tr>
+			<td><input type='text' name='s_name' value='<?php echo $profile['s_name']?>' /></td>
+		</tr>
+		<tr>
+			<td>City:</td>
+		</tr>
+		<tr>
+			<td><input type='text' name='city' value='<?php echo $profile['city']?>' /></td>
+		</tr>
+		<tr>
+			<td>Zip:</td>
+		</tr>
+		<tr>
+			<td><input type='text' name='zip' value='<?php echo $profile['zip']?>' /></td>
+		</tr>
+		<tr>
+			<td>Age:</td>
+		</tr>
+		<tr>
+			<td><input type='text' name='age' value='<?php echo $profile['age']?>'/></td>
 		</tr>
 		<tr>
 			<td><input type='Submit' value='Save Changes'</td>
@@ -40,6 +79,7 @@
 	</table>
 	
 </form>
+<h2>Favorit bars</h2>
 
 
 

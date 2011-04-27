@@ -68,7 +68,7 @@ class User extends CI_Controller {
     /**
      * Will pass the users id to the db, and gets all the users data back, and
      * forwards it to the users editProfile page.
-     */
+     
     function showEditProfile() {
 		$is_logged_in = $this->logged_in->status();
 		
@@ -88,11 +88,15 @@ class User extends CI_Controller {
         //Print_r ($_SESSION);
         //print_r($this->session->all_userdata());
     }
+    */
 
     /**
      * Will save the editet tjeck the userdata and then save it to the DB.
      */
     function editProfile() {
+    	
+    	if(strlen($this->input->post('firstname')) > 0){
+    	
         $userid = $_SESSION['userid'];
         //$email = $this->input->post('email');
         $this->load->library('form_validation');
@@ -109,12 +113,16 @@ class User extends CI_Controller {
             'userid' => $userid,
             'f_name' => $this->input->post('firstname'),
             'l_name' => $this->input->post('lastname'),
+            's_name' => $this->input->post('s_name'),
+            'city'	 => $this->input->post('city'),
+            'zip'	 => $this->input->post('zip'),
+            'age'	 => $this->input->post('age')	
         );
 
         if ($this->form_validation->run() == FALSE) {
 
         	error_log("validation false");
-        	$this->showEditProfile();
+        	$this->editProfile();
         	//redirect(base_url() . "user/showEditProfile");
         } else {
         	if(strlen($oldpassw) >= 6 || strlen($passw) >= 6){
@@ -131,10 +139,21 @@ class User extends CI_Controller {
         	
         	if($this->user_model->saveUserdata($user_data)){
         		$this->session->set_flashdata('error', 'Account data have been saved');
-        		$this->showEditProfile();
+        		
+        		$this->editProfile();
         	}
         	
-        }      
+        } 
+        }else {
+        $userid = $_SESSION['userid'];
+        //if(isset($user_data))
+        $data['profile'] = $this->user_model->getUserById($userid);
+
+        $data['pic_path'] = $this->user_model->getProfilePic($userid);
+
+        $data['main_content'] = 'showEditProfile_view';
+        $this->load->view('/include/template1_view', $data);
+        }     
     
     }
 
