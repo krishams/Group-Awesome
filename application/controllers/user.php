@@ -139,7 +139,8 @@ class User extends CI_Controller {
         	
         	if($this->user_model->saveUserdata($user_data)){
         		$this->session->set_flashdata('error', 'Account data have been saved');
-        		
+        		//redirect(base_url() . "user/EditProfile");
+        		unset($_POST['firstname']);
         		$this->editProfile();
         	}
         	
@@ -150,7 +151,7 @@ class User extends CI_Controller {
         $data['profile'] = $this->user_model->getUserById($userid);
 
         $data['pic_path'] = $this->user_model->getProfilePic($userid);
-
+		$data['bars'] = $this->bar_model->getListOfBars();
         $data['main_content'] = 'showEditProfile_view';
         $this->load->view('/include/template1_view', $data);
         }     

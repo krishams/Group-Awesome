@@ -78,13 +78,22 @@
 		</tr>				
 	</table>
 	
-</form>
-<h2>Favorit bars</h2>
 
+<h2>Favorite bars</h2>
 
-
-      
-
+	<select id="bars">
+	<?php
+		foreach ($bars as $bar) {
+			echo '<option id="'; 
+			echo $bar['id']; 
+			echo '">';
+			echo $bar['name'];
+			echo '</option>';
+		}
+	?>
+</select>
+</form>  
+<div id="content"><p>asdnfldjdfldjdfjkfdpkdfpd</p></div>
        <?php
 
             if($this->session->flashdata('error')){
@@ -96,4 +105,8 @@
 
 
 
+
+<script type="text/javascript">
+$("#content").load("<?php echo base_url();?> ajax/loadFavoritBars");
+</script>
 
