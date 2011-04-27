@@ -79,6 +79,7 @@
 	</table>
 	
 </form>
+<h2>Favorit bars</h2>
 
 
 
