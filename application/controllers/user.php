@@ -68,7 +68,7 @@ class User extends CI_Controller {
     /**
      * Will pass the users id to the db, and gets all the users data back, and
      * forwards it to the users editProfile page.
-     */
+     
     function showEditProfile() {
 		$is_logged_in = $this->logged_in->status();
 		
@@ -88,11 +88,15 @@ class User extends CI_Controller {
         //Print_r ($_SESSION);
         //print_r($this->session->all_userdata());
     }
+    */
 
     /**
      * Will save the editet tjeck the userdata and then save it to the DB.
      */
     function editProfile() {
+    	
+    	if(strlen($this->input->post('firstname')) > 0){
+    	
         $userid = $_SESSION['userid'];
         //$email = $this->input->post('email');
         $this->load->library('form_validation');
@@ -109,12 +113,16 @@ class User extends CI_Controller {
             'userid' => $userid,
             'f_name' => $this->input->post('firstname'),
             'l_name' => $this->input->post('lastname'),
+            's_name' => $this->input->post('s_name'),
+            'city'	 => $this->input->post('city'),
+            'zip'	 => $this->input->post('zip'),
+            'age'	 => $this->input->post('age')	
         );
 
         if ($this->form_validation->run() == FALSE) {
 
         	error_log("validation false");
-        	$this->showEditProfile();
+        	$this->editProfile();
         	//redirect(base_url() . "user/showEditProfile");
         } else {
         	if(strlen($oldpassw) >= 6 || strlen($passw) >= 6){
@@ -131,10 +139,21 @@ class User extends CI_Controller {
         	
         	if($this->user_model->saveUserdata($user_data)){
         		$this->session->set_flashdata('error', 'Account data have been saved');
-        		$this->showEditProfile();
+        		
+        		$this->editProfile();
         	}
         	
-        }      
+        } 
+        }else {
+        $userid = $_SESSION['userid'];
+        //if(isset($user_data))
+        $data['profile'] = $this->user_model->getUserById($userid);
+
+        $data['pic_path'] = $this->user_model->getProfilePic($userid);
+
+        $data['main_content'] = 'showEditProfile_view';
+        $this->load->view('/include/template1_view', $data);
+        }     
     
     }
 
@@ -187,120 +206,6 @@ class User extends CI_Controller {
         redirect('user/goToInbox');
     }
 
-    /**
-     * This function will make sure to get the user to his inbox, where all his messages are.
-     */
-    function goToInbox() {
-    	$is_logged_in = $this->logged_in->status();
-    	
-        $id = $_SESSION['userid'];
-        $data['messages'] = $this->message_model->getMessages($id);
-        $data['main_content'] = 'message_view';
-        if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
-        $this->load->view('/include/template1_view', $data);
-    }
-
-    /**
-     * This function will get som parameters and save them in the db tabel messages
-     */
-    function sendRepley() {
-    	$is_logged_in = $this->logged_in->status();
-        $submitter =  $_SESSION['userid'];
-        $data['owner_id'] = $_POST['owner_id'];
-        $data['message'] = $_POST['messagebody'];
-        $data['submit_id'] = $submitter;
-        $data['submit_name'] = $this->makeUserName($submitter);
-        $data['parent_id'] = $_POST['parent'];
-        if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
-        $this->message_model->insertMessage($data);
-        redirect('user/goToInbox');
-    }
-
-    /*
-     * This is the function that is needed to send a message to another
-     */
-    function sendMessage(){
-        $uri = $_POST['uri'];
-        if($this->validatInput($uri)){
-            $submitter =  $_SESSION['userid'];
-            $data['submit_id'] = $submitter;
-            $data['submit_name'] = $this->makeUserName($submitter);
-            $data['owner_id'] = $_POST['msg_to'];
-            $data['msg_sub'] = $_POST['msg_sub'];
-            $data['message'] = $_POST['msg_msg'];
-            $data['parent_id'] = 0;
-            if($is_logged_in == "1"){
-                error_log("inde i metode");
-                $data['is_logged_in'] = "logged_in";
-                }
-                else{
-                    $data['is_logged_in'] = "not_logged_in";
-                }
-            $this->message_model->insertMessage($data);
-            redirect('user/goToInbox');
-        }
-    }
-
-    /*
-     * Will send a friend request to the other person
-     */
-    function sendFriendRequest() {
-    	$is_logged_in = $this->logged_in->status();
-        $data['owner_id'] = $_POST['id'];
-        $data['msg_sub'] = 'friend request%&¤';
-        $submitter =  $_SESSION['userid'];
-        $data['submit_id'] = $submitter;
-        $data['submit_name'] = $this->makeUserName($submitter);
-        $data['parent_id'] = 0;
-        if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
-        $this->message_model->insertMessage($data);
-        redirect('user/showprofile/'.$_POST['id']);
-    }
-
-    /*
-     * simpel function that gets the name of a user
-     */
-    function makeUserName($submitter){
-        $name = $this->user_model->getUserName($submitter); //returns both first and last name
-        $first = $name['f_name'];
-        $sec = $name['l_name'];
-        return $first . ' ' . $sec;
-    }
-
-    /*
-     * this function will send a private message
-     */
-    function sendPrivateMessage(){
-        $uri = 'user/showProfile/'.$_POST['msg_to'];
-        if($this->validatInput($uri)){
-            $data['submit_id'] = $submitter;
-            $submitter =  $_SESSION['userid'];
-            $data['submit_name'] = $this->makeUserName($submitter);
-            $data['owner_id'] = $_POST['msg_to'];
-            $data['msg_sub'] = $_POST['msg_sub'];
-            $data['message'] = $_POST['msg_msg'];
-            $data['parent_id'] = 0;
-            $this->message_model->insertMessage($data);
-            redirect('user/showProfile/'.$_POST['msg_to']);
-        }
-    }
-
-    function getPrivateMsgView(){
-        $data['user'] = $_POST['id'];
-        $data['main_content'] = 'privateMessage_view';
-        $this->load->view('/include/template1_view', $data);
-    }
-
-    function validatInput($uri){
-        $this->form_validation->set_rules('msg_to', 'Message To', 'trim|required');
-        $this->form_validation->set_rules('msg_sub', 'Message subject', 'trim|required');
-        $this->form_validation->set_rules('msg_msg', 'Message', 'trim|required');
-        if ($this->form_validation->run() == FALSE) {
-            redirect($uri);
-            return false;
-        }
-        else
-            return true;
-    }
+    
 }
 ?>

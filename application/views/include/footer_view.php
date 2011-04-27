@@ -12,7 +12,7 @@
 -->
 <script type="text/javascript">
     $('.seemore').click(function() {
-        $('.hiddentr').toggle('slow', function() {
+        $('tr[name^="hide"]').toggle('slow', function() {
             // Animation complete.
         });
     });

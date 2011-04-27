@@ -1,18 +1,19 @@
-<!-- Is used to display type in errors-->
-<?php echo validation_errors('<p class="error">'); ?>
-        <h1>Send a Message</h1>
 <table>
     <td>
+        <h1>Send a Message</h1>
         <?php
             $hidden = array('uri' => $this->uri->uri_string());
-            echo form_open("user/sendMessage", '', $hidden); ?>
-            To: <input type="text" name="msg_to"/> <br/>
-            Subject: <input type="text" name="msg_sub"/> <br/>
+            echo form_open("message/sendMessage", '', $hidden); ?>
+            To: <?php echo form_input('msg_to', set_value('msg_to', '')); ?><br/>
+            Subject: <?php echo form_input('msg_sub', set_value('msg_sub', ''));?><br/>
             Message: <br/>
-            <textarea name="msg_msg" rows="4" cols="20"></textarea> <br/>
+            <?php $cdata = array('name' => 'msg_msg', 'cols' => '20', 'rows' => '4');
+            echo form_textarea($cdata, set_value('msg_msg', '')); ?>
+            <br/>
             <input type="submit" value="Send message" />
         <?= form_close(); ?>
-        
+        <!-- Is used to display type in errors-->
+        <?php echo validation_errors('<p class="error">'); ?>
     </td>
     <td>
         <?php
@@ -50,7 +51,7 @@
                         'parent_id' => $row['msg_id'],
                         'owner_id' => $row['submit_id'],
                         'submit_id' => $_SESSION['userid']);
-                    echo form_open("user/sendRepley", '', $hiddenid);
+                    echo form_open("message/sendRepley", '', $hiddenid);
                 ?>
                 <fieldset>
                     <legend>New message</legend>
