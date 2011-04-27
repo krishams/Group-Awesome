@@ -16,6 +16,7 @@ class Search extends CI_Controller {
 
         $is_logged_in = $this->logged_in->status();
 
+        $data['favorite_bars'] = $this->bar_model->getFavoriteBars($_SESSION['userid']);
         $data['random'] = $this->search_model->getRandomUsers();
         
         $data['main_content'] = 'findBuddies_view';

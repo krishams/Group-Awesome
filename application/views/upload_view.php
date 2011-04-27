@@ -28,7 +28,7 @@
         * width max 130 pixel</p>
 
 <br />
-<?php echo anchor('user/showEditProfile', 'Back to edit profile'); ?>
+<?php echo anchor('user/EditProfile', 'Back to edit profile'); ?>
 
 
 </div>
