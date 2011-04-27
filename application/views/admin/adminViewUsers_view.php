@@ -28,17 +28,17 @@
         echo form_open('admin/controlInput', '', $hidden);
     ?>
         <tr>
-            <td><?= $row['id']; ?></td>
+            <td><?php echo $row['id']; ?></td>
             
-            <td><input type='text' name='email<?= $row['id'] ?>' value='<?= $row['email'] ?>'/></td>
+            <td><input type='text' name='email<?php echo $row['id'] ?>' value='<?php echo $row['email'] ?>'/></td>
 
             <td>
                 <input type="submit" name="option" value="Change password"/>
             </td>
 
-            <td><?= form_dropdown('roleid' . $row['id'], $roleOptions, $row['role_id']); ?></td>
+            <td><?php echo form_dropdown('roleid' . $row['id'], $roleOptions, $row['role_id']); ?></td>
 
-            <td><?= form_checkbox('isactive' . $row['id'], '', $row['active']); ?></td>
+            <td><?php echo form_checkbox('isactive' . $row['id'], '', $row['active']); ?></td>
 
             <td>
             <?php
@@ -71,10 +71,10 @@
             <div>
                 <table>
                 <tr>
-                    <td>First name:</td> <td><input type='text' name='firstname<?= $row['id'] ?>' size="15" value='<?= $row['f_name'] ?>'/></td>
+                    <td>First name:</td> <td><input type='text' name='firstname<?php echo $row['id'] ?>' size="15" value='<?php echo $row['f_name'] ?>'/></td>
                 </tr>
                 <tr>
-                <td>Last name:</td> <td><input type='text' name='lastname<?= $row['id'] ?>' size="15" value='<?= $row['l_name'] ?>'/></td>
+                <td>Last name:</td> <td><input type='text' name='lastname<?php echo $row['id'] ?>' size="15" value='<?php echo $row['l_name'] ?>'/></td>
                 </tr>
                 </table>
             </div>
