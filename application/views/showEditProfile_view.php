@@ -1,7 +1,8 @@
 <h1>Basic Information</h1>
 <?php echo validation_errors(); ?>
-<div id="profile">
-            <img width="155px" height="180px" alt="Profile image"  src="
+<div id="profile-wrapper">
+<div id="profile1">
+            <img width="130px" height="150px" alt="Profile image"  src="
             <?php
                 if(empty($pic_path))
                 {
@@ -74,11 +75,12 @@
 			<td><input type='text' name='age' value='<?php echo $profile['age']?>'/></td>
 		</tr>
 		<tr>
-			<td><input type='Submit' value='Save Changes'</td>
+			<td></td><td><input type='Submit' value='Save Changes'</td>
 		</tr>				
 	</table>
 	
 </form>
+</div>
 <h2>Favorit bars</h2>
 
 

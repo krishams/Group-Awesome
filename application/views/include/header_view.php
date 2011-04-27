@@ -14,3 +14,4 @@ and open the template in the editor.
     <body>
 
     <div id="wrapper" class="<?php if(isset($is_logged_in)){echo $is_logged_in;}else{echo "not_logged_in";}?>">
+    <a href="<?php echo base_url()?>main/index" id="logo"></a>

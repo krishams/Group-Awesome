@@ -118,7 +118,6 @@ class Admin extends CI_Controller {
         $email = $this->input->post('email'.$id);
         $role_id = $this->input->post('roleid'.$id);
         $is_active = $this->input->post('isactive'.$id);
-        error_log('ID: '.$id.', Email: '.$email.', Role: '.$role_id.', Active: '.$is_active);
         $user_data = array(
             'userid' => $id,
             'email' => $email,
