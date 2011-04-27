@@ -1,7 +1,7 @@
-<h2>Basic Information</h2>
+<h1>Basic Information</h1>
 <?php echo validation_errors(); ?>
 <div id="profile">
-            <img alt="Profile image"  src="
+            <img width="155px" height="180px" alt="Profile image"  src="
             <?php
                 if(empty($pic_path))
                 {
