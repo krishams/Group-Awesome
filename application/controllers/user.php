@@ -210,7 +210,7 @@ class User extends CI_Controller {
         }
         $this->friend_model->approve_friend($user_data);
         $this->message_model->deleteMessage($id);
-        redirect('user/goToInbox');
+        redirect('message/goToInbox');
     }
 
     
