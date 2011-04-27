@@ -114,8 +114,8 @@ class Message extends CI_Controller {
         }
     }
 
-    /*
-     *
+    /**
+     * Is called when you want to send a private message
      */
     function getPrivateMsgView($id = false){
         if($id != false){
@@ -128,6 +128,9 @@ class Message extends CI_Controller {
         $this->load->view('/include/template1_view', $data);
     }
 
+    /**
+     *
+     */
     function validatInput($private = false, $id = false ){
         $this->form_validation->set_rules('msg_to', 'To', 'trim|required');
         $this->form_validation->set_rules('msg_sub', 'Subject', 'trim|required');
