@@ -1,6 +1,6 @@
 <?php
 $hidden = array('msg_to' => $user, 'uri'=>$this->uri->uri_string());
-echo form_open("user/sendPrivateMessage", '', $hidden); ?>
+echo form_open("message/sendPrivateMessage", '', $hidden); ?>
 Subject: <input type="text" name="msg_sub"/> <br/>
 Message: <br/>
 <textarea name="msg_msg" rows="4" cols="20"></textarea> <br/>
