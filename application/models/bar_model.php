@@ -58,7 +58,7 @@ class bar_model extends CI_Model {
         $sql = "SELECT users.id, l_name, f_name FROM users, favorite_bars WHERE
                 users.id = favorite_bars.user_id AND favorite_bars.bar_id = $bar_id";
         if ($user_to_exclude > 0) {
-             $sql .= " AND users.id <> 132";
+             $sql .= " AND users.id <> $user_to_exclude";
 
         }
         error_log($sql);
