@@ -1,1 +1,5 @@
-asdasdaks¾fjmaklsdmflaaslmalsmdamsdmasmalmafalamdmaldmamadlmalallasdamdalsdalaadas
+<?php
+foreach ($bars as $bar) {
+	echo $bar['name'];
+}
+?>
