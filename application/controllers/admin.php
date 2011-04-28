@@ -27,6 +27,8 @@ class Admin extends CI_Controller {
             $this->load->view('/include/admintemplate_view', $data);
         }
         else{
+        	$is_logged_in = $this->logged_in->status();
+        	if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
             $data['main_content'] = 'admin/adminLoginError_view';
             $this->load->view('/include/template1_view', $data);
         }
