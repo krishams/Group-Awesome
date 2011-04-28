@@ -38,7 +38,7 @@ and open the template in the editor.
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td><input type="submit" value="<?=$sign_in?>"/></td>
+                <td><input type="submit" value="<?php echo $sign_in ?>"/></td>
             </tr>
             <tr>
                 <td><?php echo anchor('login/getRegistration', $sign_up); ?></td>
