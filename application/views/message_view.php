@@ -1,27 +1,10 @@
-<table>
-    <td>
-        <h1>Send a Message</h1>
-        <?php
-            $hidden = array('uri' => $this->uri->uri_string());
-            echo form_open("message/sendMessage", '', $hidden); ?>
-            To: <?php echo form_input('msg_to', set_value('msg_to', '')); ?><br/>
-            Subject: <?php echo form_input('msg_sub', set_value('msg_sub', ''));?><br/>
-            Message: <br/>
-            <?php $cdata = array('name' => 'msg_msg', 'cols' => '20', 'rows' => '4');
-            echo form_textarea($cdata, set_value('msg_msg', '')); ?>
-            <br/>
-            <input type="submit" value="Send message" />
-        <?= form_close(); ?>
-        <!-- Is used to display type in errors-->
-        <?php echo validation_errors('<p class="error">'); ?>
-    </td>
-    <td>
-        <?php
+        <h1>Your Inbox</h1>
+<?php
         if ($messages != null) {
             foreach ($messages as $row) {
-                echo '<br/> ----------------------------------- <br/>';
                 if ($row['msg_sub'] == 'friend request%&¤') { ?>
-                    You have been asked if you want to be friends with <i><?php echo $row['submit_name']; ?></i>
+                    <div class="inboxMessages">
+                    <p>You have been asked if you want to be friends with</p> <i><?php echo $row['submit_name']; ?></i>
                 <?php
                     $hiddenid = array(
                         'msg_id' => $row['msg_id'],
@@ -29,8 +12,10 @@
                         'submit_id' => $_SESSION['userid']);
                     echo form_open('user/createRelation', '', $hiddenid); ?>
                     <input type="submit" value="Accept friend request" />
+                    </div>
         <?= form_close(); ?>
 <?php } else { ?>
+		<div class="inboxMessages">
         <li class="message">
             <div class="msgsub">
                 <?php echo $row['msg_sub']; ?>
@@ -61,8 +46,38 @@
                 <?php echo form_close(); ?>
             </div>
         </li>
+        </div>
     <?php }
             }
         } ?>
-</td>
-</table>
+        
+        <?php
+            $hidden = array('uri' => $this->uri->uri_string());
+            echo form_open("message/sendMessage", 'id="sendMessageForm"', $hidden); ?>
+            <table>
+    			<tr>
+            		<td>To:</td> 
+            	</tr>
+            	<tr>
+            		<td><?php echo form_input('msg_to', set_value('msg_to', '')); ?></td>
+            	</tr>
+            	<tr>
+            		<td>Subject:</td>
+            	</tr>
+            	<tr>
+            		<td><?php echo form_input('msg_sub', set_value('msg_sub', ''));?></td>
+            	</tr>
+            	<tr>
+            		<td>Message:</tr>
+            	</tr>
+            	<tr>
+            		<td><?php $cdata = array('name' => 'msg_msg', 'cols' => '20', 'rows' => '4');
+            echo form_textarea($cdata, set_value('msg_msg', '')); ?></td>
+            	</tr>
+            	<tr>
+            		<td><input type="submit" value="Send message" /></tr>
+            	</tr>
+            </table>
+        <?= form_close(); ?>
+        <!-- Is used to display type in errors-->
+        <?php echo validation_errors('<p class="error">'); ?>

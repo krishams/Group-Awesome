@@ -116,6 +116,7 @@ class Message extends CI_Controller {
      * Is called when you want to send a private message
      */
     function getPrivateMsgView($id = false){
+    	$is_logged_in = $this->logged_in->status();
         if($id != false){
             $data['user'] = $id;
         }
@@ -123,6 +124,7 @@ class Message extends CI_Controller {
             $data['user'] = $_POST['id'];
         }
         $data['main_content'] = 'privateMessage_view';
+        if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
         $this->load->view('/include/template1_view', $data);
     }
 

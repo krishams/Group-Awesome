@@ -1,31 +1,29 @@
 <h1>Find Buddies</h1>
-<div id = "search_results"></div>
 <?php
-    echo '<div id="findBuddies"><h2>Search by Name:</h2>';
+    echo '<div id="findBuddies"><h2>Find them from your favorite bars or search them by name:</h2>';
 
     $attributes = array('method' => 'post');
     echo form_open('main/searchUserButton/',$attributes);
-    echo '<li><input type="text" name="search" id="searchString" onkeyup="showResult(this.value)"/></li>
+    echo '<div id="innerBuddies"><li><input type="text" name="search" id="searchString" onkeyup="showResult(this.value)"/></li>
     <li><input type="submit" value="Search" id="search_user_by_name" /> </li>';
     echo form_close();
-    echo '</div>';
 
-    $bar_options = '<div><h2>Find buddies at your favorite bars!</h2><select id = "search_bar_users">';
+    $bar_options = '<select id = "search_bar_users">';
     $bar_options .= '<option class = "kill" selected="selected">--</option>';
     foreach($favorite_bars as $bar) {
         $bar_options .= '<option id = "' . $bar['bar_id'] . '">' . $bar['name'] . '</option>';
     }
     $bar_options .= '</select></div>';
-
     echo $bar_options;
+    echo '<div id = "search_results"></div></div>';
 ?>
 
-<div id = "randomUsers"><h1>Random Users</h1>
+<div id = "randomUsers"><h2>Or just browse a random friend:</h2>
 
 <?php
     foreach($random as $row)
     {
-       echo '<a href="'.base_url().'user/showProfile/'.$row['user_id'].'"><img width="130px" height="150px" src="'.$row['path'].'"></a>';
+       echo '<div id="profile"><a href="'.base_url().'user/showProfile/'.$row['user_id'].'"><img width="130px" height="150px" src="'.$row['path'].'"></a></div>';
     }
 ?>
 
