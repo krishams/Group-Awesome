@@ -106,7 +106,7 @@
 	?>
 </select>
 <div id="addbar">
-<form id="addbarform">
+<form id="addbarform" action="destination.html">
 <input type="text" id="barname"></input>
 <input type='Submit' value='Add Bar'>
 </form>
