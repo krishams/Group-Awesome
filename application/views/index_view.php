@@ -8,7 +8,7 @@ and open the template in the editor.
     <form class="loginForm" action="<?php echo base_url() . 'main/login'?>" method="POST">
         <table>
             <tr>
-                <td>Email</td>
+                <td><?=$mail?></td>
             </tr>
             <tr>
                 <td>
@@ -22,7 +22,7 @@ and open the template in the editor.
                 </td>
             </tr>
             <tr>
-                <td>Password</td>
+                <td><?=$password?></td>
             </tr>
             <tr>
                 <td><?php
@@ -38,13 +38,13 @@ and open the template in the editor.
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td><input type="submit" value="Sign in"/></td>
+                <td><input type="submit" value="<?=$sign_in?>"/></td>
             </tr>
             <tr>
-                <td><?php echo anchor('login/getRegistration', 'Not signed up?'); ?></td>
+                <td><?php echo anchor('login/getRegistration', $sign_up); ?></td>
             </tr>
             <tr>
-                <td><?php echo anchor('login/getRequestPassword', 'Forgot your password?'); ?></td>
+                <td><?php echo anchor('login/getRequestPassword', $forgot_pw); ?></td>
             </tr>
         </table>
         <!--This code will only be used if the password or email is incorrect,

@@ -180,16 +180,25 @@ class User extends CI_Controller {
         }
     }
 
-    function test($bar_id) {
+    function test() {
+        echo "start<br />";
+        $data['email'] = '';
+        $data['test'] = '';
+        print_r($data);
+        echo '<br />';
+        l(&$data);
+        print_r($data);
+        echo "end";
 //        $this->friend_model->get_friends(134, true);
 //        $bar = array("id" => 3, "name" => "Byens Kro");
 //        $data = $this->bar_model->getFavoriteBars(132);
 //        error_log(print_r($data, true));
-        $data = $this->bar_model->getUsersForBar($bar_id);
-        foreach ($data as $row) {
-            echo anchor('user/showProfile/'.$row['id'],$row['f_name'] ." ". $row['l_name']) . '<br />';
-        }
-    echo '<br/>';
+
+//        $data = $this->bar_model->getUsersForBar($bar_id);
+//        foreach ($data as $row) {
+//            echo anchor('user/showProfile/'.$row['id'],$row['f_name'] ." ". $row['l_name']) . '<br />';
+//        }
+//    echo '<br/>';
     }
 
     /**

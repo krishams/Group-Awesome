@@ -14,11 +14,10 @@ class Main extends CI_Controller {
      * loads the initial log-in screen
      */
     function index() {
-    		$is_logged_in = $this->logged_in->status();
-            $data['main_content'] = 'home_view';
-            if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
-            $this->load->view('/include/template1_view', $data);
-                
+        $is_logged_in = $this->logged_in->status();
+        $data['main_content'] = 'home_view';
+        if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
+        $this->load->view('/include/template1_view', $data);
     }
 
     /**
@@ -30,8 +29,17 @@ class Main extends CI_Controller {
     	if ($this->verifyLogin()) {
     		redirect(base_url());
     	} else {
+        $data['mail'] = "";
+        $data['mail'] = "";
+        $data['password'] = "";
+        $data['sign_in'] = "";
+        $data['sign_up'] = "";
+        $data['forgot_pw'] = "";
+        l(&$data);
+
       	$data['error'] = $this->session->flashdata('error');
         $data['main_content'] = 'index_view';
+        $data['email'] = $this->lang->line('email');
         $this->load->view('/include/template_view', $data);
         }
     
