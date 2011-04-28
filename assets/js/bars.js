@@ -9,4 +9,15 @@ $("#bars").change(function(){
 		
 	});
 	
+	$("#addbarshowhide").click(function(){
+		
+  		$('#addbar').toggle('slow', function() {});
+    	
+	});
+	
+	$('#addbarform').submit(function() {
+		barname = $("#barname").val();
+		alert(barname);
+  		$.get(base_url + 'ajax/saveFavoritBars/' + barname);
+	});
 getFavoritBars();

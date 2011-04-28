@@ -105,7 +105,14 @@
 		}
 	?>
 </select>
-</form>  
+<div id="addbar">
+<form id="addbarform">
+<input type="text" id="barname"></input>
+<input type='Submit' value='Add Bar'>
+</form>
+</div>
+<label id="addbarshowhide">Add new Bar</label>
+ 
 <div id="search_results"></div>
        <?php
 
