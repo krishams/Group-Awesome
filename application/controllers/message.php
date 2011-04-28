@@ -33,14 +33,12 @@ class Message extends CI_Controller {
      * This function will get som parameters and save them in the db tabel messages
      */
     function sendRepley() {
-    	$is_logged_in = $this->logged_in->status();
         $submitter =  $_SESSION['userid'];
         $data['owner_id'] = $_POST['owner_id'];
         $data['message'] = $_POST['messagebody'];
         $data['submit_id'] = $submitter;
         $data['submit_name'] = $this->makeUserName($submitter);
         $data['parent_id'] = $_POST['parent'];
-        if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
         $this->message_model->insertMessage($data);
         redirect('message/goToInbox');
     }
@@ -57,12 +55,6 @@ class Message extends CI_Controller {
             $data['msg_sub'] = $_POST['msg_sub'];
             $data['message'] = $_POST['msg_msg'];
             $data['parent_id'] = 0;
-            if($is_logged_in == "1"){
-                $data['is_logged_in'] = "logged_in";
-                }
-                else{
-                    $data['is_logged_in'] = "not_logged_in";
-                }
             $this->message_model->insertMessage($data);
             redirect('message/goToInbox');
         }
@@ -100,8 +92,8 @@ class Message extends CI_Controller {
         $private = true;
         $id = $_POST['msg_to'];
         if($this->validatInput($private, $id)){
-            $data['submit_id'] = $submitter;
             $submitter =  $_SESSION['userid'];
+            $data['submit_id'] = $submitter;
             $data['submit_name'] = $this->makeUserName($submitter);
             $data['owner_id'] = $_POST['msg_to'];
             $data['msg_sub'] = $_POST['msg_sub'];
