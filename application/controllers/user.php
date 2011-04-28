@@ -157,13 +157,13 @@ class User extends CI_Controller {
         }
     }
 
-    function test() {
+/*    function test() {
         echo "start<br />";
         $data['email'] = '';
         $data['test'] = '';
         print_r($data);
         echo '<br />';
-        l(&$data);
+        l($data);
         print_r($data);
         echo "end";
 //        $this->friend_model->get_friends(134, true);
@@ -177,7 +177,7 @@ class User extends CI_Controller {
 //        }
 //    echo '<br/>';
     }
-
+*/
     /**
      * Will create a relation between 2 users, passing the users id to the model
      */
