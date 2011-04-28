@@ -153,6 +153,19 @@ h1{
 	margin: 10px;
 }
 
+#search_results {
+	width: 300px;
+	float: right;
+        padding: 2px;
+        border-style: solid;
+        border-color: #000;
+        border-width: 2px;
+}
+
+#search_results li {
+	list-style-type: none;
+}
+
 #home p{
 	text-align: center;
 }

@@ -54,14 +54,21 @@ class bar_model extends CI_Model {
      * @param int $offset OPTIONAL where to start searching. Default = 0 which searches from the start
      * @return Array all user_ids for users that have this as a favorite bar
      */
-    function getUsersForBar($bar_id, $offset = 0){
-        $this->db->select('user_id')->from('favorite_bars')->where('bar_id', $bar_id)->limit(100, $offset);
-        $Q = $this->db->get();
+    function getUsersForBar($bar_id, $user_to_exclude = 0){
+        $sql = "SELECT users.id, l_name, f_name FROM users, favorite_bars WHERE
+                users.id = favorite_bars.user_id AND favorite_bars.bar_id = $bar_id";
+        if ($user_to_exclude > 0) {
+             $sql .= " AND users.id <> 132";
+
+        }
+        error_log($sql);
+
+        $Q = $this->db->query($sql);
 
         $data = array();
         if ($Q->num_rows() > 0) {
             foreach ($Q->result_array() as $row) {
-                $data[] = $row['user_id'];
+                $data[] = $row;
             }
         }
         return $data;

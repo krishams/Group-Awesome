@@ -180,11 +180,16 @@ class User extends CI_Controller {
         }
     }
 
-    function test() {
+    function test($bar_id) {
 //        $this->friend_model->get_friends(134, true);
 //        $bar = array("id" => 3, "name" => "Byens Kro");
-        $data = $this->bar_model->getFavoriteBars(132);
-        error_log(print_r($data, true));
+//        $data = $this->bar_model->getFavoriteBars(132);
+//        error_log(print_r($data, true));
+        $data = $this->bar_model->getUsersForBar($bar_id);
+        foreach ($data as $row) {
+            echo anchor('user/showProfile/'.$row['id'],$row['f_name'] ." ". $row['l_name']) . '<br />';
+        }
+    echo '<br/>';
     }
 
     /**
@@ -205,7 +210,7 @@ class User extends CI_Controller {
         }
         $this->friend_model->approve_friend($user_data);
         $this->message_model->deleteMessage($id);
-        redirect('user/goToInbox');
+        redirect('message/goToInbox');
     }
 
     
