@@ -26,13 +26,13 @@ class Ajax extends CI_Controller {
     function saveFavoritBars() {
     	error_log("save ajax");
     	$bar['user_id'] = $_SESSION['userid'];
-    	$bar['bar_id'] = $this->uri->segment(3);
+    	$bar['bar_id'] = urldecode($this->uri->segment(3));
     	//error_log("userid: " . $bar['user_id'] . " barid: " . $bar['bar_id']);
     	$this->bar_model->saveFavoriteBar($bar);
     }
     
     function saveBar() {
-    	$bar['name'] = $this->uri->segment(3);
+    	$bar['name'] = urldecode($this->uri->segment(3));
     	$this->bar_model->saveBar($bar);
     }
 
