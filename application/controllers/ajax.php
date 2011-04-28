@@ -14,13 +14,20 @@ class Ajax extends CI_Controller {
     
     function loadFavoritBars() {
     	error_log("ajaxsus");
-    	$data['bars'] = $this->bar_model->getFavoriteBars($_SESSION['userid']);
-    	$this->load->view('/ajax/favoritbars_view', $data);
+    	$bars = $this->bar_model->getFavoriteBars($_SESSION['userid']);
+    		echo "<ul>";
+			foreach ($bars as $bar) {
+				echo "<li>" . $bar['name'] . "</li>";
+			}
+			echo "</ul>";
+		
     }
     
     function saveFavoritBars() {
     	error_log("save ajax");
-    	error_log($_GET['name']);
+    	$bar['user_id'] = $_SESSION['userid'];
+    	$bar['bar_id'] = $this->uri->segment(3);
+    	//error_log("userid: " . $bar['user_id'] . " barid: " . $bar['bar_id']);
     	$this->bar_model->saveFavoriteBar($bar);
     }
 

@@ -1,12 +1,12 @@
-//jQuery('#bars option:selected').val();
-/*jQuery('#bars :selected').each(function(){
-    alert(jQuery(this).text());
-    alert(jQuery(this).val());
-});*/
-
-$("#bars").change(function () {
-	//alert(jQuery(this).text());
-    alert(jQuery(this).val());
-    //alert(jQuery(this).id());
-});
-
+function getFavoritBars() {
+	$("#search_results").load(base_url + 'ajax/loadFavoritBars');
+}
+$("#bars").change(function(){
+	id = $("option:selected", this).attr('id');
+	//alert(base_url + 'ajax/saveFavoritBars');
+	$.get(base_url + 'ajax/saveFavoritBars/' + id);
+	getFavoritBars();
+		
+	});
+	
+getFavoritBars();

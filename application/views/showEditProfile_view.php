@@ -106,7 +106,7 @@
 	?>
 </select>
 </form>  
-<div id="content"></div>
+<div id="search_results"></div>
        <?php
 
             if($this->session->flashdata('error')){
@@ -118,16 +118,5 @@
 
 
 
-
-<script type="text/javascript">
-$("#content").load("<?php echo base_url();?>ajax/loadFavoritBars");
-$("#bars").click(function(){
-	// load about page on click
-		
-	$.get("<?php echo base_url();?>ajax/saveFavoritBars", {limit: 25});
-		
-	});
-
-
-</script>
-
+<script type="text/javascript"> base_url = <?php echo '"' . base_url() . '"'; ?>;</script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bars.js"></script>
