@@ -65,33 +65,10 @@ class User extends CI_Controller {
         $this->load->view('/include/template1_view', $data);
     }
 
-    /**
-     * Will pass the users id to the db, and gets all the users data back, and
-     * forwards it to the users editProfile page.
-     
-    function showEditProfile() {
-		$is_logged_in = $this->logged_in->status();
-		
-        $userid = $_SESSION['userid'];
-        //if(isset($user_data))
-        $data['profile'] = $this->user_model->getUserById($userid);
 
-        $data['pic_path'] = $this->user_model->getProfilePic($userid);
-		
-		if($is_logged_in){$data['is_logged_in'] = "logged_in";}
-		
-        $data['main_content'] = 'showEditProfile_view';
-        
-        if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
-
-        $this->load->view('/include/template1_view', $data);
-        //Print_r ($_SESSION);
-        //print_r($this->session->all_userdata());
-    }
-    */
 
     /**
-     * Will save the editet tjeck the userdata and then save it to the DB.
+     * This function is used when displaying the editprofile page, it is also taking care of saving the data when editet.
      */
     function editProfile() {
     	$is_logged_in = $this->logged_in->status();
