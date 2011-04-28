@@ -23,6 +23,8 @@ class Admin extends CI_Controller {
      */
     function login() {
         if ($this->controlIsAdmin()) {
+        	$is_logged_in = $this->logged_in->status();
+        	if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
             $data['main_content'] = 'admin/adminhome_view';
             $this->load->view('/include/admintemplate_view', $data);
         }
@@ -54,6 +56,8 @@ class Admin extends CI_Controller {
      * This functions displays all users for the admin in a table
      */
     function viewUsers(){
+    	$is_logged_in = $this->logged_in->status();
+        if($is_logged_in == "1"){$data['is_logged_in'] = "logged_in";}else{$data['is_logged_in'] = "not_logged_in";}
         $id = $_SESSION['userid'];
         $data['permissions'] = $this->getPermissions();
         $data['admin'] = $this->getAdminPriv($id);

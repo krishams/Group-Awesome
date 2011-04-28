@@ -1,1 +1,1 @@
-This is the adminlogin_view.php file
+<h1>Hello... Welcome to the admin page.</h1>

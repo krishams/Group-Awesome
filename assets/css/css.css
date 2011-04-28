@@ -2,6 +2,7 @@ html{
 	margin: 0;
 	padding: 0;
 	height: 100%;
+	background: url(../img/background.png) repeat-y center #FDF8DB;
 }
 
 body{
@@ -150,9 +151,9 @@ h1{
 }
 
 .seemore {
-        color: red;
         text-decoration: underline;
         cursor: pointer;
+        float: right;
 }
 
 #innerBuddies li{
