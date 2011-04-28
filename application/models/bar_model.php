@@ -98,24 +98,17 @@ class bar_model extends CI_Model {
     /**
      * saves a new or existing favorite bar
      * @param array $bar an array containing ['user_id'] and ['bar_id']
-     * @return int/boolean the id of the newly created bar, TRUE if an existing bar has been saved or FALSE if it can
+     * @return boolean TRUE if an existing bar has been saved or FALSE if it can
      * not be saved
      */
     function saveFavoriteBar($bar) {
-        if (!isset($bar['name'])) {
+        if (!isset($bar['user_id']) || !isset($bar['bar_id'])) {
             return false;
         }
 
-        if (isset($bar['id']) && $bar['id'] > 0) { //existing bar
-            $this->db->where('id', $bar['id']);
-            $this->db->update('bars', $bar);
-            error_log("query Userdata" . $this->db->last_query());
-
+        $this->db->insert('favorite_bars', $bar);
             return true;
-        } else { //create new bar
-            $this->db->insert('bars', $bar);
-            return $this->db->insert_id();
-        }
+//        return $this->db->insert_id();
     }
 
     function deleteBar() {
