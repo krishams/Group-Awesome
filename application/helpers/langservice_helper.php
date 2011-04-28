@@ -1,6 +1,6 @@
 <?php
 if ( ! function_exists('l')) {
-    function l(&$lines) {
+    function l($lines) {
         if (is_array($lines) && !empty ($lines)) {
             $CI =& get_instance();
             $CI->lang->load('page', $CI->config->item('language'));
@@ -10,6 +10,7 @@ if ( ! function_exists('l')) {
                 }
             }
         }
+        return $lines;
     }
 }
 ?>

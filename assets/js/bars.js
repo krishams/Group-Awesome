@@ -17,7 +17,6 @@ $("#bars").change(function(){
 	
 	$('#addbarform').submit(function() {
 		barname = $("#barname").val();
-		alert(barname);
-  		$.get(base_url + 'ajax/saveFavoritBars/' + barname);
+  		$.get(base_url + 'ajax/saveBar/' + barname);
 	});
 getFavoritBars();

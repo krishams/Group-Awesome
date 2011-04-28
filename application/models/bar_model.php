@@ -106,9 +106,12 @@ class bar_model extends CI_Model {
             return false;
         }
 
-        $this->db->insert('favorite_bars', $bar);
+        $this->db->select('*')->from('bar_view')->where('user_id', $bar['user_id'])->where('bar_id', $bar['bar_id']);
+        if (!$this->db->count_all_results()) {
+            $this->db->insert('favorite_bars', $bar);
             return true;
 //        return $this->db->insert_id();
+        }
     }
 
     function deleteBar() {

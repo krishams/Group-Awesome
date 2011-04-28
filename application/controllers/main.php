@@ -29,13 +29,7 @@ class Main extends CI_Controller {
     	if ($this->verifyLogin()) {
     		redirect(base_url());
     	} else {
-        $data['mail'] = "";
-        $data['mail'] = "";
-        $data['password'] = "";
-        $data['sign_in'] = "";
-        $data['sign_up'] = "";
-        $data['forgot_pw'] = "";
-        l(&$data);
+        $data = l(array('mail' => "", 'password' => "", 'sign_in' => "", 'sign_up' => "", 'forgot_pw' => ""));
 
       	$data['error'] = $this->session->flashdata('error');
         $data['main_content'] = 'index_view';
