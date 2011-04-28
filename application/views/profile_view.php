@@ -25,6 +25,12 @@
         echo form_open('message/getPrivateMsgView','',$hidden);
         echo '<input type="submit" value="Send private message" />';
     form_close(); }?>
+        <?php if (!$isUser&&!$isFriend) {
+        $hidden = array('id' => $profile['id']);
+        echo form_open('message/sendFriendRequest','', $hidden); ?>
+        <input type="submit" value="Friend request" />
+    <?php echo form_close();
+    } ?>
 </div>
 
 <div id="sendMessage">
@@ -44,12 +50,3 @@
 </div> <!-- profile -->
 </div>  
 <div class="clear"></div>
-
-<div id="friendrequest-button">
-    <?php if (!$isUser&&!$isFriend) {
-        $hidden = array('id' => $profile['id']);
-        echo form_open('message/sendFriendRequest','', $hidden); ?>
-        <input type="submit" value="Friend request" />
-    <?php echo form_close();
-    } ?>
-</div>

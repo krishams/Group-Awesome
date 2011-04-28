@@ -1,4 +1,5 @@
-<h1>Basic Information</h1>
+<h1>Settings</h1>
+<h2>Edit Your Profile</h2>
 <?php echo validation_errors(); ?>
 <div id="profile-wrapper">
 <div id="profile1">
