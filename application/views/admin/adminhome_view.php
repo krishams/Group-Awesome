@@ -1,3 +1,1 @@
-This is the adminhome_view.php file
-
-
+<h1>Hello... Welcome to the admin page.</h1>
