@@ -1,4 +1,5 @@
-<h1>Basic Information</h1>
+<h1>Settings</h1>
+<h2>Edit Your Profile</h2>
 <?php echo validation_errors(); ?>
 <div id="profile-wrapper">
 <div id="profile1">
@@ -108,12 +109,12 @@
 	<input type='Submit' value='Add favorite'>
 </form>
 <div id="addbar">
-	<form id="addbarform" action="destination.html">
+	<form id="addbarform" action="#">
 		<input type="text" id="barname"></input>
 		<input type='Submit' value='Add Bar'>
 	</form>
 </div>
-<label id="addbarshowhide">Add new Bar</label>
+<a href="#" id="addbarshowhide">Is your bar missing? Add it to the list!</a>
  
 <div id="search_results"></div>
        <?php
