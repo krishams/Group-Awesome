@@ -20,7 +20,8 @@ $("#addbarshowhide").click(function(){
 $('#addbarform').submit(function() {
 	barname = $("#barname").val();
  	$.get(base_url + 'ajax/saveBar/' + barname);
- 	return false;
+ 	$('#addbar').toggle('slow', function() {});
+ 	$('#addbarshowhide').toggle('slow', function() {});
 });
 	
 function removefavorite(){

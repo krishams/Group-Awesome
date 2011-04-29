@@ -17,7 +17,7 @@ class Ajax extends CI_Controller {
     	$bars = $this->bar_model->getFavoriteBars($_SESSION['userid']);
     		echo "<ul id='favoritebarlist'>";
 			foreach ($bars as $bar) {
-				echo "<li>" . "<img id='" . $bar['bar_id'] . "'src='" . base_url() . "assets/img/cross_icon.png" . "' width='10' height='10' alt='some_text'/>" . $bar['name'] . "</li>";
+				echo "<li>" . "<img id='" . $bar['bar_id'] . "'src='" . base_url() . "assets/img/cross_icon.png" . "' width='10' height='10' alt='some_text'/>" ."  " . $bar['name'] . "</li>";
 			}
 			echo "</ul>";
 			echo "<script>removefavorite()</script>";

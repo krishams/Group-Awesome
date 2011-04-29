@@ -109,7 +109,7 @@
 	<input type='Submit' value='Add favorite'>
 </form>
 <div id="addbar">
-	<form id="addbarform" action="destination.html">
+	<form id="addbarform" action="#">
 		<input type="text" id="barname"></input>
 		<input type='Submit' value='Add Bar'>
 	</form>
