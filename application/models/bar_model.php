@@ -61,7 +61,7 @@ class bar_model extends CI_Model {
              $sql .= " AND users.id <> $user_to_exclude";
 
         }
-        error_log($sql);
+        
 
         $Q = $this->db->query($sql);
 
@@ -118,8 +118,10 @@ class bar_model extends CI_Model {
 
     }
 
-    function deleteFavoriteBar() {
-        
+    function removeFavoritBar($bar) {
+    	$this->db->where('bar_id', $bar['bar_id']);
+    	$this->db->where('user_id', $bar['user_id']);
+        $this->db->delete("favorite_bars");
     }
 }
 ?>

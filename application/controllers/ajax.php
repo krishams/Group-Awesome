@@ -13,21 +13,22 @@ class Ajax extends CI_Controller {
     }
     
     function loadFavoritBars() {
-    	error_log("ajaxsus");
+    	
     	$bars = $this->bar_model->getFavoriteBars($_SESSION['userid']);
-    		echo "<ul>";
+    		echo "<ul id='favoritebarlist'>";
 			foreach ($bars as $bar) {
-				echo "<li>" . $bar['name'] . "</li>";
+				echo "<li>" . "<img id='" . $bar['bar_id'] . "'src='" . base_url() . "assets/img/cross_icon.gif" . "' width='10' height='10' alt='some_text'/>" . $bar['name'] . "</li>";
 			}
 			echo "</ul>";
+			echo "<script>removefavorite()</script>";
 		
     }
     
     function saveFavoritBars() {
-    	error_log("save ajax");
+    	
     	$bar['user_id'] = $_SESSION['userid'];
     	$bar['bar_id'] = urldecode($this->uri->segment(3));
-    	//error_log("userid: " . $bar['user_id'] . " barid: " . $bar['bar_id']);
+    	
     	$this->bar_model->saveFavoriteBar($bar);
     }
     
@@ -53,6 +54,13 @@ class Ajax extends CI_Controller {
             echo '<li>' . anchor('user/showProfile/'.$row['id'],$row['f_name'] ." ". $row['l_name']) . '</li>';
         }
         echo '</ul>';
+    }
+    
+    function removeFavoritBar() {
+    	
+    	$bar['bar_id'] = $this->uri->segment(3);
+    	$bar['user_id'] = $_SESSION['userid'];
+    	$this->bar_model->removeFavoritBar($bar);
     }
 }
 ?>
