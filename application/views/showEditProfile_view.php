@@ -94,8 +94,8 @@
 
 
 <h2>Favorite bars</h2>
-
-	<select id="bars">
+<form id="bars" action="destination.html">
+	<select id="barsoption">
 	<?php
 		foreach ($bars as $bar) {
 			echo '<option id="'; 
@@ -105,14 +105,16 @@
 			echo '</option>';
 		}
 	?>
-</select>
-<div id="addbar">
-<form id="addbarform">
-<input type="text" id="barname"></input>
-<input type='Submit' value='Add Bar'>
+	</select>
+	<input type='Submit' value='Add favorite'>
 </form>
+<div id="addbar">
+	<form id="addbarform" action="destination.html">
+		<input type="text" id="barname"></input>
+		<input type='Submit' value='Add Bar'>
+	</form>
 </div>
-<label id="addbarshowhide">Add new Bar</label>
+<a href="#" id="addbarshowhide">Is your bar missing? Add it to the list!</a>
  
 <div id="search_results"></div>
        <?php
