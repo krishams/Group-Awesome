@@ -23,6 +23,18 @@ a{
 	text-decoration: none;
 }
 
+#addbarshowhide{
+	font-weight: bold;
+	font-style: italic;
+	color: #FEF8DB;
+	text-decoration: none;
+}
+
+#addbarshowhide:hover{
+	text-decoration: underline;
+	color: #8C291B;
+}
+
 a:hover{
 	text-decoration: underline;
 	color: #8C291B;
